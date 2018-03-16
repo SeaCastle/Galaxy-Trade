@@ -49,17 +49,17 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eventTextBox = new System.Windows.Forms.RichTextBox();
             this.itemsGroupBox = new System.Windows.Forms.GroupBox();
+            this.itemsListView = new System.Windows.Forms.ListView();
+            this.nameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.priceColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.inventoryGroupBox = new System.Windows.Forms.GroupBox();
+            this.inventoryListView = new System.Windows.Forms.ListView();
+            this.invNameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.invTotalColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buyButton = new System.Windows.Forms.Button();
             this.sellButton = new System.Windows.Forms.Button();
             this.dropButton = new System.Windows.Forms.Button();
             this.travelButton = new System.Windows.Forms.Button();
-            this.itemsListView = new System.Windows.Forms.ListView();
-            this.nameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.priceColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.inventoryListView = new System.Windows.Forms.ListView();
-            this.invNameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.invTotalColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statsGroupBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.itemsGroupBox.SuspendLayout();
@@ -277,6 +277,31 @@
             this.itemsGroupBox.TabStop = false;
             this.itemsGroupBox.Text = "Items";
             // 
+            // itemsListView
+            // 
+            this.itemsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.nameColumnHeader,
+            this.priceColumnHeader});
+            this.itemsListView.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.itemsListView.FullRowSelect = true;
+            this.itemsListView.GridLines = true;
+            this.itemsListView.Location = new System.Drawing.Point(7, 23);
+            this.itemsListView.Name = "itemsListView";
+            this.itemsListView.Size = new System.Drawing.Size(267, 206);
+            this.itemsListView.TabIndex = 0;
+            this.itemsListView.UseCompatibleStateImageBehavior = false;
+            this.itemsListView.View = System.Windows.Forms.View.Details;
+            // 
+            // nameColumnHeader
+            // 
+            this.nameColumnHeader.Text = "Name";
+            this.nameColumnHeader.Width = 143;
+            // 
+            // priceColumnHeader
+            // 
+            this.priceColumnHeader.Text = "Price";
+            this.priceColumnHeader.Width = 120;
+            // 
             // inventoryGroupBox
             // 
             this.inventoryGroupBox.Controls.Add(this.inventoryListView);
@@ -288,6 +313,31 @@
             this.inventoryGroupBox.TabStop = false;
             this.inventoryGroupBox.Text = "Inventory";
             // 
+            // inventoryListView
+            // 
+            this.inventoryListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.invNameColumnHeader,
+            this.invTotalColumnHeader});
+            this.inventoryListView.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inventoryListView.FullRowSelect = true;
+            this.inventoryListView.GridLines = true;
+            this.inventoryListView.Location = new System.Drawing.Point(7, 24);
+            this.inventoryListView.Name = "inventoryListView";
+            this.inventoryListView.Size = new System.Drawing.Size(267, 205);
+            this.inventoryListView.TabIndex = 0;
+            this.inventoryListView.UseCompatibleStateImageBehavior = false;
+            this.inventoryListView.View = System.Windows.Forms.View.Details;
+            // 
+            // invNameColumnHeader
+            // 
+            this.invNameColumnHeader.Text = "Name";
+            this.invNameColumnHeader.Width = 141;
+            // 
+            // invTotalColumnHeader
+            // 
+            this.invTotalColumnHeader.Text = "Total";
+            this.invTotalColumnHeader.Width = 122;
+            // 
             // buyButton
             // 
             this.buyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -298,6 +348,7 @@
             this.buyButton.TabIndex = 6;
             this.buyButton.Text = "Buy ->";
             this.buyButton.UseVisualStyleBackColor = true;
+            this.buyButton.Click += new System.EventHandler(this.buyButton_Click);
             // 
             // sellButton
             // 
@@ -332,57 +383,7 @@
             this.travelButton.Text = "Jet!";
             this.travelButton.UseVisualStyleBackColor = true;
             // 
-            // itemsListView
-            // 
-            this.itemsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.nameColumnHeader,
-            this.priceColumnHeader});
-            this.itemsListView.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.itemsListView.FullRowSelect = true;
-            this.itemsListView.GridLines = true;
-            this.itemsListView.Location = new System.Drawing.Point(7, 23);
-            this.itemsListView.Name = "itemsListView";
-            this.itemsListView.Size = new System.Drawing.Size(267, 206);
-            this.itemsListView.TabIndex = 0;
-            this.itemsListView.UseCompatibleStateImageBehavior = false;
-            this.itemsListView.View = System.Windows.Forms.View.Details;
-            // 
-            // nameColumnHeader
-            // 
-            this.nameColumnHeader.Text = "Name";
-            this.nameColumnHeader.Width = 143;
-            // 
-            // priceColumnHeader
-            // 
-            this.priceColumnHeader.Text = "Price";
-            this.priceColumnHeader.Width = 120;
-            // 
-            // inventoryListView
-            // 
-            this.inventoryListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.invNameColumnHeader,
-            this.invTotalColumnHeader});
-            this.inventoryListView.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inventoryListView.FullRowSelect = true;
-            this.inventoryListView.GridLines = true;
-            this.inventoryListView.Location = new System.Drawing.Point(7, 24);
-            this.inventoryListView.Name = "inventoryListView";
-            this.inventoryListView.Size = new System.Drawing.Size(267, 205);
-            this.inventoryListView.TabIndex = 0;
-            this.inventoryListView.UseCompatibleStateImageBehavior = false;
-            this.inventoryListView.View = System.Windows.Forms.View.Details;
-            // 
-            // invNameColumnHeader
-            // 
-            this.invNameColumnHeader.Text = "Name";
-            this.invNameColumnHeader.Width = 141;
-            // 
-            // invTotalColumnHeader
-            // 
-            this.invTotalColumnHeader.Text = "Total";
-            this.invTotalColumnHeader.Width = 122;
-            // 
-            // Form1
+            // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -396,7 +397,7 @@
             this.Controls.Add(this.eventTextBox);
             this.Controls.Add(this.statsGroupBox);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "Form1";
+            this.Name = "GameForm";
             this.Text = "Galaxy Trade";
             this.statsGroupBox.ResumeLayout(false);
             this.statsGroupBox.PerformLayout();

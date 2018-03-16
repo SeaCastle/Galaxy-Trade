@@ -22,24 +22,53 @@ namespace Galaxy_Trade
          * 
          * remove item from list view == **itemsListView.SelectedItems[0].Remove();
          * 
-        string[] items = new string[10] {"test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10"};
-
-        public void addItems()
-        {
-            int k = 1000;
-            for (int i = 0; i < items.Length; i++)
-            {
-                ListViewItem item = new ListViewItem(items[i]);
-                item.SubItems.Add(k.ToString());
-                itemsListView.Items.Add(item);
-
-                k += 1000;
-            }
-        }
         */
+
+        public Random rnd = new Random();
+        private Player player = new Player();
+
+        private Product[] products = new Product[12]
+            {
+                new Product("Copper", 10, 60),
+                new Product("Titanium", 70, 250),
+                new Product("Platinum", 100, 700),
+                new Product("Palladium", 300, 900),
+                new Product("Iridium", 450, 1500),
+                new Product("Meteorite", 500, 1300),
+                new Product("Stargems", 600, 1400),
+                new Product("Plutonium", 1000, 3500),
+                new Product("Ion Drive", 1000, 4500),
+                new Product("Nanites", 1500, 4500),
+                new Product("Galaxy Dust", 5000, 14000),
+                new Product("Dark Matter", 15000, 30000)
+            };
+
         public GameForm()
         {
             InitializeComponent();
+            updateItemsInListView();
+        }
+
+        /* 
+         * To be called once every new day, or at the start of a new game.
+         * Updates the current price of an item and adds the Product to the Items list view.
+         */
+        public void updateItemsInListView()
+        {
+            for (int i = 0; i < products.Length; i++)
+            {
+                int val = rnd.Next(products[i].MinValue, (products[i].MaxValue + 1));
+                products[i].CurrentValue = val;
+
+                ListViewItem item = new ListViewItem(products[i].Name);
+                item.SubItems.Add(products[i].CurrentValue.ToString());
+                itemsListView.Items.Add(item);
+            }
+        }
+
+        private void buyButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
