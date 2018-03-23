@@ -360,6 +360,7 @@
             this.sellButton.TabIndex = 7;
             this.sellButton.Text = "<- Sell";
             this.sellButton.UseVisualStyleBackColor = true;
+            this.sellButton.Click += new System.EventHandler(this.sellButton_Click);
             // 
             // dropButton
             // 

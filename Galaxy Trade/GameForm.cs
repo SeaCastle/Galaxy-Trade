@@ -25,7 +25,8 @@ namespace Galaxy_Trade
         */
 
         public Random rnd = new Random();
-        private Player player = new Player();
+        public Player player = new Player();
+        BuyWindow buyWindow;
 
         private Product[] products = new Product[12]
             {
@@ -46,6 +47,7 @@ namespace Galaxy_Trade
         public GameForm()
         {
             InitializeComponent();
+            setState();
             updateItemsInListView();
         }
 
@@ -68,7 +70,39 @@ namespace Galaxy_Trade
 
         private void buyButton_Click(object sender, EventArgs e)
         {
+            // Only instantiate one buy window per session,
+            // we will just hide it until we need it again
+            if (buyWindow == null || buyWindow.IsDisposed)
+            {
+                buyWindow = new BuyWindow(ref player);
+            }
 
+            ListViewItem selectedItem = getSelectedItem();
+            
+            buyWindow.setState(selectedItem);
+            buyWindow.Show();
+        }
+
+        // TODO: NEEDS ERROR CHECKING (IF STATEMENT)!
+        private ListViewItem getSelectedItem()
+        {
+            if (itemsListView.SelectedItems.Count == 0)
+            {
+                return null;
+                MessageBox.Show("Please select an item you would wish you buy", "No Item Selected!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return itemsListView.SelectedItems[0];
+        }
+
+        private void setState()
+        {
+            cashValLabel.Text = player.Money.ToString();
+        }
+
+        private void sellButton_Click(object sender, EventArgs e)
+        {
+            setState();
         }
     }
 }

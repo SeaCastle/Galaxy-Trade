@@ -45,6 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuyWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuyWindow.Designer.cs">
+      <DependentUpon>BuyWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Game.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +63,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TradeManager.cs" />
+    <EmbeddedResource Include="BuyWindow.resx">
+      <DependentUpon>BuyWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>

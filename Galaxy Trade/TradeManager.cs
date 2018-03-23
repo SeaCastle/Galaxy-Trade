@@ -8,10 +8,12 @@ namespace Galaxy_Trade
 {
     class TradeManager
     {
+        private Player player;
 
-
-
-        public TradeManager() { }
+        public TradeManager(ref Player p)
+        {
+            player = p;
+        }
 
         public void buyItems(Product product, Player player)
         {

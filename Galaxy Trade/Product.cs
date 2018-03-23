@@ -6,29 +6,30 @@ using System.Threading.Tasks;
 
 namespace Galaxy_Trade
 {
-    class Product
+    public class Product
     {
         private string name;
+        private int minValue;
+        private int maxValue;
+        private int currentValue;
+
         public string Name
         {
             get { return name; }
         }
 
-        private int minValue;
         public int MinValue
         {
             get { return minValue; }
             set { minValue = value; }
         }
 
-        private int maxValue;
         public int MaxValue
         {
             get { return maxValue; }
             set { maxValue = value; }
         }
 
-        private int currentValue;
         public int CurrentValue
         {
             get { return currentValue; }
