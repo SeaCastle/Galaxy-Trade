@@ -24,31 +24,14 @@ namespace Galaxy_Trade
          * 
         */
 
-        public Random rnd = new Random();
-        public Player player = new Player();
+        public Game game;
         BuyWindow buyWindow;
-
-        private Product[] products = new Product[12]
-            {
-                new Product("Copper", 10, 60),
-                new Product("Titanium", 70, 250),
-                new Product("Platinum", 100, 700),
-                new Product("Palladium", 300, 900),
-                new Product("Iridium", 450, 1500),
-                new Product("Meteorite", 500, 1300),
-                new Product("Stargems", 600, 1400),
-                new Product("Plutonium", 1000, 3500),
-                new Product("Ion Drive", 1000, 4500),
-                new Product("Nanites", 1500, 4500),
-                new Product("Galaxy Dust", 5000, 14000),
-                new Product("Dark Matter", 15000, 30000)
-            };
 
         public GameForm()
         {
             InitializeComponent();
+            game = new Game();
             setState();
-            updateItemsInListView();
         }
 
         /* 
@@ -57,14 +40,39 @@ namespace Galaxy_Trade
          */
         public void updateItemsInListView()
         {
-            for (int i = 0; i < products.Length; i++)
+            /*
+            for (int i = 0; i < game.products.Length; i++)
             {
-                int val = rnd.Next(products[i].MinValue, (products[i].MaxValue + 1));
-                products[i].CurrentValue = val;
-
-                ListViewItem item = new ListViewItem(products[i].Name);
-                item.SubItems.Add(products[i].CurrentValue.ToString());
+                ListViewItem item = new ListViewItem(game.products[i].Name);
+                item.SubItems.Add(game.products[i].CurrentValue.ToString("C0"));
                 itemsListView.Items.Add(item);
+            }
+            */
+            foreach (Product p in game.products)
+            {
+                if (itemsListView.FindItemWithText(p.Name) == null)
+                {
+                    ListViewItem item = new ListViewItem(p.Name);
+                    item.SubItems.Add(p.CurrentValue.ToString("C0"));
+                    itemsListView.Items.Add(item);
+                }
+            }
+        }
+
+        public void updateItemsInInventory()
+        {
+            if (game.player.Inventory.Count() > 0)
+            {
+                foreach (string key in game.player.Inventory.Keys)
+                {
+                    // Make sure the item doesn't already exist in the list view.
+                    if (inventoryListView.FindItemWithText(key) == null)
+                    {
+                        ListViewItem item = new ListViewItem(key, key);
+                        item.SubItems.Add(game.player.Inventory[key].ToString());
+                        inventoryListView.Items.Add(item);
+                    }
+                }
             }
         }
 
@@ -74,22 +82,23 @@ namespace Galaxy_Trade
             // we will just hide it until we need it again
             if (buyWindow == null || buyWindow.IsDisposed)
             {
-                buyWindow = new BuyWindow(ref player);
+                buyWindow = new BuyWindow(ref game.player);
             }
 
             ListViewItem selectedItem = getSelectedItem();
             
             buyWindow.setState(selectedItem);
-            buyWindow.Show();
+            buyWindow.ShowDialog();
+
         }
 
         // TODO: NEEDS ERROR CHECKING (IF STATEMENT)!
         private ListViewItem getSelectedItem()
         {
-            if (itemsListView.SelectedItems.Count == 0)
+            if (itemsListView.SelectedItems.Count != 1)
             {
                 return null;
-                MessageBox.Show("Please select an item you would wish you buy", "No Item Selected!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Please select an item you would wish you buy", "No Item Selected!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return itemsListView.SelectedItems[0];
@@ -97,12 +106,25 @@ namespace Galaxy_Trade
 
         private void setState()
         {
-            cashValLabel.Text = player.Money.ToString();
+            // Update the text labels
+            dayCounterLabel.Text = "Day " + game.day.ToString() + "/" + game.gameLength.ToString();
+            debtValLabel.Text = game.player.Debt.ToString("C0");
+            cashValLabel.Text = game.player.Money.ToString("C0");
+
+            // Update the list views
+            updateItemsInListView();
+            updateItemsInInventory();
         }
 
         private void sellButton_Click(object sender, EventArgs e)
         {
             setState();
+        }
+
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            buyWindow.Close();
+            Application.Exit();
         }
     }
 }

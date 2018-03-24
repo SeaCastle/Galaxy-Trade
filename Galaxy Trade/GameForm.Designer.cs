@@ -400,6 +400,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "GameForm";
             this.Text = "Galaxy Trade";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
             this.statsGroupBox.ResumeLayout(false);
             this.statsGroupBox.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

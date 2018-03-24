@@ -8,6 +8,7 @@ namespace Galaxy_Trade
 {
     public class Product
     {
+        private Random rnd = new Random();
         private string name;
         private int minValue;
         private int maxValue;
@@ -41,7 +42,12 @@ namespace Galaxy_Trade
             name = pName;
             minValue = minVal;
             maxValue = maxVal;
-            currentValue = 0;
+            currentValue = updateCurrentValue();
+        }
+
+        public int updateCurrentValue()
+        {
+            return rnd.Next(minValue, (maxValue + 1));
         }
     }
 }

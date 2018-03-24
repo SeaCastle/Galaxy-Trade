@@ -7,13 +7,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Galaxy_Trade
 {
     public partial class BuyWindow : Form
     {
+        /*
+        public struct BoughtITem
+        {
+            public readonly string name;
+            public readonly int val;
+
+            public BoughtITem(string name, int val)
+            {
+                this.name = name;
+                this.val = val;
+            }
+        }
+
+        private BoughtITem boughtItem;
+        public BoughtITem BoughtItem
+        {
+            get { return boughtItem; }
+            set { boughtItem = value; }
+        }
+        */
+
         private ListViewItem selectedItem;
         private Player player;
+        private int total;
 
         public BuyWindow(ref Player p)
         {
@@ -28,10 +51,10 @@ namespace Galaxy_Trade
         {
             selectedItem = lvi;
 
-            productLabel.Text = selectedItem.Text + "($" + selectedItem.SubItems[1].Text + ")";
+            productLabel.Text = selectedItem.Text + "(" + selectedItem.SubItems[1].Text + ")";
             totalAmountLabel.Text = "0";
 
-            cashValueLabel.Text = "$" + player.Money.ToString();
+            cashValueLabel.Text = player.Money.ToString("C0");
 
             numericUpDown.Value = 0;
             totalAmountLabel.ForeColor = System.Drawing.Color.Black;
@@ -44,8 +67,8 @@ namespace Galaxy_Trade
             var color = System.Drawing.Color.Black;
 
             int num = (int)numericUpDown.Value;
-            int cost = Int32.Parse(selectedItem.SubItems[1].Text);
-            int total = num * cost;
+            int cost = Int32.Parse(selectedItem.SubItems[1].Text, NumberStyles.Currency);
+            total = num * cost;
 
             // If the player doesn't have enough money, change the label to red
             // and disable the buy button.
@@ -68,7 +91,6 @@ namespace Galaxy_Trade
             if (numericUpDown.Value == 0) 
             {
                 this.Hide();
-                //return;
             }
             else
             {
@@ -76,10 +98,9 @@ namespace Galaxy_Trade
                 // money because we automatically disable the buy button in the 
                 // numeric updown box if they don't have enough money to buy the item(s).
                 player.addItemsToInventory(selectedItem.Text, (int)numericUpDown.Value);
-                player.Money = 10;
+                player.updateMoney(-total); ////////// I STILL DON'T LIKE THIS
+                this.Hide();
             }
-
-
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)

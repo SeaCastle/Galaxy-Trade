@@ -8,12 +8,12 @@ namespace Galaxy_Trade
 {
      public class Player
     {
-        private Dictionary<String, int> inventory; //<key, val>
+        private Dictionary<string, int> inventory; //<key, val>
         private int money;
         private int debt;
         private int health;
 
-        public Dictionary<String, int> Inventory
+        public Dictionary<string, int> Inventory
         {
             get => inventory;
         }
@@ -41,7 +41,7 @@ namespace Galaxy_Trade
             money = 20000;
             debt = 5500;
             health = 100;
-            inventory = new Dictionary<String, int>();
+            inventory = new Dictionary<string, int>();
         }
 
         /**
@@ -50,7 +50,7 @@ namespace Galaxy_Trade
          * @param p - Product<key> we are updating, or adding to the players inventory
          * @param amount - how many items we are adding to the inventory
          */
-        public void addItemsToInventory(String product, int amount)
+        public void addItemsToInventory(string product, int amount)
         {
             int val = 0;
             if (inventory.TryGetValue(product, out val))
@@ -64,7 +64,7 @@ namespace Galaxy_Trade
         }
 
         // TODO: Error Checking
-        public void removeItemsFromInventory(String product, int amount)
+        public void removeItemsFromInventory(string product, int amount)
         {
             int val = 0;
             if (inventory.TryGetValue(product, out val))
@@ -77,6 +77,11 @@ namespace Galaxy_Trade
                     inventory.Remove(product);
                 }
             }
+        }
+
+        public void updateMoney(int val)
+        {
+            money += val;
         }
     }
 }
