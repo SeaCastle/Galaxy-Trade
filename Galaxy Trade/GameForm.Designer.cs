@@ -414,6 +414,11 @@
 
         #endregion
 
+        /// NOTE:
+        /// THE BUY AND SELL BUTTONS ARE STACKED ON TOP OF EACH OTHER
+        /// IF YOU NEED ACCESS TO THE SELL BUTTON IN THE DESIGN EDITOR
+        /// MOVE THE SELL BUTTON OUT OF THE WAY
+
         private System.Windows.Forms.GroupBox statsGroupBox;
         private System.Windows.Forms.Label dayCounterLabel;
         private System.Windows.Forms.Label locationLabel;

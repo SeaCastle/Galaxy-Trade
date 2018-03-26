@@ -34,7 +34,6 @@ namespace Galaxy_Trade
         public int CurrentValue
         {
             get { return currentValue; }
-            set { currentValue = value; }
         }
 
         public Product(string pName, int minVal, int maxVal)

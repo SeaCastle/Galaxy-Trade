@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace Galaxy_Trade
 {
-    public partial class BuyWindow : Form
+    public partial class TradeWindow : Form
     {
         /*
         public struct BoughtITem
@@ -38,18 +38,32 @@ namespace Galaxy_Trade
         private Player player;
         private int total;
 
-        public BuyWindow(ref Player p)
+        public TradeWindow(ref Player p, ListViewItem lvi, bool isTrade)
         {
-            player = p;
-
             InitializeComponent();
+
+            player = p;
+            selectedItem = lvi;
+
+            setState(isTrade);    
         }
 
         // Gets a reference to variables in GameForm.cs that we need to 
         // set up the state of the buyWindow, and get the window ready to show.
-        public void setState(ListViewItem lvi)
+        public void setState(bool isTrade)
         {
-            selectedItem = lvi;
+            int maxItems = 100; ///< int The maximum number of items the player can sell / buy
+
+            if (isTrade)
+            {
+                sellBtn.Hide();
+                maxItems = player.InventorySlots;
+            }
+            else
+            {
+                buyBtn.Hide();
+                maxItems = Int32.Parse(selectedItem.SubItems[1].Text);
+            }
 
             productLabel.Text = selectedItem.Text + "(" + selectedItem.SubItems[1].Text + ")";
             totalAmountLabel.Text = "0";
@@ -57,6 +71,7 @@ namespace Galaxy_Trade
             cashValueLabel.Text = player.Money.ToString("C0");
 
             numericUpDown.Minimum = 1;
+            numericUpDown.Maximum = maxItems;
             numericUpDown.Value = 1;
             totalAmountLabel.ForeColor = System.Drawing.Color.Black;
         }
@@ -105,10 +120,16 @@ namespace Galaxy_Trade
             }
         }
 
+        private void sellBtn_Click(object sender, EventArgs e)
+        {
+            player.removeItemsFromInventory(selectedItem.Text, (int)numericUpDown.Value);
+            player.updateMoney(total);
+            this.DialogResult = DialogResult.OK;
+        }
+
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            //this.Hide();
         }
     }
 }

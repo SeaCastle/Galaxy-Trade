@@ -25,7 +25,7 @@ namespace Galaxy_Trade
         */
 
         public Game game;
-        BuyWindow buyWindow;
+        TradeWindow tradeWindow;
 
         public GameForm()
         {
@@ -53,94 +53,94 @@ namespace Galaxy_Trade
 
         public void updateItemsInInventory()
         {
-            // Make sure the player even has an item in their inventory
-            if (game.player.Inventory.Count() > 0)
+            // SHOULD PROBABLY THINK OF SOMETHING BETTER HERE -----
+            inventoryListView.Items.Clear();
+            //////////////////////////////////////////////////////
+
+            foreach (string key in game.player.Inventory.Keys)
             {
-                foreach (string key in game.player.Inventory.Keys)
+                //ListViewItem currentItem = null;
+                ListViewItem currentItem = inventoryListView.FindItemWithText(key);
+                // Make sure the item doesn't already exist in the list view.
+                if (currentItem == null)
                 {
-                    //ListViewItem currentItem = null;
-                    ListViewItem currentItem = inventoryListView.FindItemWithText(key);
-                    // Make sure the item doesn't already exist in the list view.
-                    if (currentItem == null)
-                    {
-                        ListViewItem item = new ListViewItem(key, key);
-                        item.SubItems.Add(game.player.Inventory[key].ToString());
-                        inventoryListView.Items.Add(item);
-                    }
-                    else
-                    {
-                        currentItem.SubItems[1].Text = game.player.Inventory[key].ToString();
-                    }
+                    ListViewItem item = new ListViewItem(key, key);
+                    item.SubItems.Add(game.player.Inventory[key].ToString());
+                    inventoryListView.Items.Add(item);
+                }
+                else
+                {
+                    currentItem.SubItems[1].Text = game.player.Inventory[key].ToString();
                 }
             }
         }
 
+        // CAN WE MESH THESE TWO (buyButton / sellButton) CLICK FUNCTIONS TOGETHER?
         private void buyButton_Click(object sender, EventArgs e)
         {
-            // Only instantiate one buy window per session,
-            // we will just hide it until we need it again
-            /*
-            if (buyWindow == null || buyWindow.IsDisposed)
+            ListViewItem selectedItem = getSelectedItemFromListView(itemsListView); ///< ListViewItem Will be set to null if none/more than 1 item selected.
+
+            if (selectedItem != null)
             {
-                buyWindow = new BuyWindow(ref game.player);
+                createTradeWindow(selectedItem, true);
+                itemsListView.SelectedIndices.Clear();
             }
+        }
 
-            ListViewItem selectedItem = getSelectedItem();
-            
-            buyWindow.setState(selectedItem);
-            buyWindow.ShowDialog();
-            */
+        private void sellButton_Click(object sender, EventArgs e)
+        {
+            ListViewItem selectedItem = getSelectedItemFromListView(inventoryListView);
 
-            if (buyWindow == null || buyWindow.IsDisposed)
+            if (selectedItem != null)
             {
-                using (buyWindow = new BuyWindow(ref game.player))
-                {
-                    ListViewItem selectedItem = getSelectedItem();
-                    buyWindow.setState(selectedItem);
+                createTradeWindow(selectedItem, false);
+                inventoryListView.SelectedIndices.Clear();
+            }
+        }
 
-                    DialogResult result = buyWindow.ShowDialog();
+        private void createTradeWindow(ListViewItem selectedItem, bool isTrade)
+        {
+            if (tradeWindow == null || tradeWindow.IsDisposed)
+            {
+                using (tradeWindow = new TradeWindow(ref game.player, selectedItem, isTrade))
+                {
+                    DialogResult result = tradeWindow.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        // REFRESH THE GAMEFORM
                         setState();
                     }
                 }
             }
-            
         }
 
         // TODO: NEEDS ERROR CHECKING (IF STATEMENT)!
-        private ListViewItem getSelectedItem()
+        private ListViewItem getSelectedItemFromListView(ListView view)
         {
-            if (itemsListView.SelectedItems.Count != 1)
+            if (view.SelectedItems.Count != 1)
             {
                 return null;
-                //MessageBox.Show("Please select an item you would wish you buy", "No Item Selected!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            return itemsListView.SelectedItems[0];
+            return view.SelectedItems[0];
         }
 
         private void setState()
         {
             // Update the text labels
             dayCounterLabel.Text = "Day " + game.day.ToString() + "/" + game.gameLength.ToString();
+
             debtValLabel.Text = game.player.Debt.ToString("C0");
             cashValLabel.Text = game.player.Money.ToString("C0");
+
+            spaceValLabel.Text = game.player.InventorySlots.ToString();
 
             // Update the list views
             updateItemsInListView();
             updateItemsInInventory();
         }
 
-        private void sellButton_Click(object sender, EventArgs e)
-        {
-            setState();
-        }
-
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            buyWindow.Close();
+            tradeWindow.Close();
             Application.Exit();
         }
     }

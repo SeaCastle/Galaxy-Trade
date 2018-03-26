@@ -8,14 +8,17 @@ namespace Galaxy_Trade
 {
      public class Player
     {
+        private const int STARTINGINVENTORY = 100;
         private Dictionary<string, int> inventory; //<key, val>
         private int money;
         private int debt;
         private int health;
+        private int additionalInventory;
+        private int inventorySlots;
 
         public Dictionary<string, int> Inventory
         {
-            get => inventory;
+            get { return inventory; }
         }
 
         public int Money
@@ -35,12 +38,25 @@ namespace Galaxy_Trade
             set { health = value; }
         }
 
+        public int InventorySlots
+        {
+            get { return inventorySlots; }
+        }
+
+        public int AdditionalInventory
+        {
+            get { return additionalInventory; }
+            set { additionalInventory += value; }
+        }
+
         // Use this constructor if starting a new game
         public Player()
         {
             money = 20000;
             debt = 5500;
             health = 100;
+            inventorySlots = STARTINGINVENTORY;
+            additionalInventory = 0;
             inventory = new Dictionary<string, int>();
         }
 
@@ -61,6 +77,8 @@ namespace Galaxy_Trade
             {
                 inventory.Add(product, amount);
             }
+
+            updateInventorySlots();
         }
 
         // TODO: Error Checking
@@ -77,6 +95,22 @@ namespace Galaxy_Trade
                     inventory.Remove(product);
                 }
             }
+
+            updateInventorySlots();
+        }
+
+        /**
+         * Updates how many open inventory slots the player has
+         */ 
+        public void updateInventorySlots()
+        {
+            int totalItems = 0;
+            foreach (string key in inventory.Keys)
+            {
+                totalItems += inventory[key];
+            }
+
+            inventorySlots = (STARTINGINVENTORY + additionalInventory - totalItems);
         }
 
         public void updateMoney(int val)

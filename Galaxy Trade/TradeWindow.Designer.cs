@@ -1,6 +1,6 @@
 ﻿namespace Galaxy_Trade
 {
-    partial class BuyWindow
+    partial class TradeWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -37,6 +37,7 @@
             this.numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.totalLabel = new System.Windows.Forms.Label();
             this.totalAmountLabel = new System.Windows.Forms.Label();
+            this.sellBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,12 +123,23 @@
             this.totalAmountLabel.TabIndex = 7;
             this.totalAmountLabel.Text = "$000000";
             // 
-            // BuyWindow
+            // sellBtn
+            // 
+            this.sellBtn.Location = new System.Drawing.Point(253, 152);
+            this.sellBtn.Name = "sellBtn";
+            this.sellBtn.Size = new System.Drawing.Size(90, 35);
+            this.sellBtn.TabIndex = 8;
+            this.sellBtn.Text = "Sell";
+            this.sellBtn.UseVisualStyleBackColor = true;
+            this.sellBtn.Click += new System.EventHandler(this.sellBtn_Click);
+            // 
+            // TradeWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(414, 211);
             this.ControlBox = false;
+            this.Controls.Add(this.sellBtn);
             this.Controls.Add(this.totalAmountLabel);
             this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.numericUpDown);
@@ -136,7 +148,7 @@
             this.Controls.Add(this.cashLabel);
             this.Controls.Add(this.buyBtn);
             this.Controls.Add(this.cancelBtn);
-            this.Name = "BuyWindow";
+            this.Name = "TradeWindow";
             this.Text = "BuyWindow";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -153,5 +165,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown;
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Label totalAmountLabel;
+        private System.Windows.Forms.Button sellBtn;
     }
 }

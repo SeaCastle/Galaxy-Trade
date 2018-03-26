@@ -11,7 +11,7 @@ namespace Galaxy_Trade
         public Player player;
         public Product[] products;
         public int day;
-        public int gameLength; ///< Total length of the game in days
+        public int gameLength; ///< int Total length of the game in days
 
         public Game()
         {
