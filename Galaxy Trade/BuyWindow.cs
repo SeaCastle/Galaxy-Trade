@@ -56,7 +56,8 @@ namespace Galaxy_Trade
 
             cashValueLabel.Text = player.Money.ToString("C0");
 
-            numericUpDown.Value = 0;
+            numericUpDown.Minimum = 1;
+            numericUpDown.Value = 1;
             totalAmountLabel.ForeColor = System.Drawing.Color.Black;
         }
 
@@ -81,7 +82,7 @@ namespace Galaxy_Trade
             {
                 buyBtn.Enabled = true;
             }
-            totalAmountLabel.Text = total.ToString();
+            totalAmountLabel.Text = total.ToString("C0");
             totalAmountLabel.ForeColor = color;
         }
 
@@ -99,13 +100,15 @@ namespace Galaxy_Trade
                 // numeric updown box if they don't have enough money to buy the item(s).
                 player.addItemsToInventory(selectedItem.Text, (int)numericUpDown.Value);
                 player.updateMoney(-total); ////////// I STILL DON'T LIKE THIS
-                this.Hide();
+                this.DialogResult = DialogResult.OK;
+                //this.Hide();
             }
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.DialogResult = DialogResult.Cancel;
+            //this.Hide();
         }
     }
 }

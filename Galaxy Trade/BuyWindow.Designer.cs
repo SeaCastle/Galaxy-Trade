@@ -116,7 +116,7 @@
             // totalAmountLabel
             // 
             this.totalAmountLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalAmountLabel.Location = new System.Drawing.Point(196, 110);
+            this.totalAmountLabel.Location = new System.Drawing.Point(111, 110);
             this.totalAmountLabel.Name = "totalAmountLabel";
             this.totalAmountLabel.Size = new System.Drawing.Size(206, 23);
             this.totalAmountLabel.TabIndex = 7;

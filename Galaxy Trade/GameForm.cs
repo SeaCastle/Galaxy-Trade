@@ -40,14 +40,6 @@ namespace Galaxy_Trade
          */
         public void updateItemsInListView()
         {
-            /*
-            for (int i = 0; i < game.products.Length; i++)
-            {
-                ListViewItem item = new ListViewItem(game.products[i].Name);
-                item.SubItems.Add(game.products[i].CurrentValue.ToString("C0"));
-                itemsListView.Items.Add(item);
-            }
-            */
             foreach (Product p in game.products)
             {
                 if (itemsListView.FindItemWithText(p.Name) == null)
@@ -61,16 +53,23 @@ namespace Galaxy_Trade
 
         public void updateItemsInInventory()
         {
+            // Make sure the player even has an item in their inventory
             if (game.player.Inventory.Count() > 0)
             {
                 foreach (string key in game.player.Inventory.Keys)
                 {
+                    //ListViewItem currentItem = null;
+                    ListViewItem currentItem = inventoryListView.FindItemWithText(key);
                     // Make sure the item doesn't already exist in the list view.
-                    if (inventoryListView.FindItemWithText(key) == null)
+                    if (currentItem == null)
                     {
                         ListViewItem item = new ListViewItem(key, key);
                         item.SubItems.Add(game.player.Inventory[key].ToString());
                         inventoryListView.Items.Add(item);
+                    }
+                    else
+                    {
+                        currentItem.SubItems[1].Text = game.player.Inventory[key].ToString();
                     }
                 }
             }
@@ -80,6 +79,7 @@ namespace Galaxy_Trade
         {
             // Only instantiate one buy window per session,
             // we will just hide it until we need it again
+            /*
             if (buyWindow == null || buyWindow.IsDisposed)
             {
                 buyWindow = new BuyWindow(ref game.player);
@@ -89,7 +89,24 @@ namespace Galaxy_Trade
             
             buyWindow.setState(selectedItem);
             buyWindow.ShowDialog();
+            */
 
+            if (buyWindow == null || buyWindow.IsDisposed)
+            {
+                using (buyWindow = new BuyWindow(ref game.player))
+                {
+                    ListViewItem selectedItem = getSelectedItem();
+                    buyWindow.setState(selectedItem);
+
+                    DialogResult result = buyWindow.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        // REFRESH THE GAMEFORM
+                        setState();
+                    }
+                }
+            }
+            
         }
 
         // TODO: NEEDS ERROR CHECKING (IF STATEMENT)!
