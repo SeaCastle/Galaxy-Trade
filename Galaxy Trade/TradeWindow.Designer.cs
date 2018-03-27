@@ -38,6 +38,7 @@
             this.totalLabel = new System.Windows.Forms.Label();
             this.totalAmountLabel = new System.Windows.Forms.Label();
             this.sellBtn = new System.Windows.Forms.Button();
+            this.maxBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             // 
             // buyBtn
             // 
-            this.buyBtn.Location = new System.Drawing.Point(253, 152);
+            this.buyBtn.Location = new System.Drawing.Point(260, 152);
             this.buyBtn.Name = "buyBtn";
             this.buyBtn.Size = new System.Drawing.Size(90, 35);
             this.buyBtn.TabIndex = 1;
@@ -125,7 +126,7 @@
             // 
             // sellBtn
             // 
-            this.sellBtn.Location = new System.Drawing.Point(253, 152);
+            this.sellBtn.Location = new System.Drawing.Point(260, 152);
             this.sellBtn.Name = "sellBtn";
             this.sellBtn.Size = new System.Drawing.Size(90, 35);
             this.sellBtn.TabIndex = 8;
@@ -133,12 +134,23 @@
             this.sellBtn.UseVisualStyleBackColor = true;
             this.sellBtn.Click += new System.EventHandler(this.sellBtn_Click);
             // 
+            // maxBtn
+            // 
+            this.maxBtn.Location = new System.Drawing.Point(350, 105);
+            this.maxBtn.Name = "maxBtn";
+            this.maxBtn.Size = new System.Drawing.Size(52, 28);
+            this.maxBtn.TabIndex = 9;
+            this.maxBtn.Text = "Max";
+            this.maxBtn.UseVisualStyleBackColor = true;
+            this.maxBtn.Click += new System.EventHandler(this.maxBtn_Click);
+            // 
             // TradeWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(414, 211);
             this.ControlBox = false;
+            this.Controls.Add(this.maxBtn);
             this.Controls.Add(this.sellBtn);
             this.Controls.Add(this.totalAmountLabel);
             this.Controls.Add(this.totalLabel);
@@ -166,5 +178,6 @@
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Label totalAmountLabel;
         private System.Windows.Forms.Button sellBtn;
+        private System.Windows.Forms.Button maxBtn;
     }
 }

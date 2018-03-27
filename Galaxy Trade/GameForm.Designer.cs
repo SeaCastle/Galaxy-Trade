@@ -255,9 +255,8 @@
             // 
             // eventTextBox
             // 
-            this.eventTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.eventTextBox.BackColor = System.Drawing.SystemColors.Menu;
             this.eventTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventTextBox.Enabled = false;
             this.eventTextBox.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.eventTextBox.Location = new System.Drawing.Point(12, 133);
             this.eventTextBox.Name = "eventTextBox";
@@ -372,6 +371,7 @@
             this.dropButton.TabIndex = 8;
             this.dropButton.Text = "<- Drop";
             this.dropButton.UseVisualStyleBackColor = true;
+            this.dropButton.Click += new System.EventHandler(this.dropButton_Click);
             // 
             // travelButton
             // 
@@ -383,6 +383,7 @@
             this.travelButton.TabIndex = 9;
             this.travelButton.Text = "Jet!";
             this.travelButton.UseVisualStyleBackColor = true;
+            this.travelButton.Click += new System.EventHandler(this.travelButton_Click);
             // 
             // GameForm
             // 

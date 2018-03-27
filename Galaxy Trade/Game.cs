@@ -10,6 +10,7 @@ namespace Galaxy_Trade
     {
         public Player player;
         public Product[] products;
+        public string[] locations;
         public int day;
         public int gameLength; ///< int Total length of the game in days
 
@@ -31,6 +32,8 @@ namespace Galaxy_Trade
                 new Product("Galaxy Dust", 5000, 14000),
                 new Product("Dark Matter", 15000, 30000)
             };
+
+            locations = new string[5] { "Mars", "Earth", "Venus", "Moon", "Sun" };
 
             day = 0;
             gameLength = 30;

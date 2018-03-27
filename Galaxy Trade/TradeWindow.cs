@@ -34,45 +34,56 @@ namespace Galaxy_Trade
         }
         */
 
-        private ListViewItem selectedItem;
+        private string itemName;
+        private int itemPrice;
         private Player player;
         private int total;
+        private bool isBuying;
 
-        public TradeWindow(ref Player p, ListViewItem lvi, bool isTrade)
+        public TradeWindow(ref Player p, string name, int price, bool isBuy)
         {
             InitializeComponent();
 
             player = p;
-            selectedItem = lvi;
+            itemName = name;
+            itemPrice = price;
+            isBuying = isBuy;
 
-            setState(isTrade);    
+            setState();    
         }
 
         // Gets a reference to variables in GameForm.cs that we need to 
         // set up the state of the buyWindow, and get the window ready to show.
-        public void setState(bool isTrade)
+        public void setState()
         {
             int maxItems = 100; ///< int The maximum number of items the player can sell / buy
 
-            if (isTrade)
+            if (isBuying)
             {
                 sellBtn.Hide();
-                maxItems = player.InventorySlots;
+                
+                if (itemPrice * player.InventorySlots < player.Money)
+                {
+                    maxItems = player.InventorySlots;
+                }
+                else
+                {
+                    maxItems = player.Money / itemPrice;
+                }
             }
             else
             {
                 buyBtn.Hide();
-                maxItems = Int32.Parse(selectedItem.SubItems[1].Text);
+                maxItems = player.Inventory[itemName]; // How many of the item the player has
             }
 
-            productLabel.Text = selectedItem.Text + "(" + selectedItem.SubItems[1].Text + ")";
+            productLabel.Text = itemName + "(" + itemPrice.ToString("C0") + ")";
             totalAmountLabel.Text = "0";
 
             cashValueLabel.Text = player.Money.ToString("C0");
 
             numericUpDown.Minimum = 1;
             numericUpDown.Maximum = maxItems;
-            numericUpDown.Value = 1;
             totalAmountLabel.ForeColor = System.Drawing.Color.Black;
         }
 
@@ -83,20 +94,8 @@ namespace Galaxy_Trade
             var color = System.Drawing.Color.Black;
 
             int num = (int)numericUpDown.Value;
-            int cost = Int32.Parse(selectedItem.SubItems[1].Text, NumberStyles.Currency);
-            total = num * cost;
+            total = num * itemPrice;
 
-            // If the player doesn't have enough money, change the label to red
-            // and disable the buy button.
-            if (total > player.Money)
-            {
-                color = System.Drawing.Color.Red;
-                buyBtn.Enabled = false;
-            }
-            else
-            {
-                buyBtn.Enabled = true;
-            }
             totalAmountLabel.Text = total.ToString("C0");
             totalAmountLabel.ForeColor = color;
         }
@@ -113,7 +112,7 @@ namespace Galaxy_Trade
                 // We don't do any checking for whether or not the player has enough
                 // money because we automatically disable the buy button in the 
                 // numeric updown box if they don't have enough money to buy the item(s).
-                player.addItemsToInventory(selectedItem.Text, (int)numericUpDown.Value);
+                player.addItemsToInventory(itemName, (int)numericUpDown.Value);
                 player.updateMoney(-total); ////////// I STILL DON'T LIKE THIS
                 this.DialogResult = DialogResult.OK;
                 //this.Hide();
@@ -122,7 +121,7 @@ namespace Galaxy_Trade
 
         private void sellBtn_Click(object sender, EventArgs e)
         {
-            player.removeItemsFromInventory(selectedItem.Text, (int)numericUpDown.Value);
+            player.removeItemsFromInventory(itemName, (int)numericUpDown.Value);
             player.updateMoney(total);
             this.DialogResult = DialogResult.OK;
         }
@@ -131,5 +130,43 @@ namespace Galaxy_Trade
         {
             this.DialogResult = DialogResult.Cancel;
         }
+
+        private void maxBtn_Click(object sender, EventArgs e)
+        {
+            if (isBuying)
+            {
+                if (itemPrice * player.InventorySlots < player.Money)
+                {
+                    numericUpDown.Value = player.InventorySlots;
+                }
+                else
+                {
+                    numericUpDown.Value = player.Money / itemPrice;
+                }
+                
+            }
+            else
+            {
+                numericUpDown.Value = player.Inventory[itemName];
+            }
+        }
     }
 }
+
+
+
+
+// If the player doesn't have enough money, change the label to red
+// and disable the buy button.
+// NO LONGER RELEVENT, WE DON'T ALLOW THE NUMERIC UPDOWN TO PASS HOW MANY THEY HAVE MONEY FOR
+/*
+if (total > player.Money)
+{
+    color = System.Drawing.Color.Red;
+    buyBtn.Enabled = false;
+}
+else
+{
+    buyBtn.Enabled = true;
+}
+*/

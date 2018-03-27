@@ -26,6 +26,7 @@ namespace Galaxy_Trade
 
         public Game game;
         TradeWindow tradeWindow;
+        LocationWindow locationWindow;
 
         public GameForm()
         {
@@ -79,11 +80,15 @@ namespace Galaxy_Trade
         private void buyButton_Click(object sender, EventArgs e)
         {
             ListViewItem selectedItem = getSelectedItemFromListView(itemsListView); ///< ListViewItem Will be set to null if none/more than 1 item selected.
-
+      
             if (selectedItem != null)
             {
-                createTradeWindow(selectedItem, true);
-                itemsListView.SelectedIndices.Clear();
+                string name;
+                int price;
+
+                getItemInfo(selectedItem, out name, out price);
+                createTradeWindow(name, price, true);
+                inventoryListView.SelectedIndices.Clear();
             }
         }
 
@@ -93,24 +98,44 @@ namespace Galaxy_Trade
 
             if (selectedItem != null)
             {
-                createTradeWindow(selectedItem, false);
+                string name;
+                int price;
+
+                getItemInfo(selectedItem, out name, out price);
+                createTradeWindow(name, price, false);
                 inventoryListView.SelectedIndices.Clear();
             }
         }
 
-        private void createTradeWindow(ListViewItem selectedItem, bool isTrade)
+        private void createTradeWindow(string name, int price, bool isTrade)
         {
-            if (tradeWindow == null || tradeWindow.IsDisposed)
+            using (tradeWindow = new TradeWindow(ref game.player, name, price, isTrade))
             {
-                using (tradeWindow = new TradeWindow(ref game.player, selectedItem, isTrade))
+                tradeWindow.SetDesktopLocation(Cursor.Position.X, Cursor.Position.Y);
+
+                DialogResult result = tradeWindow.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    DialogResult result = tradeWindow.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        setState();
-                    }
+                    setState();
                 }
             }
+        }
+
+        // IS THIS REALLY WHAT WE WANT TO DO??
+        /// //////////////////////////////////
+        private void getItemInfo(ListViewItem lvi, out string name, out int price)
+        {
+            name = "ERROR NAME NOT FOUND";
+            price = -1;
+
+            foreach (Product p in game.products)
+            {
+                if (lvi.SubItems[0].Text == p.Name)
+                {
+                    name = p.Name;
+                    price = p.CurrentValue;
+                }
+            }           
         }
 
         // TODO: NEEDS ERROR CHECKING (IF STATEMENT)!
@@ -121,6 +146,34 @@ namespace Galaxy_Trade
                 return null;
             }
             return view.SelectedItems[0];
+        }
+
+        private void dropButton_Click(object sender, EventArgs e)
+        {
+            ListViewItem selectedItem = getSelectedItemFromListView(inventoryListView);
+
+            if (selectedItem != null)
+            {
+                string name = selectedItem.SubItems[0].Text;
+                string count = selectedItem.SubItems[1].Text;
+
+                game.player.removeItemsFromInventory(name, Int32.Parse(count));
+                eventTextBox.AppendText("You dropped " + count + " " + name + "!\n");
+                updateItemsInInventory();
+            }            
+        }
+
+        private void travelButton_Click(object sender, EventArgs e)
+        {
+            using (locationWindow = new LocationWindow())
+            {
+                DialogResult result = locationWindow.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    // Change the day here
+                }
+            }
         }
 
         private void setState()
@@ -145,3 +198,6 @@ namespace Galaxy_Trade
         }
     }
 }
+
+
+// MessageBox.Show("Text Here", "Something", MessageBoxButtons.OK, MessageBoxIcon.None);
