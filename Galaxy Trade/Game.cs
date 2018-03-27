@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * Game is a class to store the state of the game in Galaxy Trade. This class
+ * holds all the information necessary to manage Galaxy Trade and is to be used
+ * by GameForm.cs
+ */ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +14,44 @@ namespace Galaxy_Trade
     public class Game
     {
         public Player player;
-        public Product[] products;
-        public string[] locations;
-        public int day;
-        public int gameLength; ///< int Total length of the game in days
+        private Product[] products;
+        private string[] locations;
+        private string currentLocation;
+        private int day;
+        private int gameLength; ///< int Total length of the game in days
 
+        public Product[] Products
+        {
+            get => products;
+        }
+
+        public string[] Locations
+        {
+            get => locations;
+        }
+
+        public string CurrentLocation
+        {
+            get => currentLocation;
+            set => currentLocation = value;
+        }
+
+        public int Day
+        {
+            get => day;
+            set => day = value;
+        }
+
+        public int GameLength
+        {
+            get => gameLength;
+        }
+
+        /**
+         * Initial Game constructor.
+         * This sets up all the variables needed to run Galaxy Trade.
+         * This is to be used at the start of a new game.
+         */ 
         public Game()
         {
             player = new Player();
@@ -33,7 +71,8 @@ namespace Galaxy_Trade
                 new Product("Dark Matter", 15000, 30000)
             };
 
-            locations = new string[5] { "Mars", "Earth", "Venus", "Moon", "Sun" };
+            locations = new string[5] { "Earth", "Mars", "Venus", "Moon", "Sun" };
+            currentLocation = locations[0];
 
             day = 0;
             gameLength = 30;

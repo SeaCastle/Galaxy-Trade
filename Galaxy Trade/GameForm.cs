@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * GameForm is the Main Form for Galaxy Trade. This Form manages all other subforms
+ * needed to make the complete game. This Form includes key functionality such as
+ * advancing the day counter which progresses the game forward and setting the new location
+ * of the Player when the Player chooses to leave their current location.
+ */ 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,22 +18,16 @@ namespace Galaxy_Trade
 {
     public partial class GameForm : Form
     {
-        /*
-         * This code adds items into the itemsListView
-         * Saving this code for when we have our Item class ready so we can just
-         * change out a few things and everything will hopefully work
-         * 
-         * if (itemsListView.SelectedItems.Count == 0) return;
-         * Get item from listView == **something = itemsListView.SelectedItems[0].SubItems[0].Text
-         * 
-         * remove item from list view == **itemsListView.SelectedItems[0].Remove();
-         * 
-        */
 
         public Game game;
-        TradeWindow tradeWindow;
-        LocationWindow locationWindow;
+        public TradeWindow tradeWindow;
+        public LocationWindow locationWindow;
 
+        private string nextLocation;
+
+        /**
+         * Initial constructor. To be called on a new game.
+         */ 
         public GameForm()
         {
             InitializeComponent();
@@ -35,13 +35,13 @@ namespace Galaxy_Trade
             setState();
         }
 
-        /* 
+        /**
          * To be called once every new day, or at the start of a new game.
-         * Updates the current price of an item and adds the Product to the Items list view.
+         * Adds the Product to the Items list view.
          */
         public void updateItemsInListView()
         {
-            foreach (Product p in game.products)
+            foreach (Product p in game.Products)
             {
                 if (itemsListView.FindItemWithText(p.Name) == null)
                 {
@@ -52,6 +52,12 @@ namespace Galaxy_Trade
             }
         }
 
+        /**
+         * Checks the players inventory, and adds any item name and quantity found 
+         *  in the inventory to the inventoryListView();
+         *  If an item already in the listView has it's quantity set to 0 (i.e. the player
+         *  sold all of the items) then we remove it from the listView.
+         */
         public void updateItemsInInventory()
         {
             // SHOULD PROBABLY THINK OF SOMETHING BETTER HERE -----
@@ -62,7 +68,8 @@ namespace Galaxy_Trade
             {
                 //ListViewItem currentItem = null;
                 ListViewItem currentItem = inventoryListView.FindItemWithText(key);
-                // Make sure the item doesn't already exist in the list view.
+                // Make sure the item doesn't already exist in the listView, if 
+                // it doesn't, add it to the listView
                 if (currentItem == null)
                 {
                     ListViewItem item = new ListViewItem(key, key);
@@ -71,12 +78,18 @@ namespace Galaxy_Trade
                 }
                 else
                 {
+                    // if Inventory[key] <= 0 then remove from listView?
                     currentItem.SubItems[1].Text = game.player.Inventory[key].ToString();
                 }
             }
         }
 
         // CAN WE MESH THESE TWO (buyButton / sellButton) CLICK FUNCTIONS TOGETHER?
+        /**
+         * Checks to make sure only 1 item is selected in the itemsListView. If so, we get
+         * the item info (name, price) from getItemInfo() for the particular item and then 
+         * create a TradeWindow for buying with the relevent data.
+         */
         private void buyButton_Click(object sender, EventArgs e)
         {
             ListViewItem selectedItem = getSelectedItemFromListView(itemsListView); ///< ListViewItem Will be set to null if none/more than 1 item selected.
@@ -88,10 +101,17 @@ namespace Galaxy_Trade
 
                 getItemInfo(selectedItem, out name, out price);
                 createTradeWindow(name, price, true);
+
+                // Unselect the selected item once the TradeWindow returns.
                 inventoryListView.SelectedIndices.Clear();
             }
         }
 
+        /**
+         * Checks to make sure only 1 item is selected in the inventoryListView. If so, we get
+         * the item info (name, price) from getItemInfo() for the particular item and then
+         * create a TradeWindow for selling with the relevent data.
+         */ 
         private void sellButton_Click(object sender, EventArgs e)
         {
             ListViewItem selectedItem = getSelectedItemFromListView(inventoryListView);
@@ -103,15 +123,27 @@ namespace Galaxy_Trade
 
                 getItemInfo(selectedItem, out name, out price);
                 createTradeWindow(name, price, false);
+
+                // Unselect the selected item once the TradeWindow returns.
                 inventoryListView.SelectedIndices.Clear();
             }
         }
 
-        private void createTradeWindow(string name, int price, bool isTrade)
+        /**
+         * Creates either a Buy or Sell TradeWindow as a Dialogue Window.
+         * If the user Buys or Sells, update the GameForm to reflect the changes.
+         * @param name - the name of the item the player is trying to buy/sell.
+         * @param price - the price of the item the player is trying to buy/sell.
+         * @param isBuy - flag to notify the TradeWindow whether to be a buy or sell window.
+         */ 
+        private void createTradeWindow(string name, int price, bool isBuy)
         {
-            using (tradeWindow = new TradeWindow(ref game.player, name, price, isTrade))
+            using (tradeWindow = new TradeWindow(ref game.player, name, price, isBuy))
             {
-                tradeWindow.SetDesktopLocation(Cursor.Position.X, Cursor.Position.Y);
+                //Point location = buyButton.PointToScreen(Point.Empty);
+                Point location = buyButton.FindForm().PointToClient(buyButton.Parent.PointToScreen(buyButton.Location));
+                tradeWindow.Left = location.X;
+                tradeWindow.Top = location.Y;
 
                 DialogResult result = tradeWindow.ShowDialog();
                 if (result == DialogResult.OK)
@@ -123,12 +155,18 @@ namespace Galaxy_Trade
 
         // IS THIS REALLY WHAT WE WANT TO DO??
         /// //////////////////////////////////
+        /**
+         * Gets the name and price for the selected item in a particular ListView.
+         * @param lvi - The currently selected item in a list view.
+         * @param {Out} name - The name of the selected item in the ListView.
+         * @param {Out} price - The price of the selected item in the ListView.
+         */ 
         private void getItemInfo(ListViewItem lvi, out string name, out int price)
         {
             name = "ERROR NAME NOT FOUND";
             price = -1;
 
-            foreach (Product p in game.products)
+            foreach (Product p in game.Products)
             {
                 if (lvi.SubItems[0].Text == p.Name)
                 {
@@ -138,7 +176,12 @@ namespace Galaxy_Trade
             }           
         }
 
-        // TODO: NEEDS ERROR CHECKING (IF STATEMENT)!
+        /**
+         * Returns the selected item from a ListView. Will only accept 1 item being selected.
+         * @param view - The ListView you want the selected item from.
+         * @return The selected item from the list view. will return NULL if 0 or more than 1 items 
+         * are currently selected in the view.
+         */
         private ListViewItem getSelectedItemFromListView(ListView view)
         {
             if (view.SelectedItems.Count != 1)
@@ -148,6 +191,12 @@ namespace Galaxy_Trade
             return view.SelectedItems[0];
         }
 
+        /**
+         * Removes the currently selected item from the inventoryListView. This
+         * also completely removes the item from the Players Inventory. Updates the
+         * inventoryListView to reflect that the item has been removed. No money is
+         * gained by the player with this action.
+         */ 
         private void dropButton_Click(object sender, EventArgs e)
         {
             ListViewItem selectedItem = getSelectedItemFromListView(inventoryListView);
@@ -163,11 +212,18 @@ namespace Galaxy_Trade
             }            
         }
 
+        /**
+         * Creates a new LocationWindow as a Dialogue Window.
+         * This is used for the player to select a new location to travel to.
+         * Once the player has selected a new location (other than the current location)
+         * The day counter is advanced and the GameForm is remade to reflect the new location.
+         */ 
         private void travelButton_Click(object sender, EventArgs e)
         {
-            using (locationWindow = new LocationWindow())
+            using (locationWindow = new LocationWindow(game.Locations, game.CurrentLocation))
             {
                 DialogResult result = locationWindow.ShowDialog();
+                nextLocation = locationWindow.NextLocation;
 
                 if (result == DialogResult.OK)
                 {
@@ -176,10 +232,14 @@ namespace Galaxy_Trade
             }
         }
 
+        /**
+         * Sets the state for the GameForm.
+         * This is used to update the Labels and ListViews in one single call.
+         */ 
         private void setState()
         {
             // Update the text labels
-            dayCounterLabel.Text = "Day " + game.day.ToString() + "/" + game.gameLength.ToString();
+            dayCounterLabel.Text = "Day " + game.Day.ToString() + "/" + game.GameLength.ToString();
 
             debtValLabel.Text = game.player.Debt.ToString("C0");
             cashValLabel.Text = game.player.Money.ToString("C0");
@@ -191,9 +251,12 @@ namespace Galaxy_Trade
             updateItemsInInventory();
         }
 
+        /**
+         * Make sure the GameForm closes properly.
+         */ 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            tradeWindow.Close();
+            //tradeWindow.Close();
             Application.Exit();
         }
     }

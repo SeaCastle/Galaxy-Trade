@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * TradeWindow is a Form used for buying or selling in Galaxy Trade. TradeWindow can 
+ * either be a buy window or a sell window, but not both at the same time. This class
+ * is to be instantiated by GameForm.cs - The main Form for Galaxy Trade.
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,26 +18,6 @@ namespace Galaxy_Trade
 {
     public partial class TradeWindow : Form
     {
-        /*
-        public struct BoughtITem
-        {
-            public readonly string name;
-            public readonly int val;
-
-            public BoughtITem(string name, int val)
-            {
-                this.name = name;
-                this.val = val;
-            }
-        }
-
-        private BoughtITem boughtItem;
-        public BoughtITem BoughtItem
-        {
-            get { return boughtItem; }
-            set { boughtItem = value; }
-        }
-        */
 
         private string itemName;
         private int itemPrice;
@@ -40,6 +25,13 @@ namespace Galaxy_Trade
         private int total;
         private bool isBuying;
 
+        /**
+         * TradeWindow constructor
+         * @param p - Reference to the Player object stored in Game.player
+         * @param name - Name of the current item the Player is buying/selling.
+         * @param price - Price of the current item the Player is buying/selling.
+         * @param isBuy - Flag to know whether this is a buy or a sell window.
+         */ 
         public TradeWindow(ref Player p, string name, int price, bool isBuy)
         {
             InitializeComponent();
@@ -52,8 +44,14 @@ namespace Galaxy_Trade
             setState();    
         }
 
-        // Gets a reference to variables in GameForm.cs that we need to 
-        // set up the state of the buyWindow, and get the window ready to show.
+
+        /////// TODO: Setting the Max Items to buy / sell should probably have it's own function //////////////
+        /**
+         * Sets up the state of the TradeWindow as to whether it is a buy or sell window,
+         * and how many items the player can buy / sell (based on money, inventory slots, or quantity
+         * of the item the player is trying to sell). Also sets the data for the Labels used by the 
+         * Form. This function to be called by the TradeWindow() constructor.
+         */ 
         public void setState()
         {
             int maxItems = 100; ///< int The maximum number of items the player can sell / buy
@@ -87,8 +85,10 @@ namespace Galaxy_Trade
             totalAmountLabel.ForeColor = System.Drawing.Color.Black;
         }
 
-        // This function changes the totalAmountLabel to reflect
-        // the total cost of the items.
+        /**
+         * Updates the totalAmountLabel to show the player how much it will cost
+         * them to buy a specific quantity of the item.
+         */ 
         private void numericUpDown_ValueChanged(object sender, EventArgs e)
         {
             var color = System.Drawing.Color.Black;
@@ -100,55 +100,64 @@ namespace Galaxy_Trade
             totalAmountLabel.ForeColor = color;
         }
 
+        /**
+         * Checks to see whether the Player has bought anything, and if so, add the item and quantity
+         * to the Player's inventory and subtract the total cost of the transaction from the 
+         * Player's money.
+         */ 
         private void buyBtn_Click(object sender, EventArgs e)
         {
             // they didn't buy anything
             if (numericUpDown.Value == 0) 
             {
-                this.Hide();
+                this.DialogResult = DialogResult.Cancel;
             }
             else
             {
                 // We don't do any checking for whether or not the player has enough
-                // money because we automatically disable the buy button in the 
-                // numeric updown box if they don't have enough money to buy the item(s).
+                // money because the numericUpDown won't let them select more items than
+                // they can afford / carry.
                 player.addItemsToInventory(itemName, (int)numericUpDown.Value);
                 player.updateMoney(-total); ////////// I STILL DON'T LIKE THIS
+                // player.Money -= total?????????????
                 this.DialogResult = DialogResult.OK;
-                //this.Hide();
+            }
+        }
+        /**
+         * Checks to see whether the Player has sold anything, and if so, subtract the
+         * total sold from the quantity of the item in the Player's Inventory. After that
+         * add the the total gained from the transaction to the Player's money.
+         */ 
+        private void sellBtn_Click(object sender, EventArgs e)
+        {
+            if (numericUpDown.Value == 0)
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
+            else
+            {
+                player.removeItemsFromInventory(itemName, (int)numericUpDown.Value);
+                player.updateMoney(total);
+                this.DialogResult = DialogResult.OK;
             }
         }
 
-        private void sellBtn_Click(object sender, EventArgs e)
-        {
-            player.removeItemsFromInventory(itemName, (int)numericUpDown.Value);
-            player.updateMoney(total);
-            this.DialogResult = DialogResult.OK;
-        }
-
+        /**
+         * Function that lets the Parent Form know that the dialogue box was
+         * cancelled.
+         */ 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
 
+        /**
+         * Sets the value of the numericUpDown to the maximum amount so the Player can
+         * quickly buy / sell the maximum amount of a particular item.
+         */ 
         private void maxBtn_Click(object sender, EventArgs e)
         {
-            if (isBuying)
-            {
-                if (itemPrice * player.InventorySlots < player.Money)
-                {
-                    numericUpDown.Value = player.InventorySlots;
-                }
-                else
-                {
-                    numericUpDown.Value = player.Money / itemPrice;
-                }
-                
-            }
-            else
-            {
-                numericUpDown.Value = player.Inventory[itemName];
-            }
+            numericUpDown.Value = numericUpDown.Maximum;
         }
     }
 }

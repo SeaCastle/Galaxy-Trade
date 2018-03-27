@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * Player is used to hold all the variables and functionality to make a Player
+ * in Galaxy Trade. Key functionality includes updating the Player's inventory,
+ * and updating / storing the Player's total money, debt and health.
+ */ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,10 +54,13 @@ namespace Galaxy_Trade
             set { additionalInventory += value; }
         }
 
-        // Use this constructor if starting a new game
+        /**
+         * Initial Player constructor
+         * This is used to be used when starting a new game.
+         */ 
         public Player()
         {
-            money = 20000;
+            money = 50000;
             debt = 5500;
             health = 100;
             inventorySlots = STARTINGINVENTORY;
@@ -61,10 +69,10 @@ namespace Galaxy_Trade
         }
 
         /**
-         * Adds items to the players inventory if they do not already have that
+         * Adds items to the Player's Inventory if they do not already have that
          * particular item, otherwise it adds the new amount to the old amount.
-         * @param p - Product<key> we are updating, or adding to the players inventory
-         * @param amount - how many items we are adding to the inventory
+         * @param product - The key used for lookup in the Player's Inventory.
+         * @param amount - How many items we are adding to the Player's Inventory.
          */
         public void addItemsToInventory(string product, int amount)
         {
@@ -82,6 +90,13 @@ namespace Galaxy_Trade
         }
 
         // TODO: Error Checking
+        /**
+         * Removes the quantity of an item from the Player's Inventory. If the 
+         * quantity to be removed is equal to the total number of an item the Player
+         * has, we remove the full item (name, val) from the Player's inventory entirely.
+         * @param product - The key used for lookup in the Player's Inventory.
+         * @param amount - Quantity to remove from a particular item in the Player's Inventory.
+         */ 
         public void removeItemsFromInventory(string product, int amount)
         {
             int val = 0;
@@ -100,7 +115,7 @@ namespace Galaxy_Trade
         }
 
         /**
-         * Updates how many open inventory slots the player has
+         * Updates how many open inventory slots the Player has
          */ 
         public void updateInventorySlots()
         {
@@ -113,6 +128,7 @@ namespace Galaxy_Trade
             inventorySlots = (STARTINGINVENTORY + additionalInventory - totalItems);
         }
 
+        //// THIS PROBABLY NEEDS TO GO ////
         public void updateMoney(int val)
         {
             money += val;

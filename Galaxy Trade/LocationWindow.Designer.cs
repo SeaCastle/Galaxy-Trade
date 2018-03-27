@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.locationBtnOne = new System.Windows.Forms.Button();
-            this.locationBtnTwo = new System.Windows.Forms.Button();
-            this.locationBtnThree = new System.Windows.Forms.Button();
-            this.locationBtnFour = new System.Windows.Forms.Button();
-            this.locationBtnFive = new System.Windows.Forms.Button();
+            this.locationBtn1 = new System.Windows.Forms.Button();
+            this.locationBtn2 = new System.Windows.Forms.Button();
+            this.locationBtn3 = new System.Windows.Forms.Button();
+            this.locationBtn4 = new System.Windows.Forms.Button();
+            this.locationBtn5 = new System.Windows.Forms.Button();
             this.acceptBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -48,65 +48,70 @@
             this.label1.Text = "Where would you like to go?";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // locationBtnOne
+            // locationBtn1
             // 
-            this.locationBtnOne.BackColor = System.Drawing.SystemColors.Control;
-            this.locationBtnOne.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.locationBtnOne.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationBtnOne.Location = new System.Drawing.Point(12, 68);
-            this.locationBtnOne.Name = "locationBtnOne";
-            this.locationBtnOne.Size = new System.Drawing.Size(353, 43);
-            this.locationBtnOne.TabIndex = 1;
-            this.locationBtnOne.Text = "Location One";
-            this.locationBtnOne.UseVisualStyleBackColor = false;
+            this.locationBtn1.BackColor = System.Drawing.SystemColors.Control;
+            this.locationBtn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.locationBtn1.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationBtn1.Location = new System.Drawing.Point(12, 68);
+            this.locationBtn1.Name = "locationBtn1";
+            this.locationBtn1.Size = new System.Drawing.Size(353, 43);
+            this.locationBtn1.TabIndex = 1;
+            this.locationBtn1.Text = "Location One";
+            this.locationBtn1.UseVisualStyleBackColor = false;
+            this.locationBtn1.Click += new System.EventHandler(this.locationBtn_Click);
             // 
-            // locationBtnTwo
+            // locationBtn2
             // 
-            this.locationBtnTwo.BackColor = System.Drawing.SystemColors.Control;
-            this.locationBtnTwo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.locationBtnTwo.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationBtnTwo.Location = new System.Drawing.Point(12, 117);
-            this.locationBtnTwo.Name = "locationBtnTwo";
-            this.locationBtnTwo.Size = new System.Drawing.Size(353, 43);
-            this.locationBtnTwo.TabIndex = 2;
-            this.locationBtnTwo.Text = "Location Two";
-            this.locationBtnTwo.UseVisualStyleBackColor = false;
+            this.locationBtn2.BackColor = System.Drawing.SystemColors.Control;
+            this.locationBtn2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.locationBtn2.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationBtn2.Location = new System.Drawing.Point(12, 117);
+            this.locationBtn2.Name = "locationBtn2";
+            this.locationBtn2.Size = new System.Drawing.Size(353, 43);
+            this.locationBtn2.TabIndex = 2;
+            this.locationBtn2.Text = "Location Two";
+            this.locationBtn2.UseVisualStyleBackColor = false;
+            this.locationBtn2.Click += new System.EventHandler(this.locationBtn_Click);
             // 
-            // locationBtnThree
+            // locationBtn3
             // 
-            this.locationBtnThree.BackColor = System.Drawing.SystemColors.Control;
-            this.locationBtnThree.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.locationBtnThree.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationBtnThree.Location = new System.Drawing.Point(12, 166);
-            this.locationBtnThree.Name = "locationBtnThree";
-            this.locationBtnThree.Size = new System.Drawing.Size(353, 43);
-            this.locationBtnThree.TabIndex = 3;
-            this.locationBtnThree.Text = "Location Three";
-            this.locationBtnThree.UseVisualStyleBackColor = false;
+            this.locationBtn3.BackColor = System.Drawing.SystemColors.Control;
+            this.locationBtn3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.locationBtn3.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationBtn3.Location = new System.Drawing.Point(12, 166);
+            this.locationBtn3.Name = "locationBtn3";
+            this.locationBtn3.Size = new System.Drawing.Size(353, 43);
+            this.locationBtn3.TabIndex = 3;
+            this.locationBtn3.Text = "Location Three";
+            this.locationBtn3.UseVisualStyleBackColor = false;
+            this.locationBtn3.Click += new System.EventHandler(this.locationBtn_Click);
             // 
-            // locationBtnFour
+            // locationBtn4
             // 
-            this.locationBtnFour.BackColor = System.Drawing.SystemColors.Control;
-            this.locationBtnFour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.locationBtnFour.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationBtnFour.Location = new System.Drawing.Point(12, 215);
-            this.locationBtnFour.Name = "locationBtnFour";
-            this.locationBtnFour.Size = new System.Drawing.Size(353, 43);
-            this.locationBtnFour.TabIndex = 4;
-            this.locationBtnFour.Text = "Location Four";
-            this.locationBtnFour.UseVisualStyleBackColor = false;
+            this.locationBtn4.BackColor = System.Drawing.SystemColors.Control;
+            this.locationBtn4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.locationBtn4.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationBtn4.Location = new System.Drawing.Point(12, 215);
+            this.locationBtn4.Name = "locationBtn4";
+            this.locationBtn4.Size = new System.Drawing.Size(353, 43);
+            this.locationBtn4.TabIndex = 4;
+            this.locationBtn4.Text = "Location Four";
+            this.locationBtn4.UseVisualStyleBackColor = false;
+            this.locationBtn4.Click += new System.EventHandler(this.locationBtn_Click);
             // 
-            // locationBtnFive
+            // locationBtn5
             // 
-            this.locationBtnFive.BackColor = System.Drawing.SystemColors.Control;
-            this.locationBtnFive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.locationBtnFive.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.locationBtnFive.Location = new System.Drawing.Point(12, 264);
-            this.locationBtnFive.Name = "locationBtnFive";
-            this.locationBtnFive.Size = new System.Drawing.Size(353, 43);
-            this.locationBtnFive.TabIndex = 5;
-            this.locationBtnFive.Text = "Location Five";
-            this.locationBtnFive.UseVisualStyleBackColor = false;
+            this.locationBtn5.BackColor = System.Drawing.SystemColors.Control;
+            this.locationBtn5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.locationBtn5.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.locationBtn5.Location = new System.Drawing.Point(12, 264);
+            this.locationBtn5.Name = "locationBtn5";
+            this.locationBtn5.Size = new System.Drawing.Size(353, 43);
+            this.locationBtn5.TabIndex = 5;
+            this.locationBtn5.Text = "Location Five";
+            this.locationBtn5.UseVisualStyleBackColor = false;
+            this.locationBtn5.Click += new System.EventHandler(this.locationBtn_Click);
             // 
             // acceptBtn
             // 
@@ -119,6 +124,7 @@
             this.acceptBtn.TabIndex = 6;
             this.acceptBtn.Text = "Accept";
             this.acceptBtn.UseVisualStyleBackColor = false;
+            this.acceptBtn.Click += new System.EventHandler(this.acceptBtn_Click);
             // 
             // cancelBtn
             // 
@@ -131,6 +137,7 @@
             this.cancelBtn.TabIndex = 7;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = false;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // LocationWindow
             // 
@@ -139,11 +146,11 @@
             this.ClientSize = new System.Drawing.Size(377, 367);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.acceptBtn);
-            this.Controls.Add(this.locationBtnFive);
-            this.Controls.Add(this.locationBtnFour);
-            this.Controls.Add(this.locationBtnThree);
-            this.Controls.Add(this.locationBtnTwo);
-            this.Controls.Add(this.locationBtnOne);
+            this.Controls.Add(this.locationBtn5);
+            this.Controls.Add(this.locationBtn4);
+            this.Controls.Add(this.locationBtn3);
+            this.Controls.Add(this.locationBtn2);
+            this.Controls.Add(this.locationBtn1);
             this.Controls.Add(this.label1);
             this.Name = "LocationWindow";
             this.Text = "Where to?";
@@ -154,11 +161,11 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button locationBtnOne;
-        private System.Windows.Forms.Button locationBtnTwo;
-        private System.Windows.Forms.Button locationBtnThree;
-        private System.Windows.Forms.Button locationBtnFour;
-        private System.Windows.Forms.Button locationBtnFive;
+        private System.Windows.Forms.Button locationBtn1;
+        private System.Windows.Forms.Button locationBtn2;
+        private System.Windows.Forms.Button locationBtn3;
+        private System.Windows.Forms.Button locationBtn4;
+        private System.Windows.Forms.Button locationBtn5;
         private System.Windows.Forms.Button acceptBtn;
         private System.Windows.Forms.Button cancelBtn;
     }
