@@ -140,10 +140,11 @@ namespace Galaxy_Trade
         {
             using (tradeWindow = new TradeWindow(ref game.player, name, price, isBuy))
             {
-                //Point location = buyButton.PointToScreen(Point.Empty);
-                Point location = buyButton.FindForm().PointToClient(buyButton.Parent.PointToScreen(buyButton.Location));
-                tradeWindow.Left = location.X;
-                tradeWindow.Top = location.Y;
+                Point location = buyButton.PointToScreen(Point.Empty);
+                location.X -= 200;
+                location.Y -= 200;
+                // Point location = buyButton.FindForm().PointToClient(buyButton.Parent.PointToScreen(buyButton.Location));
+                tradeWindow.Pos = location;
 
                 DialogResult result = tradeWindow.ShowDialog();
                 if (result == DialogResult.OK)

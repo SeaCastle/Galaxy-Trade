@@ -18,12 +18,19 @@ namespace Galaxy_Trade
 {
     public partial class TradeWindow : Form
     {
-
+        
+        private Point pos;
         private string itemName;
         private int itemPrice;
         private Player player;
         private int total;
         private bool isBuying;
+
+        public Point Pos
+        {
+            get => pos;
+            set => pos = value;
+        }
 
         /**
          * TradeWindow constructor
@@ -31,7 +38,7 @@ namespace Galaxy_Trade
          * @param name - Name of the current item the Player is buying/selling.
          * @param price - Price of the current item the Player is buying/selling.
          * @param isBuy - Flag to know whether this is a buy or a sell window.
-         */ 
+         */
         public TradeWindow(ref Player p, string name, int price, bool isBuy)
         {
             InitializeComponent();
@@ -158,6 +165,11 @@ namespace Galaxy_Trade
         private void maxBtn_Click(object sender, EventArgs e)
         {
             numericUpDown.Value = numericUpDown.Maximum;
+        }
+
+        private void TradeWindow_Shown(object sender, EventArgs e)
+        {
+            this.Location = Pos;
         }
     }
 }
