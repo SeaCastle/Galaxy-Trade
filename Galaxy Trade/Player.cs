@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Galaxy_Trade
 {
-     public class Player
+    public class Player
     {
         private const int STARTINGINVENTORY = 100;
         private Dictionary<string, int> inventory; //<key, val>
@@ -23,35 +23,36 @@ namespace Galaxy_Trade
 
         public Dictionary<string, int> Inventory
         {
-            get { return inventory; }
+            get => inventory;
         }
 
         public int Money
         {
-            get { return money; }
+            get => money;
+            set => money = value;
         }
 
         public int Debt
         {
-            get { return debt; }
-            set { debt = value; }
+            get => debt;
+            set => debt = value;
         }
 
         public int Health
         {
-            get { return health; }
-            set { health = value; }
+            get => health;
+            set => health = value;
         }
 
         public int InventorySlots
         {
-            get { return inventorySlots; }
+            get => inventorySlots;
         }
 
         public int AdditionalInventory
         {
-            get { return additionalInventory; }
-            set { additionalInventory += value; }
+            get => additionalInventory;
+            set => additionalInventory += value;
         }
 
         /**
@@ -126,12 +127,6 @@ namespace Galaxy_Trade
             }
 
             inventorySlots = (STARTINGINVENTORY + additionalInventory - totalItems);
-        }
-
-        //// THIS PROBABLY NEEDS TO GO ////
-        public void updateMoney(int val)
-        {
-            money += val;
         }
     }
 }

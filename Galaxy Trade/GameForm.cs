@@ -24,6 +24,7 @@ namespace Galaxy_Trade
         public LocationWindow locationWindow;
 
         private string nextLocation;
+        private List<Product> currentProducts;
 
         /**
          * Initial constructor. To be called on a new game.
@@ -41,6 +42,8 @@ namespace Galaxy_Trade
          */
         public void updateItemsInListView()
         {
+            itemsListView.Items.Clear();
+
             foreach (Product p in game.Products)
             {
                 if (itemsListView.FindItemWithText(p.Name) == null)
@@ -229,8 +232,26 @@ namespace Galaxy_Trade
                 if (result == DialogResult.OK)
                 {
                     // Change the day here
+                    advanceDay();
                 }
             }
+        }
+
+        private void advanceDay()
+        {
+            if (game.Day >= game.GameLength)
+            {
+                // END THE GAME HERE
+            }
+
+            game.Day += 1;
+            game.CurrentLocation = nextLocation;
+
+            foreach (Product p in game.Products)
+            {
+                p.updateCurrentValue();
+            }
+            setState();
         }
 
         /**
@@ -246,6 +267,8 @@ namespace Galaxy_Trade
             cashValLabel.Text = game.player.Money.ToString("C0");
 
             spaceValLabel.Text = game.player.InventorySlots.ToString();
+
+            locationNameLabel.Text = game.CurrentLocation;
 
             // Update the list views
             updateItemsInListView();

@@ -162,6 +162,7 @@
             this.Controls.Add(this.cancelBtn);
             this.Name = "TradeWindow";
             this.Text = "BuyWindow";
+            this.Shown += new System.EventHandler(this.TradeWindow_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.ResumeLayout(false);
 

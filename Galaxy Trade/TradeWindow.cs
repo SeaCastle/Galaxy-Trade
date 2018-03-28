@@ -125,8 +125,7 @@ namespace Galaxy_Trade
                 // money because the numericUpDown won't let them select more items than
                 // they can afford / carry.
                 player.addItemsToInventory(itemName, (int)numericUpDown.Value);
-                player.updateMoney(-total); ////////// I STILL DON'T LIKE THIS
-                // player.Money -= total?????????????
+                player.Money -= total;
                 this.DialogResult = DialogResult.OK;
             }
         }
@@ -144,7 +143,7 @@ namespace Galaxy_Trade
             else
             {
                 player.removeItemsFromInventory(itemName, (int)numericUpDown.Value);
-                player.updateMoney(total);
+                player.Money += total;
                 this.DialogResult = DialogResult.OK;
             }
         }
