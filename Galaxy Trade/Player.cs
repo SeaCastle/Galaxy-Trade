@@ -18,6 +18,7 @@ namespace Galaxy_Trade
         private int money;
         private int debt;
         private int health;
+        private bool hasAdditionalInventory;
         private int additionalInventory;
         private int inventorySlots;
 
@@ -44,15 +45,17 @@ namespace Galaxy_Trade
             set => health = value;
         }
 
-        public int InventorySlots
-        {
-            get => inventorySlots;
-        }
+        public bool HasAdditionalInventory { get; set; }
 
         public int AdditionalInventory
         {
             get => additionalInventory;
             set => additionalInventory += value;
+        }
+
+        public int InventorySlots
+        {
+            get => inventorySlots;
         }
 
         /**
@@ -118,7 +121,7 @@ namespace Galaxy_Trade
         /**
          * Updates how many open inventory slots the Player has
          */ 
-        public void updateInventorySlots()
+        private void updateInventorySlots()
         {
             int totalItems = 0;
             foreach (string key in inventory.Keys)

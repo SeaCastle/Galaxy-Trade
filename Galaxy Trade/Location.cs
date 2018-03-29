@@ -31,9 +31,6 @@ namespace Galaxy_Trade
             updateCurrentProducts();
         }
 
-        // There must be a way to stop rerolling tons and tons of times. Like if I have
-        // 11 items I don't want to reroll until I only have 1 left that I don't have.
-        // Maybe do a reverse roll?
         public void updateCurrentProducts()
         {
             Random rnd = new Random();
@@ -41,7 +38,7 @@ namespace Galaxy_Trade
 
             foreach (Product p in allProducts)
             {
-                p.updateCurrentValue();
+                p.updateCurrentValue(1.0);
             }
 
             // No need to reroll over and over again to try and fill a list
@@ -57,13 +54,7 @@ namespace Galaxy_Trade
             {
                 int k = rnd.Next(currentProducts.Count);
 
-                Product p = currentProducts.Find(x => x.Name == allProducts[k].Name);
-                while (p == null)
-                {
-                    k = rnd.Next(allProducts.Length);
-                    p = currentProducts.Find(x => x.Name == allProducts[k].Name);
-                }
-                currentProducts.Remove(p);
+                currentProducts.RemoveAt(k);
             }                  
         }
 

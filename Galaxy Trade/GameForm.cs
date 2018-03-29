@@ -24,7 +24,6 @@ namespace Galaxy_Trade
         public LocationWindow locationWindow;
 
         private string nextLocation;
-        private List<Product> currentProducts;
 
         /**
          * Initial constructor. To be called on a new game.
@@ -54,14 +53,15 @@ namespace Galaxy_Trade
                     itemsListView.Items.Add(item);
                 }
             }
-            eventTextBox.AppendText(game.CurrentLocation.CurrentProducts.Count.ToString());
+            setBackgroundColorInListView(itemsListView);
+            //eventTextBox.AppendText(game.CurrentLocation.CurrentProducts.Count.ToString());
         }
 
         /**
          * Checks the players inventory, and adds any item name and quantity found 
-         *  in the inventory to the inventoryListView();
-         *  If an item already in the listView has it's quantity set to 0 (i.e. the player
-         *  sold all of the items) then we remove it from the listView.
+         * in the inventory to the inventoryListView();
+         * If an item already in the listView has it's quantity set to 0 (i.e. the player
+         * sold all of the items) then we remove it from the listView.
          */
         public void updateItemsInInventory()
         {
@@ -71,7 +71,6 @@ namespace Galaxy_Trade
 
             foreach (string key in game.player.Inventory.Keys)
             {
-                //ListViewItem currentItem = null;
                 ListViewItem currentItem = inventoryListView.FindItemWithText(key);
                 // Make sure the item doesn't already exist in the listView, if 
                 // it doesn't, add it to the listView
@@ -87,6 +86,9 @@ namespace Galaxy_Trade
                     currentItem.SubItems[1].Text = game.player.Inventory[key].ToString();
                 }
             }
+
+            setBackgroundColorInListView(inventoryListView);
+            //eventTextBox.AppendText(game.player.Inventory.Count.ToString());
         }
 
         // CAN WE MESH THESE TWO (buyButton / sellButton) CLICK FUNCTIONS TOGETHER?
@@ -179,6 +181,19 @@ namespace Galaxy_Trade
                     price = p.CurrentValue;
                 }
             }           
+        }
+
+        /**
+         * Sets an alternating background color for items in a certain ListView.
+         * Pattern is - even: light gray, odd: white
+         * @param view - The ListView you want to apply the background pattern to.
+         */ 
+        private void setBackgroundColorInListView(ListView view)
+        {
+            foreach (ListViewItem item in view.Items)
+            {
+                item.BackColor = item.Index % 2 == 0 ? Color.LightGray : Color.WhiteSmoke;
+            }
         }
 
         /**
