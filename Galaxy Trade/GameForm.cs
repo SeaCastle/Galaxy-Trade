@@ -44,7 +44,8 @@ namespace Galaxy_Trade
         {
             itemsListView.Items.Clear();
 
-            foreach (Product p in game.Products)
+            //foreach (Product p in game.Products)
+            foreach (Product p in game.CurrentLocation.CurrentProducts)
             {
                 if (itemsListView.FindItemWithText(p.Name) == null)
                 {
@@ -53,6 +54,7 @@ namespace Galaxy_Trade
                     itemsListView.Items.Add(item);
                 }
             }
+            eventTextBox.AppendText(game.CurrentLocation.CurrentProducts.Count.ToString());
         }
 
         /**
@@ -146,7 +148,6 @@ namespace Galaxy_Trade
                 Point location = buyButton.PointToScreen(Point.Empty);
                 location.X -= 200;
                 location.Y -= 200;
-                // Point location = buyButton.FindForm().PointToClient(buyButton.Parent.PointToScreen(buyButton.Location));
                 tradeWindow.Pos = location;
 
                 DialogResult result = tradeWindow.ShowDialog();
@@ -224,7 +225,7 @@ namespace Galaxy_Trade
          */ 
         private void travelButton_Click(object sender, EventArgs e)
         {
-            using (locationWindow = new LocationWindow(game.Locations, game.CurrentLocation))
+            using (locationWindow = new LocationWindow(game.Locations, game.CurrentLocation.Name))
             {
                 DialogResult result = locationWindow.ShowDialog();
                 nextLocation = locationWindow.NextLocation;
@@ -245,12 +246,13 @@ namespace Galaxy_Trade
             }
 
             game.Day += 1;
-            game.CurrentLocation = nextLocation;
 
-            foreach (Product p in game.Products)
-            {
-                p.updateCurrentValue();
-            }
+            game.player.Debt += (int)(game.player.Debt * 0.10);
+
+            // Setup for the next location
+            game.CurrentLocation.Name = nextLocation;
+            game.CurrentLocation.updateCurrentProducts();
+
             setState();
         }
 
@@ -268,7 +270,7 @@ namespace Galaxy_Trade
 
             spaceValLabel.Text = game.player.InventorySlots.ToString();
 
-            locationNameLabel.Text = game.CurrentLocation;
+            locationNameLabel.Text = game.CurrentLocation.Name;
 
             // Update the list views
             updateItemsInListView();

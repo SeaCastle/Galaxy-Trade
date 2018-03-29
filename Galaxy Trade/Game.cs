@@ -14,65 +14,16 @@ namespace Galaxy_Trade
     public class Game
     {
         public Player player;
-        public Location currenLocation;
 
+        private Location currentLocation;
         private Product[] products;
         private string[] locations;
         private int day;
         private int gameLength; ///< int Total length of the game in days
-        
-        public struct Location
+
+        public Location CurrentLocation
         {
-            public string name;
-            public List<Product> currentProducts;
-
-            private Product[] totalProducts;
-
-            public Location(string name, Product[] p)
-            {
-                this.name = name;
-                totalProducts = p;
-
-                currentProducts = setCurrentProducts();
-            }
-
-            public List<Product> setCurrentProducts()
-            {
-                int total = 0;
-
-                Random rnd = new Random();
-                int num = rnd.Next(101);
-
-                if (num == 1)
-                {
-                    total = 6;
-                }
-                else if (num <= 4 && num > 1)
-                {
-                    total = 8;
-                }
-                else if (num > 4 && num <= 17)
-                {
-                    total = 9;
-                }
-                else if (num > 17 && num <= 48)
-                {
-                    total = 10;
-                }
-                else if (num > 48 && num <= 80)
-                {
-                    total = 11;
-                }
-                else if (num > 80)
-                {
-                    total = 12;
-                }
-
-                for (int i = 0; i < total; i++)
-                {
-
-                }
-            }
+            get => currentLocation;
         }
 
         public Product[] Products
@@ -121,7 +72,7 @@ namespace Galaxy_Trade
             };
 
             locations = new string[5] { "Earth", "Mars", "Venus", "Moon", "Sun" };
-            currentLocation = locations[0];
+            currentLocation = new Location(locations[0], products);
 
             day = 1;
             gameLength = 30;
