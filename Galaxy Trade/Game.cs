@@ -8,12 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Galaxy_Trade.Events;
 
 namespace Galaxy_Trade
 {
     public class Game
     {
         public Player player;
+        public PlayerEvents playerEvents;
+        public ItemEvents itemEvents;
 
         private Location currentLocation;
         private Product[] products;
@@ -71,11 +74,48 @@ namespace Galaxy_Trade
                 new Product("Dark Matter", 15000, 30000)
             };
 
+            playerEvents = new PlayerEvents(7, ref player, ref products);
+            itemEvents = new ItemEvents(35, ref products);
+
             locations = new string[5] { "Earth", "Mars", "Venus", "Moon", "Sun" };
-            currentLocation = new Location(locations[0], products);
+            currentLocation = new Location(locations[0], ref products);
 
             day = 1;
             gameLength = 30;
         }
-    }
+
+        public void update(string nextLoc)
+        {
+            playerEvents.clearMessage();
+            itemEvents.clearMessage();
+
+            day += 1;
+
+            if (player.Debt > 0)
+            {
+                player.Debt += (int)(player.Debt * 0.1);
+            }
+
+            foreach (Product p in products)
+            {
+                p.updateCurrentValue();
+            }
+
+            // Run Player Events
+            if (playerEvents.isActive())
+            {
+                playerEvents.chooseEvent();
+            }
+
+            // run Item Events
+            if (itemEvents.isActive())
+            {
+                itemEvents.chooseEvent();
+            }                        
+
+            // Update location
+            currentLocation.Name = nextLoc;
+            currentLocation.updateCurrentProducts();
+        }
+    }    
 }

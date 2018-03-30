@@ -54,7 +54,7 @@ namespace Galaxy_Trade
             name = pName;
             minValue = minVal;
             maxValue = maxVal;
-            updateCurrentValue(1);
+            updateCurrentValue();
         }
 
         /**
@@ -63,9 +63,14 @@ namespace Galaxy_Trade
          * @param multiplier - Used to multiply the current value by a certain amount.
          * This is used if an event effects the current price.
          */ 
-        public void updateCurrentValue(double multiplier)
+        public void updateCurrentValue()
         {
-            currentValue = (int)(rnd.Next(minValue, (maxValue + 1)) * multiplier);
+            currentValue = rnd.Next(minValue, (maxValue + 1));
+        }
+
+        public void multiplyCurrentValue(double multiplier)
+        {
+            currentValue = (int)(currentValue * multiplier);
         }
     }
 }

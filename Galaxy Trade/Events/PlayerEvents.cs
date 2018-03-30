@@ -6,23 +6,28 @@ using System.Threading.Tasks;
 
 namespace Galaxy_Trade.Events
 {
-    class PlayerEvents : IEvent
+    public class PlayerEvents : IEvent
     {
         private Random rnd;
         private Player player;
+        private Product[] products;
         private int eventChance;
         private List<string> message;
 
-        public List<string> Message { get; }
+        public List<string> Message { get => message; }
 
         /**
          * Initial constructor
          * @param chance - The chance that a PlayerEvent has to trigger.
+         * @param p - Reference to the Player object for access to their health, money, inventory.
+         * @param prod - Reference to the main Product array for item names.
          */ 
-        public PlayerEvents(int chance, ref Player p)
+        public PlayerEvents(int chance, ref Player p, ref Product[] prod)
         {
             rnd = new Random();
+            message = new List<string>();
             player = p;
+            products = prod;
             eventChance = chance;
         }
 
@@ -31,7 +36,10 @@ namespace Galaxy_Trade.Events
          */ 
         public void clearMessage()
         {
-            message.Clear();
+            if (message.Count > 0)
+            {
+                message.Clear();
+            }
         }
 
         /**
@@ -52,9 +60,9 @@ namespace Galaxy_Trade.Events
         {            
             int cost = rnd.Next(200,351);
 
-            string m = String.Format("An Alien ship hails you on your way. For a small fee of {0} " +
-                "their expert engineers have agreed to increase your storage capacity by 10!", cost);
-            Message.Add(m);
+            string m = String.Format("**An Alien ship hails you on your way. For a small fee of ${0} " +
+                "their expert engineers have agreed to increase your storage capacity by 10!\n", cost);
+            message.Add(m);
         }
 
         /**
@@ -63,19 +71,20 @@ namespace Galaxy_Trade.Events
          * they have space. If not, their remaining inventory is filled and the excess amount 
          * of the found item is discarded. If inventory is full, all found items are discarded.
          */
-        private void findItems(Product[] p, int freeInvSlots)
+        private void findItems()
         {
+            int freeInvSlots = player.InventorySlots;
             int itemQuantity = rnd.Next(1, 14);
-            int idx = rnd.Next(p.Length);
-            Product prod = p[idx];
+            int idx = rnd.Next(products.Length);
+            Product prod = products[idx];
 
-            string m = String.Format("Among your travels, you come across a tragic scene - A ship " +
-                "had a head on collision with an asteroid! There were no survivors... But hey, they left" +
-                "some free stuff for you!\n You recieved: {0} {1}(s)!", itemQuantity, prod.Name);
+            string m = String.Format("**Among your travels, you come across a tragic scene - A ship " +
+                "had a head on collision with an asteroid! There were no survivors... But hey, they left " +
+                "some free stuff for you!\nYou recieved: {0} {1}(s)!\n", itemQuantity, prod.Name);
 
             if (freeInvSlots == 0)
             {
-                m += "\nUnfortunately, you have no extra storage space. All items were left behind. Feelsbadman";
+                m += "Unfortunately, you have no extra storage space. All items were left behind. Feelsbadman\n";
             }
             // The Player doesn't have enough inventory slots to fit all the items. Fill their
             // inventory to the max and leave the rest behind.
@@ -83,14 +92,14 @@ namespace Galaxy_Trade.Events
             {
                 player.addItemsToInventory(prod.Name, freeInvSlots);
                 m += String.Format("\nUh-Oh, you only have {0} slots left. You fill your ship" +
-                    " to the brim and leave {1} {2}(s) behind.", freeInvSlots, (itemQuantity-freeInvSlots), prod.Name);
+                    " to the brim and leave {1} {2}(s) behind.\n", freeInvSlots, (itemQuantity-freeInvSlots), prod.Name);
             }
             else
             {
                 player.addItemsToInventory(prod.Name, itemQuantity);
             }
 
-            Message.Add(m);
+            message.Add(m);
         }
 
         /**
@@ -104,6 +113,9 @@ namespace Galaxy_Trade.Events
             // Anywhere between 3% - 10% of the Players total money, rounded up/down.
             int moneyTaken = rnd.Next((int)(player.Money * 0.03), (int)(player.Money * 0.1));
             int healthLost = rnd.Next(5,18);
+            string m = String.Format("**While travelling through space, you encounter a huge ship of space pirates! " +
+                "Not wanting to start any trouble, you comply with their demands. They take ${0} and hurt you for {1} " +
+                "for good measure - they are pirates after all.\n", moneyTaken, healthLost);
 
             int itemsInInv = player.Inventory.Count;
             // Calculate what item and how much of that item was lost.
@@ -117,10 +129,36 @@ namespace Galaxy_Trade.Events
                 int totalLost = rnd.Next((int)(itemQuantity * 0.1), (int)(itemQuantity * 0.4));
 
                 player.removeItemsFromInventory(itemName, totalLost);
+
+                m += String.Format("Before leaving the pirates take a look at your booty... er your items. " +
+                    "They take {0} {1}!\n", totalLost, itemName);
             }
 
             player.Money -= moneyTaken;
             player.Health -= healthLost;
+
+            message.Add(m);
+        }
+
+        /**
+         * Randomly chooses which event to run.
+         */ 
+        public void chooseEvent()
+        {
+            int i = rnd.Next(100) + 1;
+
+            if (i <= 30)
+            {
+                findItems();
+            }
+            else if (i <= 48)
+            {
+                gotMugged();
+            }
+            else
+            {
+                buyStorage();
+            }
         }
     }
 }

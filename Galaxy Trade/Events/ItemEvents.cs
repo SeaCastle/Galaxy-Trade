@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace Galaxy_Trade.Events
 {
-    class ItemEvents : IEvent
+    public class ItemEvents : IEvent
     {
         Random rnd;
         private int eventChance;
         private List<string> message;
-        private Product[] allProducts;                
+        private Product[] products;                
 
-        public List<string> Message { get; }
+        public List<string> Message { get => message; }
 
 
-        public ItemEvents(int chance, Product[] p)
+        public ItemEvents(int chance, ref Product[] p)
         {
             rnd = new Random();
+            message = new List<string>();
             eventChance = chance;
-            allProducts = p;
+            products = p;
         }
 
         /**
@@ -34,23 +35,68 @@ namespace Galaxy_Trade.Events
             return (i <= eventChance);
         }
 
+        /**
+         * Clears the message that was stored from the previous event.
+         */
         public void clearMessage()
         {
-            message.Clear();
+            if (message.Count > 0)
+            {
+                message.Clear();
+            }
         }
 
+        /**
+         * Randomly chooses which event to run.
+         */
+        public void chooseEvent()
+        {
+            int i = rnd.Next(100) + 1;
+
+            if (i <= 50)
+            {
+                highDemand();
+            }
+            else
+            {
+                lowDemand();
+            }
+        }
+
+        /**
+         * Randomly chooses 1 or 2 items and multiplies their value by 3.37 - 5.         
+         */ 
         private void highDemand()
         {
-            double multiplier = (rnd.NextDouble() * (5.0 - 3.37) + 1.74);
+            string[] s = new string[2]
+            {
+                "**Companies are buying {0} at rediculous prices!\n",
+                "**{0} is in short supply. Prices are sky rocketing!\n"
+            };
+            
+            double multiplier = (rnd.NextDouble() * (5.0 - 4.0) + 4.0);
             int numProducts = ((rnd.Next(100) + 1) >= 90) ? 2 : 1;
 
             for (int i = 0; i < numProducts; i++)
             {
-                int k = rnd.Next(allProducts.Length);
-                allProducts[k].updateCurrentValue(multiplier);
-            }
+                int k = rnd.Next(products.Length);
+                products[k].multiplyCurrentValue(multiplier);
 
-            string m = String.Format("");
+                string m = k % 2 == 0 ? String.Format(s[0], products[k].Name) : String.Format(s[1], products[k].Name);
+                message.Add(m);
+            }            
+        }
+
+        /**
+         * Randomly chooses an item and multiplies it's value by 0.33.
+         */ 
+        private void lowDemand()
+        {                    
+            int i = rnd.Next(products.Length);
+            products[i].multiplyCurrentValue(0.33);
+
+            string m = String.Format("**The market is flooded with {0}. Prices are plummeting!\n", products[i].Name);
+            message.Add(m);
         }
     }
 }

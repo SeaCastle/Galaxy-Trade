@@ -23,7 +23,7 @@ namespace Galaxy_Trade
             get => currentProducts;
         }
 
-        public Location(string name, Product[] p)
+        public Location(string name, ref Product[] p)
         {
             this.name = name;
             allProducts = p;
@@ -35,19 +35,15 @@ namespace Galaxy_Trade
         {
             Random rnd = new Random();
             int totalProducts = getTotalProducts();
-
-            foreach (Product p in allProducts)
+           
+            if (currentProducts.Count > 0)
             {
-                p.updateCurrentValue(1.0);
+                currentProducts.Clear();
             }
 
             // No need to reroll over and over again to try and fill a list
             // with every unique item except for only a few. Instead, we start
             // with a full list and remove only a few items.
-            if (currentProducts.Count > 0)
-            {
-                currentProducts.Clear();
-            }
             currentProducts.AddRange(allProducts);
 
             for (int i = 0; i < allProducts.Length - totalProducts; i++)

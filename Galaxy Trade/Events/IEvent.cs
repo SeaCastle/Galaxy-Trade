@@ -12,6 +12,7 @@ namespace Galaxy_Trade
 
         bool isActive();
         void clearMessage();
+        void chooseEvent();
     }
 
     //new Random((int) DateTime.Now.Ticks)

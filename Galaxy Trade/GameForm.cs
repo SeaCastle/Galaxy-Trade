@@ -248,26 +248,33 @@ namespace Galaxy_Trade
                 if (result == DialogResult.OK)
                 {
                     // Change the day here
-                    advanceDay();
+                    changeLocation();
                 }
             }
         }
 
-        private void advanceDay()
-        {
-            if (game.Day >= game.GameLength)
+        private void changeLocation()
+        {            
+            game.update(nextLocation);
+
+            eventTextBox.Clear();
+
+            if (game.playerEvents.Message.Count > 0)
             {
-                // END THE GAME HERE
+                foreach (string s in game.playerEvents.Message)
+                {
+                    eventTextBox.AppendText(s);
+                }
             }
 
-            game.Day += 1;
-
-            game.player.Debt += (int)(game.player.Debt * 0.10);
-
-            // Setup for the next location
-            game.CurrentLocation.Name = nextLocation;
-            game.CurrentLocation.updateCurrentProducts();
-
+            if (game.itemEvents.Message.Count > 0)
+            {
+                foreach (string s in game.itemEvents.Message)
+                {
+                    eventTextBox.AppendText(s);
+                }
+            }
+            
             setState();
         }
 
@@ -286,6 +293,8 @@ namespace Galaxy_Trade
             spaceValLabel.Text = game.player.InventorySlots.ToString();
 
             locationNameLabel.Text = game.CurrentLocation.Name;
+
+            healthValLabel.Text = game.player.Health.ToString();
 
             // Update the list views
             updateItemsInListView();
