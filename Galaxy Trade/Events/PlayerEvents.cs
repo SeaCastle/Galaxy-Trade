@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Galaxy_Trade.Events
 {
@@ -62,7 +63,14 @@ namespace Galaxy_Trade.Events
 
             string m = String.Format("**An Alien ship hails you on your way. For a small fee of ${0} " +
                 "their expert engineers have agreed to increase your storage capacity by 10!\n", cost);
-            message.Add(m);
+
+            if (MessageBox.Show(m, "Event!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                player.AdditionalInventory += 10;
+                player.updateInventorySlots();
+                player.Money -= cost;
+            }
+            //message.Add(m);
         }
 
         /**
@@ -106,7 +114,7 @@ namespace Galaxy_Trade.Events
          * Player event for the player getting mugged. This event randomly takes 3 - 10%
          * of the Player's total money and 5 - 17 health from the Player. Additionally, if
          * the Player has any items in their inventory, one item is selected at random and
-         * 10% - 40% (randomly chosen, rounded) of that items quantity is discarded. 
+         * 10% - 40% (randomly chosen, rounded up) of that items quantity is discarded. 
          */ 
         private void gotMugged()
         {
@@ -126,7 +134,8 @@ namespace Galaxy_Trade.Events
                 string itemName = player.Inventory.ElementAt(idx).Key;
                 int itemQuantity = player.Inventory.ElementAt(idx).Value;
 
-                int totalLost = rnd.Next((int)(itemQuantity * 0.1), (int)(itemQuantity * 0.4));
+                double i = rnd.Next((int)(itemQuantity * 0.1), (int)(itemQuantity * 0.4));
+                int totalLost = (int)Math.Ceiling(i);
 
                 player.removeItemsFromInventory(itemName, totalLost);
 

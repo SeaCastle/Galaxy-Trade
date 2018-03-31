@@ -50,7 +50,7 @@ namespace Galaxy_Trade
         public int AdditionalInventory
         {
             get => additionalInventory;
-            set => additionalInventory += value;
+            set => additionalInventory = value;
         }
 
         public int InventorySlots
@@ -121,7 +121,7 @@ namespace Galaxy_Trade
         /**
          * Updates how many open inventory slots the Player has
          */ 
-        private void updateInventorySlots()
+        public void updateInventorySlots()
         {
             int totalItems = 0;
             foreach (string key in inventory.Keys)

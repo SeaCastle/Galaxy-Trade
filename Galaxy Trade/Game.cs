@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Galaxy_Trade.Events;
 
 namespace Galaxy_Trade
@@ -85,37 +86,60 @@ namespace Galaxy_Trade
         }
 
         public void update(string nextLoc)
+        {            
+            if (!gameOver())
+            {
+                day += 1;
+
+                playerEvents.clearMessage();
+                itemEvents.clearMessage();
+
+                if (player.Debt > 0)
+                {
+                    player.Debt += (int)(player.Debt * 0.1);
+                }
+
+                foreach (Product p in products)
+                {
+                    p.updateCurrentValue();
+                }
+
+                // Run Player Events
+                if (playerEvents.isActive())
+                {
+                    playerEvents.chooseEvent();
+                }
+
+                // run Item Events
+                if (itemEvents.isActive())
+                {
+                    itemEvents.chooseEvent();
+                }
+
+                // Update location
+                currentLocation.Name = nextLoc;
+                currentLocation.updateCurrentProducts();
+            }
+            else
+            {
+                int score = player.Money - (player.Debt * 2);
+
+                string m = String.Format("Congratulations! You made it to the end and have seen that I don't " +
+                    "have a proper screen for the game over :( \nAnyway, your score was: {0:n0}! Is that all you" +
+                    " got? Sigh.", score);
+
+                MessageBox.Show(m, "Game Over!", MessageBoxButtons.OK);
+                Application.Exit();
+            }            
+        }
+
+        /**
+         * Checks whether the game is over or not.
+         * @return - False if we haven't hit the game length yet, True otherwise.
+         */ 
+        private bool gameOver()
         {
-            playerEvents.clearMessage();
-            itemEvents.clearMessage();
-
-            day += 1;
-
-            if (player.Debt > 0)
-            {
-                player.Debt += (int)(player.Debt * 0.1);
-            }
-
-            foreach (Product p in products)
-            {
-                p.updateCurrentValue();
-            }
-
-            // Run Player Events
-            if (playerEvents.isActive())
-            {
-                playerEvents.chooseEvent();
-            }
-
-            // run Item Events
-            if (itemEvents.isActive())
-            {
-                itemEvents.chooseEvent();
-            }                        
-
-            // Update location
-            currentLocation.Name = nextLoc;
-            currentLocation.updateCurrentProducts();
+            return (day >= gameLength);
         }
     }    
 }
