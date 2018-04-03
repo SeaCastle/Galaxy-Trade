@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * Location.cs is a class that holds all the information and functionality for a Location in
+ * Galaxy Trade. This includes holding all the current Products for that location and the locations
+ * name. Due to the nature of the list of products changing so frequently, it makes more
+ * sense to only have 1 Location that is the players current location and just updating this one
+ * object.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +30,11 @@ namespace Galaxy_Trade
             get => currentProducts;
         }
 
+        /**
+         * Initial constructor.
+         * @param name - The name of the current Location
+         * @param p - A reference to the master set of Products
+         */ 
         public Location(string name, ref Product[] p)
         {
             this.name = name;
@@ -31,6 +43,10 @@ namespace Galaxy_Trade
             updateCurrentProducts();
         }
 
+        /**
+         * Decides how many Products the current location will have and then generates
+         * a List of unique Products based on that number.
+         */ 
         public void updateCurrentProducts()
         {
             Random rnd = new Random();
@@ -54,6 +70,11 @@ namespace Galaxy_Trade
             }                  
         }
 
+        /**
+         * Decides how many Products (weighted) there will be for the day.
+         * Currently there can be 6, 8, 9, 10, 11, or 12 Products at a current
+         * location in a given day.
+         */ 
         private int getTotalProducts()
         {
             int totalProducts = 0;
@@ -91,24 +112,3 @@ namespace Galaxy_Trade
         }
     }
 }
-
-
-
-/*
-            else
-            {
-                for (int i = 0; i < totalProducts; i++)
-                {
-                    int k = rnd.Next(allProducts.Length);
-
-                    // Search the List to see if we already have that product in the currentProducts.
-                    Product p = currentProducts.Find(x => x.Name == allProducts[k].Name);
-                    while (p != null)
-                    {
-                        k = rnd.Next(allProducts.Length);
-                        p = currentProducts.Find(x => x.Name == allProducts[k].Name);
-                    }
-                    currentProducts.Add(allProducts[k]);
-                }
-            }
-            */

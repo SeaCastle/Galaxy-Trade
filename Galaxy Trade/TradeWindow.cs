@@ -33,11 +33,11 @@ namespace Galaxy_Trade
         }
 
         /**
-         * TradeWindow constructor
+         * Initial constructor
          * @param p - Reference to the Player object stored in Game.player
          * @param name - Name of the current item the Player is buying/selling.
          * @param price - Price of the current item the Player is buying/selling.
-         * @param isBuy - Flag to know whether this is a buy or a sell window.
+         * @param isBuy - Flag to know whether this should be a buy or a sell window.
          */
         public TradeWindow(ref Player p, string name, int price, bool isBuy)
         {

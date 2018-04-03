@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * PlayerEvents.cs is a class containing all the functionality to run Player specific events in
+ * Galaxy Trade. These events are specific to the Player because each event effects the Player
+ * in some way - i.e. updating their inventory, inventory size, health or money.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,12 +69,22 @@ namespace Galaxy_Trade.Events
             string m = String.Format("**An Alien ship hails you on your way. For a small fee of ${0} " +
                 "their expert engineers have agreed to increase your storage capacity by 10!\n", cost);
 
-            if (MessageBox.Show(m, "Event!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (player.Money < cost)
             {
-                player.AdditionalInventory += 10;
-                player.updateInventorySlots();
-                player.Money -= cost;
+                m += "\nUnfortunately, you don't have enough money, so the aliens pull away slowly, " +
+                    "laughing at how poor you are.\n";
+                message.Add(m);
             }
+            else
+            {
+                if (MessageBox.Show(m, "Event!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    player.AdditionalInventory += 10;
+                    player.updateInventorySlots();
+                    player.Money -= cost;
+                }
+            }
+            
             //message.Add(m);
         }
 
@@ -121,7 +136,7 @@ namespace Galaxy_Trade.Events
             // Anywhere between 3% - 10% of the Players total money, rounded up/down.
             int moneyTaken = rnd.Next((int)(player.Money * 0.03), (int)(player.Money * 0.1));
             int healthLost = rnd.Next(5,18);
-            string m = String.Format("**While travelling through space, you encounter a huge ship of space pirates! " +
+            string m = String.Format("**While traveling through space, you encounter a huge ship of space pirates! " +
                 "Not wanting to start any trouble, you comply with their demands. They take ${0} and hurt you for {1} " +
                 "for good measure - they are pirates after all.\n", moneyTaken, healthLost);
 

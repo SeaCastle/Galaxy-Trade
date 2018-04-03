@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * ItemEvents.cs is a class containing all the functionality to run Item specific events
+ * in Galaxy Trade. These events are specific to the Items of Galaxy Trade because they 
+ * either multiply their value greatly or reduce their value to a degree.
+ */ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +20,12 @@ namespace Galaxy_Trade.Events
 
         public List<string> Message { get => message; }
 
-
+        /**
+         * Initial constructor
+         * @param chance - The chance for an ItemEvent to happen.
+         * @param p - A reference to the main Product array in case we need to
+         * multiply a product value due to an event.
+         */ 
         public ItemEvents(int chance, ref Product[] p)
         {
             rnd = new Random();

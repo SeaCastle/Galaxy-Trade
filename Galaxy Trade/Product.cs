@@ -60,14 +60,16 @@ namespace Galaxy_Trade
         /**
          * Sets the currentValue of a Product to be somewhere randomly
          * between the Products minimum and maximum values.
-         * @param multiplier - Used to multiply the current value by a certain amount.
-         * This is used if an event effects the current price.
          */ 
         public void updateCurrentValue()
         {
             currentValue = rnd.Next(minValue, (maxValue + 1));
         }
 
+        /**
+         * Takes the current value of a Product and multiplies it by a certain amount.
+         * @param multiplier - The amount by which we multiply the current value.
+         */ 
         public void multiplyCurrentValue(double multiplier)
         {
             currentValue = (int)(currentValue * multiplier);

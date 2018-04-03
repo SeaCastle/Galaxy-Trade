@@ -78,13 +78,20 @@ namespace Galaxy_Trade
             playerEvents = new PlayerEvents(7, ref player, ref products);
             itemEvents = new ItemEvents(35, ref products);
 
-            locations = new string[5] { "Earth", "Mars", "Venus", "Moon", "Sun" };
+            locations = new string[5] { "Earth", "51 Pegasi B", "Kepler-452b", "Gliese 876d", "PSR B1257+12 A" };
             currentLocation = new Location(locations[0], ref products);
 
             day = 1;
             gameLength = 30;
         }
 
+        /**
+         * Updates the current state of the game. This includes: increasing the day counter,
+         * increasing Player debt (if any), updating the current value of all products, running
+         * both Player and Item events, and updating our location (name, current products), or
+         * ending the game if the Player has reached the end.
+         * @param nextLoc - The name of the next location the player has chosen to travel to.
+         */ 
         public void update(string nextLoc)
         {            
             if (!gameOver())

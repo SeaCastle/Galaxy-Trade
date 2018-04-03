@@ -18,7 +18,7 @@ namespace Galaxy_Trade
         private int money;
         private int debt;
         private int health;
-        private bool hasAdditionalInventory;
+        //private bool hasAdditionalInventory;
         private int additionalInventory;
         private int inventorySlots;
 
@@ -64,7 +64,7 @@ namespace Galaxy_Trade
          */ 
         public Player()
         {
-            money = 50000;
+            money = 2000;
             debt = 5500;
             health = 100;
             inventorySlots = STARTINGINVENTORY;

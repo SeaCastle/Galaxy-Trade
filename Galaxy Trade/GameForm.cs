@@ -43,7 +43,6 @@ namespace Galaxy_Trade
         {
             itemsListView.Items.Clear();
 
-            //foreach (Product p in game.Products)
             foreach (Product p in game.CurrentLocation.CurrentProducts)
             {
                 if (itemsListView.FindItemWithText(p.Name) == null)
@@ -53,8 +52,7 @@ namespace Galaxy_Trade
                     itemsListView.Items.Add(item);
                 }
             }
-            setBackgroundColorInListView(itemsListView);
-            //eventTextBox.AppendText(game.CurrentLocation.CurrentProducts.Count.ToString());
+            setBackgroundColorInListView(itemsListView);            
         }
 
         /**
@@ -87,8 +85,7 @@ namespace Galaxy_Trade
                 }
             }
 
-            setBackgroundColorInListView(inventoryListView);
-            //eventTextBox.AppendText(game.player.Inventory.Count.ToString());
+            setBackgroundColorInListView(inventoryListView);            
         }
 
         // CAN WE MESH THESE TWO (buyButton / sellButton) CLICK FUNCTIONS TOGETHER?
@@ -159,9 +156,7 @@ namespace Galaxy_Trade
                 }
             }
         }
-
-        // IS THIS REALLY WHAT WE WANT TO DO??
-        /// //////////////////////////////////
+        
         /**
          * Gets the name and price for the selected item in a particular ListView.
          * @param lvi - The currently selected item in a list view.
@@ -253,6 +248,14 @@ namespace Galaxy_Trade
             }
         }
 
+        /**
+         * Event callback that happens when the Player travels to a new location.
+         * This event calls game.update() (changes location, advances the day etc).
+         * If any events trigger from game.update(), this function will display
+         * the event message for that event. This also calls setState() to set up
+         * the GameForm to show the correct information once the Player has traveled to
+         * a new location.
+         */ 
         private void changeLocation()
         {            
             game.update(nextLocation);

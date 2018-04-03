@@ -207,9 +207,9 @@
             // 
             this.locationLabel.Location = new System.Drawing.Point(6, 51);
             this.locationLabel.Name = "locationLabel";
-            this.locationLabel.Size = new System.Drawing.Size(90, 20);
+            this.locationLabel.Size = new System.Drawing.Size(98, 20);
             this.locationLabel.TabIndex = 0;
-            this.locationLabel.Text = "Location";
+            this.locationLabel.Text = "Location:";
             this.locationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // menuStrip1

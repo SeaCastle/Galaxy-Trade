@@ -1,4 +1,7 @@
-﻿using System;
+﻿/**
+ * IEvent.cs is an Interface for all Event classes to inherit from in Galaxy Trade.
+ */ 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
