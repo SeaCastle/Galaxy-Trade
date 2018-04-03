@@ -60,10 +60,24 @@
             this.sellButton = new System.Windows.Forms.Button();
             this.dropButton = new System.Windows.Forms.Button();
             this.travelButton = new System.Windows.Forms.Button();
+            this.itemAndInvPanel = new System.Windows.Forms.Panel();
+            this.errandsButton = new System.Windows.Forms.Button();
+            this.errandPanel = new System.Windows.Forms.Panel();
+            this.greetingLabel = new System.Windows.Forms.Label();
+            this.errandCashLabel = new System.Windows.Forms.Label();
+            this.errandCashValLabel = new System.Windows.Forms.Label();
+            this.errandDebtLabel = new System.Windows.Forms.Label();
+            this.errandDebtValLabel = new System.Windows.Forms.Label();
+            this.errandNumUpDn = new System.Windows.Forms.NumericUpDown();
+            this.errandCancelBtn = new System.Windows.Forms.Button();
+            this.errandSubmitBtn = new System.Windows.Forms.Button();
             this.statsGroupBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.itemsGroupBox.SuspendLayout();
             this.inventoryGroupBox.SuspendLayout();
+            this.itemAndInvPanel.SuspendLayout();
+            this.errandPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errandNumUpDn)).BeginInit();
             this.SuspendLayout();
             // 
             // statsGroupBox
@@ -269,7 +283,7 @@
             // 
             this.itemsGroupBox.Controls.Add(this.itemsListView);
             this.itemsGroupBox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.itemsGroupBox.Location = new System.Drawing.Point(12, 229);
+            this.itemsGroupBox.Location = new System.Drawing.Point(12, 3);
             this.itemsGroupBox.Name = "itemsGroupBox";
             this.itemsGroupBox.Size = new System.Drawing.Size(280, 235);
             this.itemsGroupBox.TabIndex = 4;
@@ -305,7 +319,7 @@
             // 
             this.inventoryGroupBox.Controls.Add(this.inventoryListView);
             this.inventoryGroupBox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inventoryGroupBox.Location = new System.Drawing.Point(393, 228);
+            this.inventoryGroupBox.Location = new System.Drawing.Point(399, 3);
             this.inventoryGroupBox.Name = "inventoryGroupBox";
             this.inventoryGroupBox.Size = new System.Drawing.Size(280, 235);
             this.inventoryGroupBox.TabIndex = 5;
@@ -341,7 +355,7 @@
             // 
             this.buyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buyButton.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buyButton.Location = new System.Drawing.Point(298, 252);
+            this.buyButton.Location = new System.Drawing.Point(300, 12);
             this.buyButton.Name = "buyButton";
             this.buyButton.Size = new System.Drawing.Size(89, 33);
             this.buyButton.TabIndex = 6;
@@ -353,7 +367,7 @@
             // 
             this.sellButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.sellButton.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sellButton.Location = new System.Drawing.Point(298, 306);
+            this.sellButton.Location = new System.Drawing.Point(300, 60);
             this.sellButton.Name = "sellButton";
             this.sellButton.Size = new System.Drawing.Size(89, 33);
             this.sellButton.TabIndex = 7;
@@ -365,11 +379,11 @@
             // 
             this.dropButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.dropButton.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dropButton.Location = new System.Drawing.Point(298, 360);
+            this.dropButton.Location = new System.Drawing.Point(300, 108);
             this.dropButton.Name = "dropButton";
             this.dropButton.Size = new System.Drawing.Size(89, 33);
             this.dropButton.TabIndex = 8;
-            this.dropButton.Text = "<- Drop";
+            this.dropButton.Text = "Drop <-";
             this.dropButton.UseVisualStyleBackColor = true;
             this.dropButton.Click += new System.EventHandler(this.dropButton_Click);
             // 
@@ -377,7 +391,7 @@
             // 
             this.travelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.travelButton.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.travelButton.Location = new System.Drawing.Point(298, 414);
+            this.travelButton.Location = new System.Drawing.Point(300, 204);
             this.travelButton.Name = "travelButton";
             this.travelButton.Size = new System.Drawing.Size(89, 33);
             this.travelButton.TabIndex = 9;
@@ -385,17 +399,137 @@
             this.travelButton.UseVisualStyleBackColor = true;
             this.travelButton.Click += new System.EventHandler(this.travelButton_Click);
             // 
+            // itemAndInvPanel
+            // 
+            this.itemAndInvPanel.Controls.Add(this.errandsButton);
+            this.itemAndInvPanel.Controls.Add(this.itemsGroupBox);
+            this.itemAndInvPanel.Controls.Add(this.travelButton);
+            this.itemAndInvPanel.Controls.Add(this.inventoryGroupBox);
+            this.itemAndInvPanel.Controls.Add(this.dropButton);
+            this.itemAndInvPanel.Controls.Add(this.buyButton);
+            this.itemAndInvPanel.Controls.Add(this.sellButton);
+            this.itemAndInvPanel.Location = new System.Drawing.Point(0, 228);
+            this.itemAndInvPanel.Name = "itemAndInvPanel";
+            this.itemAndInvPanel.Size = new System.Drawing.Size(691, 243);
+            this.itemAndInvPanel.TabIndex = 10;
+            // 
+            // errandsButton
+            // 
+            this.errandsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.errandsButton.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandsButton.Location = new System.Drawing.Point(300, 156);
+            this.errandsButton.Name = "errandsButton";
+            this.errandsButton.Size = new System.Drawing.Size(89, 33);
+            this.errandsButton.TabIndex = 10;
+            this.errandsButton.Text = "Errands";
+            this.errandsButton.UseVisualStyleBackColor = true;
+            this.errandsButton.Click += new System.EventHandler(this.errandsButton_Click);
+            // 
+            // errandPanel
+            // 
+            this.errandPanel.Controls.Add(this.errandSubmitBtn);
+            this.errandPanel.Controls.Add(this.errandCancelBtn);
+            this.errandPanel.Controls.Add(this.errandNumUpDn);
+            this.errandPanel.Controls.Add(this.errandDebtValLabel);
+            this.errandPanel.Controls.Add(this.errandDebtLabel);
+            this.errandPanel.Controls.Add(this.errandCashValLabel);
+            this.errandPanel.Controls.Add(this.errandCashLabel);
+            this.errandPanel.Controls.Add(this.greetingLabel);
+            this.errandPanel.Location = new System.Drawing.Point(0, 476);
+            this.errandPanel.Name = "errandPanel";
+            this.errandPanel.Size = new System.Drawing.Size(691, 243);
+            this.errandPanel.TabIndex = 11;
+            this.errandPanel.Visible = false;
+            // 
+            // greetingLabel
+            // 
+            this.greetingLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.greetingLabel.Location = new System.Drawing.Point(80, 23);
+            this.greetingLabel.Name = "greetingLabel";
+            this.greetingLabel.Size = new System.Drawing.Size(531, 56);
+            this.greetingLabel.TabIndex = 0;
+            this.greetingLabel.Text = "Welcome to the Loan Shark. How much would you like to pay off?";
+            this.greetingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // errandCashLabel
+            // 
+            this.errandCashLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandCashLabel.Location = new System.Drawing.Point(84, 93);
+            this.errandCashLabel.Name = "errandCashLabel";
+            this.errandCashLabel.Size = new System.Drawing.Size(75, 23);
+            this.errandCashLabel.TabIndex = 1;
+            this.errandCashLabel.Text = "Cash:";
+            this.errandCashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandCashValLabel
+            // 
+            this.errandCashValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandCashValLabel.ForeColor = System.Drawing.Color.LimeGreen;
+            this.errandCashValLabel.Location = new System.Drawing.Point(165, 93);
+            this.errandCashValLabel.Name = "errandCashValLabel";
+            this.errandCashValLabel.Size = new System.Drawing.Size(179, 23);
+            this.errandCashValLabel.TabIndex = 2;
+            this.errandCashValLabel.Text = "1,000,000,000";
+            this.errandCashValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandDebtLabel
+            // 
+            this.errandDebtLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandDebtLabel.Location = new System.Drawing.Point(364, 93);
+            this.errandDebtLabel.Name = "errandDebtLabel";
+            this.errandDebtLabel.Size = new System.Drawing.Size(75, 23);
+            this.errandDebtLabel.TabIndex = 3;
+            this.errandDebtLabel.Text = "Debt:";
+            this.errandDebtLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandDebtValLabel
+            // 
+            this.errandDebtValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandDebtValLabel.ForeColor = System.Drawing.Color.Red;
+            this.errandDebtValLabel.Location = new System.Drawing.Point(432, 93);
+            this.errandDebtValLabel.Name = "errandDebtValLabel";
+            this.errandDebtValLabel.Size = new System.Drawing.Size(179, 23);
+            this.errandDebtValLabel.TabIndex = 4;
+            this.errandDebtValLabel.Text = "1,000,000,000";
+            this.errandDebtValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandNumUpDn
+            // 
+            this.errandNumUpDn.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandNumUpDn.Location = new System.Drawing.Point(277, 141);
+            this.errandNumUpDn.Name = "errandNumUpDn";
+            this.errandNumUpDn.Size = new System.Drawing.Size(109, 31);
+            this.errandNumUpDn.TabIndex = 5;
+            // 
+            // errandCancelBtn
+            // 
+            this.errandCancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.errandCancelBtn.Location = new System.Drawing.Point(139, 191);
+            this.errandCancelBtn.Name = "errandCancelBtn";
+            this.errandCancelBtn.Size = new System.Drawing.Size(105, 35);
+            this.errandCancelBtn.TabIndex = 6;
+            this.errandCancelBtn.Text = "Cancel";
+            this.errandCancelBtn.UseVisualStyleBackColor = true;
+            this.errandCancelBtn.Click += new System.EventHandler(this.errandCancelBtn_Click);
+            // 
+            // errandSubmitBtn
+            // 
+            this.errandSubmitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.errandSubmitBtn.Location = new System.Drawing.Point(416, 191);
+            this.errandSubmitBtn.Name = "errandSubmitBtn";
+            this.errandSubmitBtn.Size = new System.Drawing.Size(105, 35);
+            this.errandSubmitBtn.TabIndex = 7;
+            this.errandSubmitBtn.Text = "Submit";
+            this.errandSubmitBtn.UseVisualStyleBackColor = true;
+            this.errandSubmitBtn.Click += new System.EventHandler(this.errandSubmitBtn_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(691, 476);
-            this.Controls.Add(this.travelButton);
-            this.Controls.Add(this.dropButton);
-            this.Controls.Add(this.sellButton);
-            this.Controls.Add(this.buyButton);
-            this.Controls.Add(this.inventoryGroupBox);
-            this.Controls.Add(this.itemsGroupBox);
+            this.ClientSize = new System.Drawing.Size(691, 720);
+            this.Controls.Add(this.errandPanel);
+            this.Controls.Add(this.itemAndInvPanel);
             this.Controls.Add(this.eventTextBox);
             this.Controls.Add(this.statsGroupBox);
             this.Controls.Add(this.menuStrip1);
@@ -408,6 +542,9 @@
             this.menuStrip1.PerformLayout();
             this.itemsGroupBox.ResumeLayout(false);
             this.inventoryGroupBox.ResumeLayout(false);
+            this.itemAndInvPanel.ResumeLayout(false);
+            this.errandPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errandNumUpDn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,6 +589,17 @@
         private System.Windows.Forms.ListView inventoryListView;
         private System.Windows.Forms.ColumnHeader invNameColumnHeader;
         private System.Windows.Forms.ColumnHeader invTotalColumnHeader;
+        private System.Windows.Forms.Panel itemAndInvPanel;
+        private System.Windows.Forms.Button errandsButton;
+        private System.Windows.Forms.Panel errandPanel;
+        private System.Windows.Forms.Button errandSubmitBtn;
+        private System.Windows.Forms.Button errandCancelBtn;
+        private System.Windows.Forms.NumericUpDown errandNumUpDn;
+        private System.Windows.Forms.Label errandDebtValLabel;
+        private System.Windows.Forms.Label errandDebtLabel;
+        private System.Windows.Forms.Label errandCashValLabel;
+        private System.Windows.Forms.Label errandCashLabel;
+        private System.Windows.Forms.Label greetingLabel;
     }
 }
 

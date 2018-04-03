@@ -23,6 +23,7 @@ namespace Galaxy_Trade
         public TradeWindow tradeWindow;
         public LocationWindow locationWindow;
 
+        private Point dialogOpenLocation;
         private string nextLocation;
 
         /**
@@ -32,7 +33,17 @@ namespace Galaxy_Trade
         {
             InitializeComponent();
             game = new Game();
+
+            setGameFormSize();
+
+            // Set the location where all dialogue boxes will open at.
+            //dialogOpenLocation = buyButton.PointToScreen(Point.Empty); 
+            //dialogOpenLocation = buyButton.FindForm().PointToClient(buyButton.Parent.PointToScreen(buyButton.Location));
+            //dialogOpenLocation.X -= 200;
+            //dialogOpenLocation.Y -= 200;
+
             setState();
+            
         }
 
         /**
@@ -144,10 +155,12 @@ namespace Galaxy_Trade
         {
             using (tradeWindow = new TradeWindow(ref game.player, name, price, isBuy))
             {
-                Point location = buyButton.PointToScreen(Point.Empty);
-                location.X -= 200;
-                location.Y -= 200;
-                tradeWindow.Pos = location;
+                //tradeWindow.Pos = dialogOpenLocation;
+
+                Point loc = buyButton.PointToScreen(Point.Empty);
+                loc.X -= 200;
+                loc.Y -= 200;
+                tradeWindow.Pos = loc;
 
                 DialogResult result = tradeWindow.ShowDialog();
                 if (result == DialogResult.OK)
@@ -237,6 +250,11 @@ namespace Galaxy_Trade
         {
             using (locationWindow = new LocationWindow(game.Locations, game.CurrentLocation.Name))
             {
+                Point loc = buyButton.PointToScreen(Point.Empty);
+                loc.X -= 200;
+                loc.Y -= 200;
+                locationWindow.Pos = loc;
+
                 DialogResult result = locationWindow.ShowDialog();
                 nextLocation = locationWindow.NextLocation;
 
@@ -305,12 +323,110 @@ namespace Galaxy_Trade
         }
 
         /**
+         * Sets up the labels and numeric up down of the errand panel.
+         */ 
+        private void setErrandPanelState()
+        {
+            errandCashValLabel.Text = game.player.Money.ToString("C0");
+            errandDebtValLabel.Text = game.player.Debt.ToString("C0");
+            errandNumUpDn.Minimum = 0;
+            errandNumUpDn.Maximum = game.player.Money > game.player.Debt ? game.player.Debt : game.player.Money;
+            errandNumUpDn.Value = 0;
+        }
+
+        /**
+         * Sets the size of the GameForm Form. This is needed because we put the
+         * errandPanel on top of the itemAndInvPanel and we want to resize the
+         * form to get rid of the empty space at the bottom.
+         */ 
+        private void setGameFormSize()
+        {
+            Point pt = itemAndInvPanel.Location;
+            errandPanel.Location = pt;
+
+            Size cliSize = this.ClientSize;
+            cliSize.Height = this.ClientSize.Height - errandPanel.Height;
+            this.ClientSize = cliSize;
+        }
+
+        /**
          * Make sure the GameForm closes properly.
          */ 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             //tradeWindow.Close();
             Application.Exit();
+        }
+
+        /**
+         * Makes function calls to setErrandPanelState() and showErrandPanel() to setup 
+         * the state of the errandPanel and then shows the errandPanel in the place of
+         * the itemAndInvPanel's place.
+         */ 
+        private void errandsButton_Click(object sender, EventArgs e)
+        {
+            setErrandPanelState();
+            showErrandPanel();            
+        }
+
+        /**
+         * The Player has canceled the current Errand option, hide the errandPanel and
+         * show the itemAndInvPanel in its place.
+         */ 
+        private void errandCancelBtn_Click(object sender, EventArgs e)
+        {
+            hideErrandPanel();
+        }
+
+        /**
+         * Hides the itemAndInvPanel and shows the errandPanel in its place.
+         */ 
+        private void showErrandPanel()
+        {
+            if (!errandPanel.Visible)
+            {
+                errandPanel.Show();
+            }
+            if (itemAndInvPanel.Visible)
+            {
+                itemAndInvPanel.Hide();
+            }
+        }
+
+        /**
+         * Hides the errandPanel and shows the itemAndInvPanel in its place.
+         */ 
+        private void hideErrandPanel()
+        {
+            if (!itemAndInvPanel.Visible)
+            {
+                itemAndInvPanel.Show();
+            }
+            if (errandPanel.Visible)
+            {
+                errandPanel.Hide();
+            }
+        }
+
+        /**
+         * The Player has chosen to either pay money to the Loan Shark or deposit
+         * money in the bank. Update the players money / debt / bank accordingly
+         * then hide the errandPanel and show the itemAndInvPanel in its place.
+         * Updates the GameForm afterward to reflect the errand changes.
+         */ 
+        private void errandSubmitBtn_Click(object sender, EventArgs e)
+        {
+            if (errandNumUpDn.Value > 0)
+            {
+                game.player.Money -= (int)errandNumUpDn.Value;
+                game.player.Debt -= (int)errandNumUpDn.Value;
+                hideErrandPanel();
+                setState();
+            }
+            else
+            {
+                hideErrandPanel();
+            }
         }
     }
 }

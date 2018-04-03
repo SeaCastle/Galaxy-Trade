@@ -154,6 +154,7 @@
             this.Controls.Add(this.label1);
             this.Name = "LocationWindow";
             this.Text = "Where to?";
+            this.Shown += new System.EventHandler(this.LocationWindow_Shown);
             this.ResumeLayout(false);
 
         }

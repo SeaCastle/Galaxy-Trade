@@ -168,7 +168,7 @@ namespace Galaxy_Trade
 
         private void TradeWindow_Shown(object sender, EventArgs e)
         {
-            this.Location = Pos;
+            this.Location = pos;
         }
     }
 }

@@ -18,11 +18,17 @@ namespace Galaxy_Trade
 {
     public partial class LocationWindow : Form
     {
+        private Point pos;
         private Button[] locationBtns;
         private Button currentButton; ///< string used to know which location button was last clicked.
         private string currentLocation;
         private string nextLocation;
 
+        public Point Pos
+        {
+            get => pos;
+            set => pos = value;
+        }
         public string NextLocation
         {
             get => nextLocation;
@@ -95,6 +101,11 @@ namespace Galaxy_Trade
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        private void LocationWindow_Shown(object sender, EventArgs e)
+        {
+            this.Location = pos;
         }
     }
 }
