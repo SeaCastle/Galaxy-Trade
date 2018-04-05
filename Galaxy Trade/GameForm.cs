@@ -25,6 +25,8 @@ namespace Galaxy_Trade
 
         private Point dialogOpenLocation;
         private string nextLocation;
+        private int currentErrand; ///< Used to tell whether our current location has an errand or not, set in setState();
+        private enum Errands { None, LoanShark, Bank, Repair};
 
         /**
          * Initial constructor. To be called on a new game.
@@ -34,16 +36,9 @@ namespace Galaxy_Trade
             InitializeComponent();
             game = new Game();
 
-            setGameFormSize();
+            setGameFormSize();            
 
-            // Set the location where all dialogue boxes will open at.
-            //dialogOpenLocation = buyButton.PointToScreen(Point.Empty); 
-            //dialogOpenLocation = buyButton.FindForm().PointToClient(buyButton.Parent.PointToScreen(buyButton.Location));
-            //dialogOpenLocation.X -= 200;
-            //dialogOpenLocation.Y -= 200;
-
-            setState();
-            
+            setState();            
         }
 
         /**
@@ -155,17 +150,13 @@ namespace Galaxy_Trade
         {
             using (tradeWindow = new TradeWindow(ref game.player, name, price, isBuy))
             {
-                //tradeWindow.Pos = dialogOpenLocation;
-
-                Point loc = buyButton.PointToScreen(Point.Empty);
-                loc.X -= 200;
-                loc.Y -= 200;
-                tradeWindow.Pos = loc;
+                tradeWindow.Pos = dialogOpenLocation;
 
                 DialogResult result = tradeWindow.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    setState();
+                    updateFormLabels();
+                    updateItemsInInventory();
                 }
             }
         }
@@ -250,10 +241,12 @@ namespace Galaxy_Trade
         {
             using (locationWindow = new LocationWindow(game.Locations, game.CurrentLocation.Name))
             {
+                /*
                 Point loc = buyButton.PointToScreen(Point.Empty);
                 loc.X -= 200;
                 loc.Y -= 200;
-                locationWindow.Pos = loc;
+                */
+                locationWindow.Pos = dialogOpenLocation;
 
                 DialogResult result = locationWindow.ShowDialog();
                 nextLocation = locationWindow.NextLocation;
@@ -300,12 +293,11 @@ namespace Galaxy_Trade
         }
 
         /**
-         * Sets the state for the GameForm.
-         * This is used to update the Labels and ListViews in one single call.
-         */ 
-        private void setState()
+         * Updates the main labels in the GameForm i.e. Day, Player Money, Player Debt,
+         * Inventory Slots, Location and Health.
+         */
+        private void updateFormLabels()
         {
-            // Update the text labels
             dayCounterLabel.Text = "Day " + game.Day.ToString() + "/" + game.GameLength.ToString();
 
             debtValLabel.Text = game.player.Debt.ToString("C0");
@@ -315,11 +307,51 @@ namespace Galaxy_Trade
 
             locationNameLabel.Text = game.CurrentLocation.Name;
 
+            bankValLabel.Text = game.player.Savings.ToString("C0");
+
             healthValLabel.Text = game.player.Health.ToString();
+        }
+
+        /**
+         * Sets the state for the GameForm.
+         * This is used to update the Labels and ListViews in one single call.
+         */ 
+        private void setState()
+        {
+            // Update the text labels
+            updateFormLabels();
 
             // Update the list views
             updateItemsInListView();
             updateItemsInInventory();
+
+            // TODO: Something different here. I don't like this.
+            // Decide whether there is an Errand available at our current location.
+            switch(game.CurrentLocation.Name)
+            {
+                case "51 Pegasi B":
+                    currentErrand = (int)Errands.Repair;
+                    break;
+                case "Kepler-452b":
+                    currentErrand = (int)Errands.LoanShark;
+                    break;
+                case "PSR B1257+12 A":
+                    currentErrand = (int)Errands.Bank;
+                    break;
+                default:
+                    currentErrand = (int)Errands.None;
+                    break;
+            }
+
+            // BUTTON DISABLED FOR REPAIR ERRAND UNTIL WE FINISH IT.
+            if (currentErrand == (int)Errands.None || currentErrand == (int)Errands.Repair)
+            {
+                errandsButton.Enabled = false;
+            }
+            else
+            {
+                errandsButton.Enabled = true;
+            }
         }
 
         /**
@@ -328,10 +360,32 @@ namespace Galaxy_Trade
         private void setErrandPanelState()
         {
             errandCashValLabel.Text = game.player.Money.ToString("C0");
-            errandDebtValLabel.Text = game.player.Debt.ToString("C0");
+
             errandNumUpDn.Minimum = 0;
-            errandNumUpDn.Maximum = game.player.Money > game.player.Debt ? game.player.Debt : game.player.Money;
             errandNumUpDn.Value = 0;
+
+            string greeting = "Welcome to the {0}. How much would you like to {1}?";
+
+            if (currentErrand == (int)Errands.Repair)
+            {
+                // TODO: Finish this later.
+            }
+            else if (currentErrand == (int)Errands.LoanShark)
+            {
+                errandGreetingLabel.Text = String.Format(greeting, "Loan Shark", "pay off");
+                errandTypeLabel.Text = "Debt:";
+                errandTypeValLabel.Text = game.player.Debt.ToString("C0");
+                errandTypeValLabel.ForeColor = Color.Red;
+                errandNumUpDn.Maximum = game.player.Money > game.player.Debt ? game.player.Debt : game.player.Money;
+            }
+            else if (currentErrand == (int)Errands.Bank)
+            {
+                errandGreetingLabel.Text = String.Format(greeting, "Bank", "deposit");
+                errandTypeLabel.Text = "Bank:";
+                errandTypeValLabel.Text = game.player.Savings.ToString("C0");
+                errandTypeValLabel.ForeColor = Color.Black;
+                errandNumUpDn.Maximum = game.player.Money;
+            }
         }
 
         /**
@@ -383,14 +437,11 @@ namespace Galaxy_Trade
          */ 
         private void showErrandPanel()
         {
-            if (!errandPanel.Visible)
-            {
-                errandPanel.Show();
-            }
-            if (itemAndInvPanel.Visible)
-            {
-                itemAndInvPanel.Hide();
-            }
+            if (!errandPanel.Visible)            
+                errandPanel.Show();         
+            
+            if (itemAndInvPanel.Visible)            
+                itemAndInvPanel.Hide();            
         }
 
         /**
@@ -398,14 +449,11 @@ namespace Galaxy_Trade
          */ 
         private void hideErrandPanel()
         {
-            if (!itemAndInvPanel.Visible)
-            {
-                itemAndInvPanel.Show();
-            }
-            if (errandPanel.Visible)
-            {
-                errandPanel.Hide();
-            }
+            if (!itemAndInvPanel.Visible)            
+                itemAndInvPanel.Show(); 
+            
+            if (errandPanel.Visible)            
+                errandPanel.Hide();            
         }
 
         /**
@@ -416,17 +464,55 @@ namespace Galaxy_Trade
          */ 
         private void errandSubmitBtn_Click(object sender, EventArgs e)
         {
-            if (errandNumUpDn.Value > 0)
+            if (currentErrand == (int)Errands.LoanShark)
             {
-                game.player.Money -= (int)errandNumUpDn.Value;
-                game.player.Debt -= (int)errandNumUpDn.Value;
-                hideErrandPanel();
-                setState();
+                if (errandNumUpDn.Value > 0)
+                {
+                    game.player.Money -= (int)errandNumUpDn.Value;
+                    game.player.Debt -= (int)errandNumUpDn.Value;
+                    updateFormLabels();
+                }
             }
-            else
+            else if (currentErrand == (int)Errands.Bank)
             {
-                hideErrandPanel();
+                if (errandNumUpDn.Value > 0)
+                {
+                    game.player.Money -= (int)errandNumUpDn.Value;
+                    game.player.Savings += (int)errandNumUpDn.Value;
+                    updateFormLabels();
+                }
             }
+
+            hideErrandPanel();
+        }
+
+        //////////////// Both methods below are used to essentially do the same thing. ////////////////
+        /**
+         * This function gets the location of the BuyButton everytime the GameForm
+         * location is changed, so that we have an accurate updated location of the
+         * BuyButton. This is used because we set the open location of all dialogue
+         * boxes to this relative location.
+         */
+        private void GameForm_LocationChanged(object sender, EventArgs e)
+        {
+            // Set the location where all dialogue boxes will open at.
+            dialogOpenLocation = buyButton.PointToScreen(Point.Empty); 
+            dialogOpenLocation.X -= 200;
+            dialogOpenLocation.Y -= 200;
+        }
+
+        /**
+         * This function gets the location of the BuyButton after the GameForm
+         * is shown, so that we have an accurate updated location of the BuyButton.
+         * This is used because we set the open location of all dialogue boxes to 
+         * this relative location.
+         */ 
+        private void GameForm_Shown(object sender, EventArgs e)
+        {
+            // Set the location where all dialogue boxes will open at.
+            dialogOpenLocation = buyButton.PointToScreen(Point.Empty);
+            dialogOpenLocation.X -= 200;
+            dialogOpenLocation.Y -= 200;
         }
     }
 }

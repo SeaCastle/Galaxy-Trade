@@ -18,6 +18,7 @@ namespace Galaxy_Trade
         private int money;
         private int debt;
         private int health;
+        private int savings;
         //private bool hasAdditionalInventory;
         private int additionalInventory;
         private int inventorySlots;
@@ -43,6 +44,12 @@ namespace Galaxy_Trade
         {
             get => health;
             set => health = value;
+        }
+
+        public int Savings
+        {
+            get => savings;
+            set => savings = value;
         }
 
         public bool HasAdditionalInventory { get; set; }

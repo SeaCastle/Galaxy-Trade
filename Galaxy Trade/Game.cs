@@ -106,6 +106,11 @@ namespace Galaxy_Trade
                     player.Debt += (int)(player.Debt * 0.1);
                 }
 
+                if (player.Savings > 0)
+                {
+                    player.Savings += (int)(player.Savings * 0.05);
+                }
+
                 foreach (Product p in products)
                 {
                     p.updateCurrentValue();

@@ -63,11 +63,11 @@
             this.itemAndInvPanel = new System.Windows.Forms.Panel();
             this.errandsButton = new System.Windows.Forms.Button();
             this.errandPanel = new System.Windows.Forms.Panel();
-            this.greetingLabel = new System.Windows.Forms.Label();
+            this.errandGreetingLabel = new System.Windows.Forms.Label();
             this.errandCashLabel = new System.Windows.Forms.Label();
             this.errandCashValLabel = new System.Windows.Forms.Label();
-            this.errandDebtLabel = new System.Windows.Forms.Label();
-            this.errandDebtValLabel = new System.Windows.Forms.Label();
+            this.errandTypeLabel = new System.Windows.Forms.Label();
+            this.errandTypeValLabel = new System.Windows.Forms.Label();
             this.errandNumUpDn = new System.Windows.Forms.NumericUpDown();
             this.errandCancelBtn = new System.Windows.Forms.Button();
             this.errandSubmitBtn = new System.Windows.Forms.Button();
@@ -430,26 +430,26 @@
             this.errandPanel.Controls.Add(this.errandSubmitBtn);
             this.errandPanel.Controls.Add(this.errandCancelBtn);
             this.errandPanel.Controls.Add(this.errandNumUpDn);
-            this.errandPanel.Controls.Add(this.errandDebtValLabel);
-            this.errandPanel.Controls.Add(this.errandDebtLabel);
+            this.errandPanel.Controls.Add(this.errandTypeValLabel);
+            this.errandPanel.Controls.Add(this.errandTypeLabel);
             this.errandPanel.Controls.Add(this.errandCashValLabel);
             this.errandPanel.Controls.Add(this.errandCashLabel);
-            this.errandPanel.Controls.Add(this.greetingLabel);
+            this.errandPanel.Controls.Add(this.errandGreetingLabel);
             this.errandPanel.Location = new System.Drawing.Point(0, 476);
             this.errandPanel.Name = "errandPanel";
             this.errandPanel.Size = new System.Drawing.Size(691, 243);
             this.errandPanel.TabIndex = 11;
             this.errandPanel.Visible = false;
             // 
-            // greetingLabel
+            // errandGreetingLabel
             // 
-            this.greetingLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.greetingLabel.Location = new System.Drawing.Point(80, 23);
-            this.greetingLabel.Name = "greetingLabel";
-            this.greetingLabel.Size = new System.Drawing.Size(531, 56);
-            this.greetingLabel.TabIndex = 0;
-            this.greetingLabel.Text = "Welcome to the Loan Shark. How much would you like to pay off?";
-            this.greetingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.errandGreetingLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandGreetingLabel.Location = new System.Drawing.Point(80, 23);
+            this.errandGreetingLabel.Name = "errandGreetingLabel";
+            this.errandGreetingLabel.Size = new System.Drawing.Size(531, 56);
+            this.errandGreetingLabel.TabIndex = 0;
+            this.errandGreetingLabel.Text = "Welcome to the Loan Shark. How much would you like to pay off?";
+            this.errandGreetingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // errandCashLabel
             // 
@@ -472,26 +472,26 @@
             this.errandCashValLabel.Text = "1,000,000,000";
             this.errandCashValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // errandDebtLabel
+            // errandTypeLabel
             // 
-            this.errandDebtLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandDebtLabel.Location = new System.Drawing.Point(364, 93);
-            this.errandDebtLabel.Name = "errandDebtLabel";
-            this.errandDebtLabel.Size = new System.Drawing.Size(75, 23);
-            this.errandDebtLabel.TabIndex = 3;
-            this.errandDebtLabel.Text = "Debt:";
-            this.errandDebtLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.errandTypeLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandTypeLabel.Location = new System.Drawing.Point(364, 93);
+            this.errandTypeLabel.Name = "errandTypeLabel";
+            this.errandTypeLabel.Size = new System.Drawing.Size(75, 23);
+            this.errandTypeLabel.TabIndex = 3;
+            this.errandTypeLabel.Text = "Debt:";
+            this.errandTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // errandDebtValLabel
+            // errandTypeValLabel
             // 
-            this.errandDebtValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandDebtValLabel.ForeColor = System.Drawing.Color.Red;
-            this.errandDebtValLabel.Location = new System.Drawing.Point(432, 93);
-            this.errandDebtValLabel.Name = "errandDebtValLabel";
-            this.errandDebtValLabel.Size = new System.Drawing.Size(179, 23);
-            this.errandDebtValLabel.TabIndex = 4;
-            this.errandDebtValLabel.Text = "1,000,000,000";
-            this.errandDebtValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.errandTypeValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandTypeValLabel.ForeColor = System.Drawing.Color.Red;
+            this.errandTypeValLabel.Location = new System.Drawing.Point(432, 93);
+            this.errandTypeValLabel.Name = "errandTypeValLabel";
+            this.errandTypeValLabel.Size = new System.Drawing.Size(179, 23);
+            this.errandTypeValLabel.TabIndex = 4;
+            this.errandTypeValLabel.Text = "1,000,000,000";
+            this.errandTypeValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // errandNumUpDn
             // 
@@ -536,6 +536,8 @@
             this.Name = "GameForm";
             this.Text = "Galaxy Trade";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
+            this.Shown += new System.EventHandler(this.GameForm_Shown);
+            this.LocationChanged += new System.EventHandler(this.GameForm_LocationChanged);
             this.statsGroupBox.ResumeLayout(false);
             this.statsGroupBox.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -595,11 +597,11 @@
         private System.Windows.Forms.Button errandSubmitBtn;
         private System.Windows.Forms.Button errandCancelBtn;
         private System.Windows.Forms.NumericUpDown errandNumUpDn;
-        private System.Windows.Forms.Label errandDebtValLabel;
-        private System.Windows.Forms.Label errandDebtLabel;
+        private System.Windows.Forms.Label errandTypeValLabel;
+        private System.Windows.Forms.Label errandTypeLabel;
         private System.Windows.Forms.Label errandCashValLabel;
         private System.Windows.Forms.Label errandCashLabel;
-        private System.Windows.Forms.Label greetingLabel;
+        private System.Windows.Forms.Label errandGreetingLabel;
     }
 }
 
