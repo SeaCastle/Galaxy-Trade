@@ -63,14 +63,15 @@
             this.itemAndInvPanel = new System.Windows.Forms.Panel();
             this.errandsButton = new System.Windows.Forms.Button();
             this.errandPanel = new System.Windows.Forms.Panel();
-            this.errandGreetingLabel = new System.Windows.Forms.Label();
-            this.errandCashLabel = new System.Windows.Forms.Label();
-            this.errandCashValLabel = new System.Windows.Forms.Label();
-            this.errandTypeLabel = new System.Windows.Forms.Label();
-            this.errandTypeValLabel = new System.Windows.Forms.Label();
-            this.errandNumUpDn = new System.Windows.Forms.NumericUpDown();
+            this.errandOKBtn = new System.Windows.Forms.Button();
             this.errandCancelBtn = new System.Windows.Forms.Button();
-            this.errandSubmitBtn = new System.Windows.Forms.Button();
+            this.errandNumUpDn = new System.Windows.Forms.NumericUpDown();
+            this.errandTypeValLabel = new System.Windows.Forms.Label();
+            this.errandTypeLabel = new System.Windows.Forms.Label();
+            this.errandCashValLabel = new System.Windows.Forms.Label();
+            this.errandCashLabel = new System.Windows.Forms.Label();
+            this.errandGreetingLabel = new System.Windows.Forms.Label();
+            this.errandWithdrawBtn = new System.Windows.Forms.Button();
             this.statsGroupBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.itemsGroupBox.SuspendLayout();
@@ -427,7 +428,8 @@
             // 
             // errandPanel
             // 
-            this.errandPanel.Controls.Add(this.errandSubmitBtn);
+            this.errandPanel.Controls.Add(this.errandWithdrawBtn);
+            this.errandPanel.Controls.Add(this.errandOKBtn);
             this.errandPanel.Controls.Add(this.errandCancelBtn);
             this.errandPanel.Controls.Add(this.errandNumUpDn);
             this.errandPanel.Controls.Add(this.errandTypeValLabel);
@@ -441,65 +443,16 @@
             this.errandPanel.TabIndex = 11;
             this.errandPanel.Visible = false;
             // 
-            // errandGreetingLabel
+            // errandOKBtn
             // 
-            this.errandGreetingLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandGreetingLabel.Location = new System.Drawing.Point(80, 23);
-            this.errandGreetingLabel.Name = "errandGreetingLabel";
-            this.errandGreetingLabel.Size = new System.Drawing.Size(531, 56);
-            this.errandGreetingLabel.TabIndex = 0;
-            this.errandGreetingLabel.Text = "Welcome to the Loan Shark. How much would you like to pay off?";
-            this.errandGreetingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // errandCashLabel
-            // 
-            this.errandCashLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandCashLabel.Location = new System.Drawing.Point(84, 93);
-            this.errandCashLabel.Name = "errandCashLabel";
-            this.errandCashLabel.Size = new System.Drawing.Size(75, 23);
-            this.errandCashLabel.TabIndex = 1;
-            this.errandCashLabel.Text = "Cash:";
-            this.errandCashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // errandCashValLabel
-            // 
-            this.errandCashValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandCashValLabel.ForeColor = System.Drawing.Color.LimeGreen;
-            this.errandCashValLabel.Location = new System.Drawing.Point(165, 93);
-            this.errandCashValLabel.Name = "errandCashValLabel";
-            this.errandCashValLabel.Size = new System.Drawing.Size(179, 23);
-            this.errandCashValLabel.TabIndex = 2;
-            this.errandCashValLabel.Text = "1,000,000,000";
-            this.errandCashValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // errandTypeLabel
-            // 
-            this.errandTypeLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandTypeLabel.Location = new System.Drawing.Point(364, 93);
-            this.errandTypeLabel.Name = "errandTypeLabel";
-            this.errandTypeLabel.Size = new System.Drawing.Size(75, 23);
-            this.errandTypeLabel.TabIndex = 3;
-            this.errandTypeLabel.Text = "Debt:";
-            this.errandTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // errandTypeValLabel
-            // 
-            this.errandTypeValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandTypeValLabel.ForeColor = System.Drawing.Color.Red;
-            this.errandTypeValLabel.Location = new System.Drawing.Point(432, 93);
-            this.errandTypeValLabel.Name = "errandTypeValLabel";
-            this.errandTypeValLabel.Size = new System.Drawing.Size(179, 23);
-            this.errandTypeValLabel.TabIndex = 4;
-            this.errandTypeValLabel.Text = "1,000,000,000";
-            this.errandTypeValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // errandNumUpDn
-            // 
-            this.errandNumUpDn.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errandNumUpDn.Location = new System.Drawing.Point(277, 141);
-            this.errandNumUpDn.Name = "errandNumUpDn";
-            this.errandNumUpDn.Size = new System.Drawing.Size(109, 31);
-            this.errandNumUpDn.TabIndex = 5;
+            this.errandOKBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.errandOKBtn.Location = new System.Drawing.Point(416, 191);
+            this.errandOKBtn.Name = "errandOKBtn";
+            this.errandOKBtn.Size = new System.Drawing.Size(105, 35);
+            this.errandOKBtn.TabIndex = 7;
+            this.errandOKBtn.Text = "Submit";
+            this.errandOKBtn.UseVisualStyleBackColor = true;
+            this.errandOKBtn.Click += new System.EventHandler(this.errandSubmitBtn_Click);
             // 
             // errandCancelBtn
             // 
@@ -512,16 +465,76 @@
             this.errandCancelBtn.UseVisualStyleBackColor = true;
             this.errandCancelBtn.Click += new System.EventHandler(this.errandCancelBtn_Click);
             // 
-            // errandSubmitBtn
+            // errandNumUpDn
             // 
-            this.errandSubmitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.errandSubmitBtn.Location = new System.Drawing.Point(416, 191);
-            this.errandSubmitBtn.Name = "errandSubmitBtn";
-            this.errandSubmitBtn.Size = new System.Drawing.Size(105, 35);
-            this.errandSubmitBtn.TabIndex = 7;
-            this.errandSubmitBtn.Text = "Submit";
-            this.errandSubmitBtn.UseVisualStyleBackColor = true;
-            this.errandSubmitBtn.Click += new System.EventHandler(this.errandSubmitBtn_Click);
+            this.errandNumUpDn.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandNumUpDn.Location = new System.Drawing.Point(277, 141);
+            this.errandNumUpDn.Name = "errandNumUpDn";
+            this.errandNumUpDn.Size = new System.Drawing.Size(109, 31);
+            this.errandNumUpDn.TabIndex = 5;
+            this.errandNumUpDn.ValueChanged += new System.EventHandler(this.errandNumUpDn_ValueChanged);
+            // 
+            // errandTypeValLabel
+            // 
+            this.errandTypeValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandTypeValLabel.ForeColor = System.Drawing.Color.Red;
+            this.errandTypeValLabel.Location = new System.Drawing.Point(432, 93);
+            this.errandTypeValLabel.Name = "errandTypeValLabel";
+            this.errandTypeValLabel.Size = new System.Drawing.Size(179, 23);
+            this.errandTypeValLabel.TabIndex = 4;
+            this.errandTypeValLabel.Text = "1,000,000,000";
+            this.errandTypeValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandTypeLabel
+            // 
+            this.errandTypeLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandTypeLabel.Location = new System.Drawing.Point(364, 93);
+            this.errandTypeLabel.Name = "errandTypeLabel";
+            this.errandTypeLabel.Size = new System.Drawing.Size(75, 23);
+            this.errandTypeLabel.TabIndex = 3;
+            this.errandTypeLabel.Text = "Debt:";
+            this.errandTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandCashValLabel
+            // 
+            this.errandCashValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandCashValLabel.ForeColor = System.Drawing.Color.LimeGreen;
+            this.errandCashValLabel.Location = new System.Drawing.Point(165, 93);
+            this.errandCashValLabel.Name = "errandCashValLabel";
+            this.errandCashValLabel.Size = new System.Drawing.Size(179, 23);
+            this.errandCashValLabel.TabIndex = 2;
+            this.errandCashValLabel.Text = "1,000,000,000";
+            this.errandCashValLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandCashLabel
+            // 
+            this.errandCashLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandCashLabel.Location = new System.Drawing.Point(84, 93);
+            this.errandCashLabel.Name = "errandCashLabel";
+            this.errandCashLabel.Size = new System.Drawing.Size(75, 23);
+            this.errandCashLabel.TabIndex = 1;
+            this.errandCashLabel.Text = "Cash:";
+            this.errandCashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errandGreetingLabel
+            // 
+            this.errandGreetingLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errandGreetingLabel.Location = new System.Drawing.Point(80, 23);
+            this.errandGreetingLabel.Name = "errandGreetingLabel";
+            this.errandGreetingLabel.Size = new System.Drawing.Size(531, 56);
+            this.errandGreetingLabel.TabIndex = 0;
+            this.errandGreetingLabel.Text = "Welcome to the Loan Shark. How much would you like to pay off?";
+            this.errandGreetingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // errandWithdrawBtn
+            // 
+            this.errandWithdrawBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.errandWithdrawBtn.Location = new System.Drawing.Point(306, 191);
+            this.errandWithdrawBtn.Name = "errandWithdrawBtn";
+            this.errandWithdrawBtn.Size = new System.Drawing.Size(105, 35);
+            this.errandWithdrawBtn.TabIndex = 8;
+            this.errandWithdrawBtn.Text = "Withdraw";
+            this.errandWithdrawBtn.UseVisualStyleBackColor = true;
             // 
             // GameForm
             // 
@@ -594,7 +607,7 @@
         private System.Windows.Forms.Panel itemAndInvPanel;
         private System.Windows.Forms.Button errandsButton;
         private System.Windows.Forms.Panel errandPanel;
-        private System.Windows.Forms.Button errandSubmitBtn;
+        private System.Windows.Forms.Button errandOKBtn;
         private System.Windows.Forms.Button errandCancelBtn;
         private System.Windows.Forms.NumericUpDown errandNumUpDn;
         private System.Windows.Forms.Label errandTypeValLabel;
@@ -602,6 +615,7 @@
         private System.Windows.Forms.Label errandCashValLabel;
         private System.Windows.Forms.Label errandCashLabel;
         private System.Windows.Forms.Label errandGreetingLabel;
+        private System.Windows.Forms.Button errandWithdrawBtn;
     }
 }
 

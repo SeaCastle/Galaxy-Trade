@@ -352,11 +352,28 @@ namespace Galaxy_Trade
             {
                 errandsButton.Enabled = true;
             }
-        }
+        }        
+
+        /**
+         * Sets the size of the GameForm Form. This is needed because we put the
+         * errandPanel on top of the itemAndInvPanel and we want to resize the
+         * form to get rid of the empty space at the bottom.
+         */ 
+        private void setGameFormSize()
+        {
+            Point pt = itemAndInvPanel.Location;
+            errandPanel.Location = pt;
+
+            Size cliSize = this.ClientSize;
+            cliSize.Height = this.ClientSize.Height - errandPanel.Height;
+            this.ClientSize = cliSize;
+        }        
+
+        #region Errand Panel
 
         /**
          * Sets up the labels and numeric up down of the errand panel.
-         */ 
+         */
         private void setErrandPanelState()
         {
             errandCashValLabel.Text = game.player.Money.ToString("C0");
@@ -372,7 +389,11 @@ namespace Galaxy_Trade
             }
             else if (currentErrand == (int)Errands.LoanShark)
             {
+                errandWithdrawBtn.Enabled = false;
+                errandWithdrawBtn.Hide();
+
                 errandGreetingLabel.Text = String.Format(greeting, "Loan Shark", "pay off");
+                errandOKBtn.Text = "Submit";
                 errandTypeLabel.Text = "Debt:";
                 errandTypeValLabel.Text = game.player.Debt.ToString("C0");
                 errandTypeValLabel.ForeColor = Color.Red;
@@ -380,43 +401,24 @@ namespace Galaxy_Trade
             }
             else if (currentErrand == (int)Errands.Bank)
             {
+                if (game.player.Savings > 0)
+                    errandWithdrawBtn.Enabled = true;
+                errandWithdrawBtn.Show();
+
                 errandGreetingLabel.Text = String.Format(greeting, "Bank", "deposit");
+                errandOKBtn.Text = "Deposit";
                 errandTypeLabel.Text = "Bank:";
                 errandTypeValLabel.Text = game.player.Savings.ToString("C0");
                 errandTypeValLabel.ForeColor = Color.Black;
-                errandNumUpDn.Maximum = game.player.Money;
+                errandNumUpDn.Maximum = game.player.Money > game.player.Savings ? game.player.Money : game.player.Savings;
             }
-        }
-
-        /**
-         * Sets the size of the GameForm Form. This is needed because we put the
-         * errandPanel on top of the itemAndInvPanel and we want to resize the
-         * form to get rid of the empty space at the bottom.
-         */ 
-        private void setGameFormSize()
-        {
-            Point pt = itemAndInvPanel.Location;
-            errandPanel.Location = pt;
-
-            Size cliSize = this.ClientSize;
-            cliSize.Height = this.ClientSize.Height - errandPanel.Height;
-            this.ClientSize = cliSize;
-        }
-
-        /**
-         * Make sure the GameForm closes properly.
-         */ 
-        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //tradeWindow.Close();
-            Application.Exit();
         }
 
         /**
          * Makes function calls to setErrandPanelState() and showErrandPanel() to setup 
          * the state of the errandPanel and then shows the errandPanel in the place of
          * the itemAndInvPanel's place.
-         */ 
+         */
         private void errandsButton_Click(object sender, EventArgs e)
         {
             setErrandPanelState();
@@ -457,11 +459,45 @@ namespace Galaxy_Trade
         }
 
         /**
+         * This disables the Withdraw or Deposit buttons depending on whether the Player
+         * has enough money for either one.
+         * This is needed because the Player's savings and current money is almost never
+         * going to be the same value. Therefor, we can't set the numericUpDown.Maximum
+         * without letting them either withdraw or deposit more than they have.
+         */ 
+        private void errandNumUpDn_ValueChanged(object sender, EventArgs e)
+        {
+            if (currentErrand == (int)Errands.Bank)
+            {
+                if (errandNumUpDn.Value > game.player.Savings)
+                {
+                    errandWithdrawBtn.Enabled = false;
+                }
+                else
+                {
+                    errandWithdrawBtn.Enabled = true;
+                }
+            }
+
+            if (currentErrand == (int)Errands.Bank)
+            {
+                if (errandNumUpDn.Value > game.player.Money)
+                {
+                    errandOKBtn.Enabled = false;
+                }
+                else
+                {
+                    errandOKBtn.Enabled = true;
+                }
+            }
+        }
+
+        /**
          * The Player has chosen to either pay money to the Loan Shark or deposit
          * money in the bank. Update the players money / debt / bank accordingly
          * then hide the errandPanel and show the itemAndInvPanel in its place.
          * Updates the GameForm afterward to reflect the errand changes.
-         */ 
+         */
         private void errandSubmitBtn_Click(object sender, EventArgs e)
         {
             if (currentErrand == (int)Errands.LoanShark)
@@ -485,6 +521,8 @@ namespace Galaxy_Trade
 
             hideErrandPanel();
         }
+
+        #endregion
 
         //////////////// Both methods below are used to essentially do the same thing. ////////////////
         /**
@@ -513,6 +551,14 @@ namespace Galaxy_Trade
             dialogOpenLocation = buyButton.PointToScreen(Point.Empty);
             dialogOpenLocation.X -= 200;
             dialogOpenLocation.Y -= 200;
+        }
+
+        /**
+         * Make sure the GameForm closes properly.
+         */
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
