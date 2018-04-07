@@ -535,6 +535,7 @@
             this.errandWithdrawBtn.TabIndex = 8;
             this.errandWithdrawBtn.Text = "Withdraw";
             this.errandWithdrawBtn.UseVisualStyleBackColor = true;
+            this.errandWithdrawBtn.Click += new System.EventHandler(this.errandWithdrawBtn_Click);
             // 
             // GameForm
             // 

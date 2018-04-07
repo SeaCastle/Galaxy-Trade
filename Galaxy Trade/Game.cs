@@ -134,7 +134,7 @@ namespace Galaxy_Trade
             }
             else
             {
-                int score = player.Money - (player.Debt * 2);
+                int score = (player.Money + player.Savings) - (player.Debt * 2);
 
                 string m = String.Format("Congratulations! You made it to the end and have seen that I don't " +
                     "have a proper screen for the game over :( \nAnyway, your score was: {0:n0}! Is that all you" +

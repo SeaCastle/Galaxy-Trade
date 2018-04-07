@@ -378,6 +378,8 @@ namespace Galaxy_Trade
         {
             errandCashValLabel.Text = game.player.Money.ToString("C0");
 
+            errandWithdrawBtn.Enabled = false;
+
             errandNumUpDn.Minimum = 0;
             errandNumUpDn.Value = 0;
 
@@ -434,9 +436,47 @@ namespace Galaxy_Trade
             hideErrandPanel();
         }
 
+        private void errandWithdrawBtn_Click(object sender, EventArgs e)
+        {
+            game.player.Money += (int)errandNumUpDn.Value;
+            game.player.Savings -= (int)errandNumUpDn.Value;
+            updateFormLabels();
+            hideErrandPanel();
+        }
+
+        /**
+         * The Player has chosen to either pay money to the Loan Shark or deposit
+         * money in the bank. Update the players money / debt / bank accordingly
+         * then hide the errandPanel and show the itemAndInvPanel in its place.
+         * Updates the GameForm afterward to reflect the errand changes.
+         */
+        private void errandSubmitBtn_Click(object sender, EventArgs e)
+        {
+            if (currentErrand == (int)Errands.LoanShark)
+            {
+                if (errandNumUpDn.Value > 0)
+                {
+                    game.player.Money -= (int)errandNumUpDn.Value;
+                    game.player.Debt -= (int)errandNumUpDn.Value;
+                    updateFormLabels();
+                }
+            }
+            else if (currentErrand == (int)Errands.Bank)
+            {
+                if (errandNumUpDn.Value > 0)
+                {
+                    game.player.Money -= (int)errandNumUpDn.Value;
+                    game.player.Savings += (int)errandNumUpDn.Value;
+                    updateFormLabels();
+                }
+            }
+
+            hideErrandPanel();
+        }
+
         /**
          * Hides the itemAndInvPanel and shows the errandPanel in its place.
-         */ 
+         */
         private void showErrandPanel()
         {
             if (!errandPanel.Visible)            
@@ -490,37 +530,7 @@ namespace Galaxy_Trade
                     errandOKBtn.Enabled = true;
                 }
             }
-        }
-
-        /**
-         * The Player has chosen to either pay money to the Loan Shark or deposit
-         * money in the bank. Update the players money / debt / bank accordingly
-         * then hide the errandPanel and show the itemAndInvPanel in its place.
-         * Updates the GameForm afterward to reflect the errand changes.
-         */
-        private void errandSubmitBtn_Click(object sender, EventArgs e)
-        {
-            if (currentErrand == (int)Errands.LoanShark)
-            {
-                if (errandNumUpDn.Value > 0)
-                {
-                    game.player.Money -= (int)errandNumUpDn.Value;
-                    game.player.Debt -= (int)errandNumUpDn.Value;
-                    updateFormLabels();
-                }
-            }
-            else if (currentErrand == (int)Errands.Bank)
-            {
-                if (errandNumUpDn.Value > 0)
-                {
-                    game.player.Money -= (int)errandNumUpDn.Value;
-                    game.player.Savings += (int)errandNumUpDn.Value;
-                    updateFormLabels();
-                }
-            }
-
-            hideErrandPanel();
-        }
+        }        
 
         #endregion
 
@@ -559,7 +569,7 @@ namespace Galaxy_Trade
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
-        }
+        }        
     }
 }
 
