@@ -63,6 +63,7 @@
             this.itemAndInvPanel = new System.Windows.Forms.Panel();
             this.errandsButton = new System.Windows.Forms.Button();
             this.errandPanel = new System.Windows.Forms.Panel();
+            this.errandWithdrawBtn = new System.Windows.Forms.Button();
             this.errandOKBtn = new System.Windows.Forms.Button();
             this.errandCancelBtn = new System.Windows.Forms.Button();
             this.errandNumUpDn = new System.Windows.Forms.NumericUpDown();
@@ -71,7 +72,6 @@
             this.errandCashValLabel = new System.Windows.Forms.Label();
             this.errandCashLabel = new System.Windows.Forms.Label();
             this.errandGreetingLabel = new System.Windows.Forms.Label();
-            this.errandWithdrawBtn = new System.Windows.Forms.Button();
             this.statsGroupBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.itemsGroupBox.SuspendLayout();
@@ -443,6 +443,17 @@
             this.errandPanel.TabIndex = 11;
             this.errandPanel.Visible = false;
             // 
+            // errandWithdrawBtn
+            // 
+            this.errandWithdrawBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.errandWithdrawBtn.Location = new System.Drawing.Point(306, 191);
+            this.errandWithdrawBtn.Name = "errandWithdrawBtn";
+            this.errandWithdrawBtn.Size = new System.Drawing.Size(105, 35);
+            this.errandWithdrawBtn.TabIndex = 8;
+            this.errandWithdrawBtn.Text = "Withdraw";
+            this.errandWithdrawBtn.UseVisualStyleBackColor = true;
+            this.errandWithdrawBtn.Click += new System.EventHandler(this.errandWithdrawBtn_Click);
+            // 
             // errandOKBtn
             // 
             this.errandOKBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -478,7 +489,7 @@
             // 
             this.errandTypeValLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errandTypeValLabel.ForeColor = System.Drawing.Color.Red;
-            this.errandTypeValLabel.Location = new System.Drawing.Point(432, 93);
+            this.errandTypeValLabel.Location = new System.Drawing.Point(445, 93);
             this.errandTypeValLabel.Name = "errandTypeValLabel";
             this.errandTypeValLabel.Size = new System.Drawing.Size(179, 23);
             this.errandTypeValLabel.TabIndex = 4;
@@ -490,10 +501,10 @@
             this.errandTypeLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errandTypeLabel.Location = new System.Drawing.Point(364, 93);
             this.errandTypeLabel.Name = "errandTypeLabel";
-            this.errandTypeLabel.Size = new System.Drawing.Size(75, 23);
+            this.errandTypeLabel.Size = new System.Drawing.Size(86, 23);
             this.errandTypeLabel.TabIndex = 3;
             this.errandTypeLabel.Text = "Debt:";
-            this.errandTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.errandTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // errandCashValLabel
             // 
@@ -525,17 +536,6 @@
             this.errandGreetingLabel.TabIndex = 0;
             this.errandGreetingLabel.Text = "Welcome to the Loan Shark. How much would you like to pay off?";
             this.errandGreetingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // errandWithdrawBtn
-            // 
-            this.errandWithdrawBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.errandWithdrawBtn.Location = new System.Drawing.Point(306, 191);
-            this.errandWithdrawBtn.Name = "errandWithdrawBtn";
-            this.errandWithdrawBtn.Size = new System.Drawing.Size(105, 35);
-            this.errandWithdrawBtn.TabIndex = 8;
-            this.errandWithdrawBtn.Text = "Withdraw";
-            this.errandWithdrawBtn.UseVisualStyleBackColor = true;
-            this.errandWithdrawBtn.Click += new System.EventHandler(this.errandWithdrawBtn_Click);
             // 
             // GameForm
             // 

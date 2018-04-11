@@ -343,8 +343,8 @@ namespace Galaxy_Trade
                     break;
             }
 
-            // BUTTON DISABLED FOR REPAIR ERRAND UNTIL WE FINISH IT.
-            if (currentErrand == (int)Errands.None || currentErrand == (int)Errands.Repair)
+            // Enable errand button if the current area has an errand.
+            if (currentErrand == (int)Errands.None)
             {
                 errandsButton.Enabled = false;
             }
@@ -387,7 +387,23 @@ namespace Galaxy_Trade
 
             if (currentErrand == (int)Errands.Repair)
             {
-                // TODO: Finish this later.
+                errandWithdrawBtn.Enabled = false;
+                errandWithdrawBtn.Hide();
+
+                errandGreetingLabel.Text = String.Format(greeting, "Repair Shop", "Repair");
+                errandOKBtn.Text = "Submit";
+                errandTypeLabel.Text = "Health:";
+                errandTypeValLabel.Text = game.player.Health.ToString();
+                errandTypeValLabel.ForeColor = Color.Black;
+                
+                if (game.player.Money > (game.player.Health - 100) * game.RepairCost)
+                {
+                    errandNumUpDn.Maximum = game.player.Health - 100;
+                }
+                else
+                {
+                    errandNumUpDn.Maximum = game.player.Money % (game.player.Health - 100) * game.RepairCost;
+                }
             }
             else if (currentErrand == (int)Errands.LoanShark)
             {
@@ -452,7 +468,16 @@ namespace Galaxy_Trade
          */
         private void errandSubmitBtn_Click(object sender, EventArgs e)
         {
-            if (currentErrand == (int)Errands.LoanShark)
+            if (currentErrand == (int)Errands.Repair)
+            {
+                if (errandNumUpDn.Value > 0)
+                {
+                    game.player.Health += (int)errandNumUpDn.Value;
+                    game.player.Money -= (int)errandNumUpDn.Value * 170;
+                    updateFormLabels();
+                }
+            }
+            else if (currentErrand == (int)Errands.LoanShark)
             {
                 if (errandNumUpDn.Value > 0)
                 {

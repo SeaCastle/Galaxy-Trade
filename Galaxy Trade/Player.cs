@@ -71,9 +71,9 @@ namespace Galaxy_Trade
          */ 
         public Player()
         {
-            money = 20000;
+            money = 1700;
             debt = 5500;
-            health = 100;
+            health = 10;
             inventorySlots = STARTINGINVENTORY;
             additionalInventory = 0;
             inventory = new Dictionary<string, int>();

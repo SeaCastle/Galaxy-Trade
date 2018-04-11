@@ -22,6 +22,7 @@ namespace Galaxy_Trade
         private Location currentLocation;
         private Product[] products;
         private string[] locations;
+        private int repairCost;
         private int day;
         private int gameLength; ///< int Total length of the game in days
 
@@ -38,6 +39,11 @@ namespace Galaxy_Trade
         public string[] Locations
         {
             get => locations;
+        }
+
+        public int RepairCost
+        {
+            get => repairCost;
         }
 
         public int Day
@@ -80,6 +86,8 @@ namespace Galaxy_Trade
 
             locations = new string[5] { "Earth", "51 Pegasi B", "Kepler-452b", "Gliese 876d", "PSR B1257+12 A" };
             currentLocation = new Location(locations[0], ref products);
+
+            repairCost = 170;
 
             day = 1;
             gameLength = 30;
