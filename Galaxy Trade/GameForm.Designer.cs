@@ -547,11 +547,13 @@
             this.Controls.Add(this.eventTextBox);
             this.Controls.Add(this.statsGroupBox);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.Name = "GameForm";
             this.Text = "Galaxy Trade";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
             this.Shown += new System.EventHandler(this.GameForm_Shown);
             this.LocationChanged += new System.EventHandler(this.GameForm_LocationChanged);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyDown);
             this.statsGroupBox.ResumeLayout(false);
             this.statsGroupBox.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

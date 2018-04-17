@@ -10,14 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Galaxy_Trade
-{
+{    
     public class Player
     {
         private const int STARTINGINVENTORY = 100;
+        private const int MAXHEALTH = 100;
+
         private Dictionary<string, int> inventory; //<key, val>
         private int money;
         private int debt;
-        private int health;
+        private int health;        
         private int savings;
         //private bool hasAdditionalInventory;
         private int additionalInventory;
@@ -40,6 +42,11 @@ namespace Galaxy_Trade
             set => debt = value;
         }
 
+        public int MaxHealth
+        {
+            get => MAXHEALTH;            
+        }
+
         public int Health
         {
             get => health;
@@ -52,7 +59,7 @@ namespace Galaxy_Trade
             set => savings = value;
         }
 
-        public bool HasAdditionalInventory { get; set; }
+        //public bool HasAdditionalInventory { get; set; }
 
         public int AdditionalInventory
         {
@@ -73,7 +80,7 @@ namespace Galaxy_Trade
         {
             money = 1700;
             debt = 5500;
-            health = 10;
+            health = MAXHEALTH;
             inventorySlots = STARTINGINVENTORY;
             additionalInventory = 0;
             inventory = new Dictionary<string, int>();

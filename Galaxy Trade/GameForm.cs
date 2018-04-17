@@ -396,13 +396,19 @@ namespace Galaxy_Trade
                 errandTypeValLabel.Text = game.player.Health.ToString();
                 errandTypeValLabel.ForeColor = Color.Black;
                 
-                if (game.player.Money > (game.player.Health - 100) * game.RepairCost)
+                if (game.player.Money > (game.player.MaxHealth - game.player.Health) * game.RepairCost)
                 {
                     errandNumUpDn.Maximum = game.player.Health - 100;
                 }
                 else
                 {
-                    errandNumUpDn.Maximum = game.player.Money % (game.player.Health - 100) * game.RepairCost;
+                    int totalRepairs = 0;
+                    for (int i = game.RepairCost; i <= game.player.Money; i+= game.RepairCost)
+                    {
+                        totalRepairs++;
+                    }
+                    //errandNumUpDn.Maximum = game.player.Money % (game.player.Health - 100) * game.RepairCost;
+                    errandNumUpDn.Maximum = totalRepairs;
                 }
             }
             else if (currentErrand == (int)Errands.LoanShark)
@@ -555,6 +561,20 @@ namespace Galaxy_Trade
                     errandOKBtn.Enabled = true;
                 }
             }
+
+            /*
+            if (currentErrand == (int)Errands.Repair)
+            {
+                if (errandNumUpDn.Value > game.player.Money)
+                {
+                    errandOKBtn.Enabled = false;               
+                }
+                else
+                {
+                    errandOKBtn.Enabled = false;
+                }
+            }
+            */
         }        
 
         #endregion
@@ -586,6 +606,37 @@ namespace Galaxy_Trade
             dialogOpenLocation = buyButton.PointToScreen(Point.Empty);
             dialogOpenLocation.X -= 200;
             dialogOpenLocation.Y -= 200;
+        }
+
+        /**
+         * Create some keyboard shortcuts for the form.
+         */ 
+        private void GameForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.B)
+            {
+                
+            }
+
+            if (e.Control && e.KeyCode == Keys.J)
+            {
+                
+            }
+
+            if (e.Control && e.KeyCode == Keys.G)
+            {
+                if (!gameToolStripMenuItem.DropDown.Visible)
+                {
+                    gameToolStripMenuItem.ShowDropDown();                    
+                }
+            }
+            if (e.Control && e.KeyCode == Keys.H)
+            {
+                if (!helpToolStripMenuItem.DropDown.Visible)
+                {
+                    helpToolStripMenuItem.ShowDropDown();
+                }
+            }
         }
 
         /**
