@@ -78,7 +78,7 @@ namespace Galaxy_Trade
          */ 
         public Player()
         {
-            money = 1700;
+            money = 2000;
             debt = 5500;
             health = MAXHEALTH;
             inventorySlots = STARTINGINVENTORY;
