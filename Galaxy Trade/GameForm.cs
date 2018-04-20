@@ -23,6 +23,7 @@ namespace Galaxy_Trade
         public TradeWindow tradeWindow;
         public LocationWindow locationWindow;
 
+        private string SAVEFILE = Application.StartupPath + "\\SaveData.xml";
         private Point dialogOpenLocation;
         private string nextLocation;
         private int currentErrand; ///< Used to tell whether our current location has an errand or not, set in setState();
@@ -645,7 +646,22 @@ namespace Galaxy_Trade
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
-        }        
+        }
+
+        
+        //// TEST ////        
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            XmlUtil xml = new XmlUtil(ref game);
+            xml.writeGameToXmlFile(SAVEFILE);
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            XmlUtil xml = new XmlUtil(ref game);
+            xml.loadGameFromXmlFile(SAVEFILE);
+            setState();
+        }
     }
 }
 

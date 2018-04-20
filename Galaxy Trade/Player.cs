@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Galaxy_Trade
 {    
@@ -19,12 +20,14 @@ namespace Galaxy_Trade
         private Dictionary<string, int> inventory; //<key, val>
         private int money;
         private int debt;
-        private int health;        
+        private int health;
         private int savings;
         //private bool hasAdditionalInventory;
         private int additionalInventory;
         private int inventorySlots;
 
+        [XmlIgnore] // THIS SHOULD NOT BE IGNORED. I DON'T WANT THE HEADACHE OF SERIALIZING
+                    // A DICTIONARY RIGHT NOW
         public Dictionary<string, int> Inventory
         {
             get => inventory;
@@ -42,6 +45,7 @@ namespace Galaxy_Trade
             set => debt = value;
         }
 
+        [XmlIgnore]
         public int MaxHealth
         {
             get => MAXHEALTH;            
@@ -67,6 +71,7 @@ namespace Galaxy_Trade
             set => additionalInventory = value;
         }
 
+        [XmlIgnore] // THIS SHOULD PROBABLY NOT GET IGNORED BUT WE NEED TO TEST
         public int InventorySlots
         {
             get => inventorySlots;
@@ -144,6 +149,6 @@ namespace Galaxy_Trade
             }
 
             inventorySlots = (STARTINGINVENTORY + additionalInventory - totalItems);
-        }
+        }        
     }
 }
