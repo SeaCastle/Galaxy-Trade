@@ -22,7 +22,7 @@ namespace Galaxy_Trade
         {
             XmlWriterSettings ws = new XmlWriterSettings();
             ws.Indent = true;
-
+            
             using (FileStream fs = new FileStream(xmlFile, FileMode.Create, FileAccess.Write))
             using (XmlWriter writer = XmlWriter.Create(fs, ws))
             {
@@ -74,6 +74,8 @@ namespace Galaxy_Trade
             }
         }
 
+        // TODO: Maybe in the DoWhile loop we move the reader to a start tag and not worry about
+        // end tags. This would skip over 1 whole Do loop after we perform the proper switch case.
         public void loadGameFromXmlFile(string xmlFile)
         {
             if (!File.Exists(xmlFile))
@@ -102,33 +104,64 @@ namespace Galaxy_Trade
                             if (tag == "Money")
                             {
                                 reader.Read();
-                                gameInstance.player.Money = Int32.Parse(reader.Value);
+                                gameInstance.player.Money = reader.ReadContentAsInt();
                             }
                             else if (tag == "Debt")
                             {
                                 reader.Read();
-                                gameInstance.player.Debt = Int32.Parse(reader.Value);
+                                gameInstance.player.Debt = reader.ReadContentAsInt();
                             }
                             else if (tag == "Health")
                             {
                                 reader.Read();
-                                gameInstance.player.Health = Int32.Parse(reader.Value);
+                                gameInstance.player.Health = reader.ReadContentAsInt();
                             }
                             else if (tag == "Savings")
                             {
                                 reader.Read();
-                                gameInstance.player.Savings = Int32.Parse(reader.Value);
+                                gameInstance.player.Savings = reader.ReadContentAsInt();
                             }
                             else if (tag == "Inventory")
                             {
-                                gameInstance.player.Inventory.Clear();
+                                // Inventory has multiple <Item> descendants depending on how many items the Player
+                                // had in their Inventory when they saved. Each <item> has a <Key><Val> children pair.
+                                string itemName;
+                                int itemQuantity;
+
+                                // Create a SubTree reader to read over the <Inventory> xml element and corresponding children. 
+                                // We use this to iterate over the <Key><Val> pairs of each <Item> to properly get each item name and 
+                                // item quantity to put them back into the players inventory.
+                                using (XmlReader subReader = reader.ReadSubtree())
+                                {
+                                    do
+                                    {
+                                        // This to skip over whitespace.
+                                        reader.MoveToContent();
+                                        tag = subReader.Name;
+
+                                        // For each <Item> tag, grab the Item name <Key> and Item quantity <Val>
+                                        // and add it to the Player's Inventory.
+                                        if (tag == "Item" && subReader.NodeType != XmlNodeType.EndElement)
+                                        {
+                                            subReader.ReadToDescendant("Key");
+                                            subReader.Read();
+                                            itemName = subReader.ReadContentAsString();
+
+                                            subReader.ReadToNextSibling("Val");
+                                            subReader.Read();
+                                            itemQuantity = subReader.ReadContentAsInt();
+
+                                            gameInstance.player.addItemsToInventory(itemName, itemQuantity);
+                                        }
+                                    } while (subReader.Read());
+                                }
                             }
-                            break;
+                        break;
                     }
                 } while (reader.Read());
             }
         }
-
+        // CONSIDER XELEMENT?
         /*
         public void savePlayerToFile(string fileName)
         {
