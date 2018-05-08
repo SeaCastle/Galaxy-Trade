@@ -70,6 +70,43 @@ namespace Galaxy_Trade
             }                  
         }
 
+        public void clearCurrentProducts()
+        {
+            currentProducts.Clear();
+        }
+
+        // TODO: Possibly refactor this later
+        /**
+         * -- This function is only to be used when loading a save file. --
+         * Adds a Product to the currentProduct list by searching the array of all products by name
+         * to get the corresponding Product object. Will also set the currentValue for the corresponding
+         * Product as to preserve the state of the game when the file was saved.
+         * Will throw an exception if the Product is not found.
+         * @param name - The name of the Product we are loading from the xml save file.
+         * @param price - The current price of the Product from the xml save file.
+         */
+        public void addCurrentProduct(string name, int price)
+        {
+            // Create a new array of strings containing the names of the products to search against?
+            string[] temp = new string[allProducts.Length];
+            for (int i = 0; i < allProducts.Length; i++)
+            {
+                temp[i] = allProducts[i].Name;         
+            }
+
+            int idx = Array.IndexOf(temp, name);
+
+            if (idx < 0)
+            {
+                throw new ArgumentException("Error: Product name '" + name + "' in is not valid while loading SaveData.xml");
+            }
+            else
+            {
+                allProducts[idx].CurrentValue = price;
+                currentProducts.Add(allProducts[idx]);
+            }
+        }
+
         /**
          * Decides how many Products (weighted) there will be for the day.
          * Currently there can be 6, 8, 9, 10, 11, or 12 Products at a current

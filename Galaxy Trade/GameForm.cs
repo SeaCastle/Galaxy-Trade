@@ -656,9 +656,11 @@ namespace Galaxy_Trade
             xml.writeGameToXmlFile(SAVEFILE);
         }
 
+        // TODO: MOVE THE LOCATION.CLEARCURRENTPRODUCTS SOMEWHERE THAT MAKES SENSE.
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XmlUtil xml = new XmlUtil(ref game);
+            game.CurrentLocation.clearCurrentProducts();
             xml.loadGameFromXmlFile(SAVEFILE);
             setState();
         }

@@ -66,7 +66,34 @@ namespace Galaxy_Trade
                 }                                
                 writer.WriteFullEndElement();
 
-                // End Player data.
+                // End Player element.
+                writer.WriteFullEndElement();
+
+                writer.WriteStartElement("Location");
+
+                //writer.WriteStartElement("LocationIndex");
+                writer.WriteStartElement("LocationName");
+                writer.WriteString(gameInstance.CurrentLocation.Name);
+                writer.WriteFullEndElement();
+
+                writer.WriteStartElement("Products");
+                foreach (Product p in gameInstance.CurrentLocation.CurrentProducts)
+                {
+                    writer.WriteStartElement("Product");
+
+                    writer.WriteStartElement("Name");
+                    writer.WriteString(p.Name);
+                    writer.WriteFullEndElement();
+
+                    writer.WriteStartElement("Price");
+                    writer.WriteString(p.CurrentValue.ToString());
+                    writer.WriteFullEndElement();
+
+                    writer.WriteFullEndElement();
+                }
+                writer.WriteFullEndElement();
+
+                // End Location element.
                 writer.WriteFullEndElement();
 
                 // End Game element.
@@ -121,11 +148,17 @@ namespace Galaxy_Trade
                                 reader.Read();
                                 gameInstance.player.Savings = reader.ReadContentAsInt();
                             }
-                            else if (tag == "Inventory")
+                            else if (tag == "LocationName")
+                            {
+                                reader.Read();
+                                gameInstance.CurrentLocation.Name = reader.ReadContentAsString();
+                            }
+                            else if (tag == "Inventory" || tag == "Products")
                             {
                                 // Inventory has multiple <Item> descendants depending on how many items the Player
                                 // had in their Inventory when they saved. Each <item> has a <Key><Val> children pair.
                                 string itemName;
+                                int itemPrice;
                                 int itemQuantity;
 
                                 // Create a SubTree reader to read over the <Inventory> xml element and corresponding children. 
@@ -152,6 +185,18 @@ namespace Galaxy_Trade
                                             itemQuantity = subReader.ReadContentAsInt();
 
                                             gameInstance.player.addItemsToInventory(itemName, itemQuantity);
+                                        }
+                                        else if (tag == "Product" && subReader.NodeType != XmlNodeType.EndElement)
+                                        {
+                                            subReader.ReadToDescendant("Name");
+                                            subReader.Read();
+                                            itemName = subReader.ReadContentAsString();
+
+                                            subReader.ReadToNextSibling("Price");
+                                            subReader.Read();
+                                            itemPrice = subReader.ReadContentAsInt();
+
+                                            gameInstance.CurrentLocation.addCurrentProduct(itemName, itemPrice);
                                         }
                                     } while (subReader.Read());
                                 }

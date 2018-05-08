@@ -39,6 +39,7 @@ namespace Galaxy_Trade
         public int CurrentValue
         {
             get => currentValue;
+            set => currentValue = value;
         }
 
         /** 
