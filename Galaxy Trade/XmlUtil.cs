@@ -30,7 +30,12 @@ namespace Galaxy_Trade
                 writer.WriteComment("Game Save data for Galaxy Trade");
                 writer.WriteStartElement("Game");
 
+                writer.WriteStartElement("Day");
+                writer.WriteString(gameInstance.Day.ToString());
+                writer.WriteFullEndElement();
+
                 // Write the save data for the Player.
+                writer.WriteComment("Player Data");
                 writer.WriteStartElement("Player");
 
                 writer.WriteStartElement("Money");
@@ -69,6 +74,7 @@ namespace Galaxy_Trade
                 // End Player element.
                 writer.WriteFullEndElement();
 
+                writer.WriteComment("Location Data");
                 writer.WriteStartElement("Location");
 
                 //writer.WriteStartElement("LocationIndex");
@@ -115,7 +121,7 @@ namespace Galaxy_Trade
                     return;
 
                 reader.MoveToContent();
-                reader.ReadToDescendant("Player");
+                //reader.ReadToDescendant("Player");
 
                 string tag = "";
 
@@ -128,6 +134,11 @@ namespace Galaxy_Trade
                         case XmlNodeType.Element:
                             tag = reader.Name;
 
+                            if (tag == "Day")
+                            {
+                                reader.Read();
+                                gameInstance.Day = reader.ReadContentAsInt();
+                            }
                             if (tag == "Money")
                             {
                                 reader.Read();

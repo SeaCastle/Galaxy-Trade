@@ -75,7 +75,6 @@ namespace Galaxy_Trade
             currentProducts.Clear();
         }
 
-        // TODO: Possibly refactor this later
         /**
          * -- This function is only to be used when loading a save file. --
          * Adds a Product to the currentProduct list by searching the array of all products by name
@@ -87,14 +86,7 @@ namespace Galaxy_Trade
          */
         public void addCurrentProduct(string name, int price)
         {
-            // Create a new array of strings containing the names of the products to search against?
-            string[] temp = new string[allProducts.Length];
-            for (int i = 0; i < allProducts.Length; i++)
-            {
-                temp[i] = allProducts[i].Name;         
-            }
-
-            int idx = Array.IndexOf(temp, name);
+            int idx = Array.FindIndex(allProducts, product => product.Name == name);
 
             if (idx < 0)
             {
