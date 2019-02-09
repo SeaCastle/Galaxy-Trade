@@ -8,6 +8,6 @@ namespace Galaxy_Trade
 {
     public static class Globals
     {
-        static Random rnd = new Random((int)DateTime.Now.Ticks);
+        public static Random rnd = new Random((int)DateTime.Now.Ticks);
     }
 }

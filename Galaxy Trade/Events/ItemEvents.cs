@@ -13,7 +13,6 @@ namespace Galaxy_Trade.Events
 {
     public class ItemEvents : IEvent
     {
-        Random rnd;
         private int eventChance;
         private List<string> message;
         private Product[] products;                
@@ -28,7 +27,6 @@ namespace Galaxy_Trade.Events
          */ 
         public ItemEvents(int chance, ref Product[] p)
         {
-            rnd = new Random();
             message = new List<string>();
             eventChance = chance;
             products = p;
@@ -40,7 +38,7 @@ namespace Galaxy_Trade.Events
          */
         public bool isActive()
         {
-            int i = rnd.Next(100) + 1;
+            int i = Globals.rnd.Next(100) + 1;
 
             return (i <= eventChance);
         }
@@ -61,7 +59,7 @@ namespace Galaxy_Trade.Events
          */
         public void chooseEvent()
         {
-            int i = rnd.Next(100) + 1;
+            int i = Globals.rnd.Next(100) + 1;
 
             if (i <= 50)
             {
@@ -84,12 +82,12 @@ namespace Galaxy_Trade.Events
                 "**{0} is in short supply. Prices are sky rocketing!\n"
             };
             
-            double multiplier = (rnd.NextDouble() * (5.0 - 4.0) + 4.0);
-            int numProducts = ((rnd.Next(100) + 1) >= 90) ? 2 : 1;
+            double multiplier = (Globals.rnd.NextDouble() * (5.0 - 4.0) + 4.0);
+            int numProducts = ((Globals.rnd.Next(100) + 1) >= 90) ? 2 : 1;
 
             for (int i = 0; i < numProducts; i++)
             {
-                int k = rnd.Next(products.Length);
+                int k = Globals.rnd.Next(products.Length);
                 products[k].multiplyCurrentValue(multiplier);
 
                 string m = k % 2 == 0 ? String.Format(s[0], products[k].Name) : String.Format(s[1], products[k].Name);
@@ -102,7 +100,7 @@ namespace Galaxy_Trade.Events
          */ 
         private void lowDemand()
         {                    
-            int i = rnd.Next(products.Length);
+            int i = Globals.rnd.Next(products.Length);
             products[i].multiplyCurrentValue(0.33);
 
             string m = String.Format("**The market is flooded with {0}. Prices are plummeting!\n", products[i].Name);

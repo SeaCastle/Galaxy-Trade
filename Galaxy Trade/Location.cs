@@ -49,7 +49,6 @@ namespace Galaxy_Trade
          */ 
         public void updateCurrentProducts()
         {
-            Random rnd = new Random();
             int totalProducts = getTotalProducts();
            
             if (currentProducts.Count > 0)
@@ -64,7 +63,7 @@ namespace Galaxy_Trade
 
             for (int i = 0; i < allProducts.Length - totalProducts; i++)
             {
-                int k = rnd.Next(currentProducts.Count);
+                int k = Globals.rnd.Next(currentProducts.Count);
 
                 currentProducts.RemoveAt(k);
             }                  
@@ -108,8 +107,7 @@ namespace Galaxy_Trade
         {
             int totalProducts = 0;
 
-            Random rnd = new Random();
-            int num = rnd.Next(100) + 1;
+            int num = Globals.rnd.Next(100) + 1;
 
             // How many products is the current location going to have?
             if (num == 1)

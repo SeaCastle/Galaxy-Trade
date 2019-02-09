@@ -55,6 +55,8 @@ namespace Galaxy_Trade
                 if (itemsListView.FindItemWithText(p.Name) == null)
                 {
                     ListViewItem item = new ListViewItem(p.Name);
+                    // DEBUG 
+                    // item.SubItems.Add(p.CurrentValue.ToString("C0") + "(" + calculatePercent(p.MinValue, p.MaxValue, p.CurrentValue).ToString("0") + "%)");
                     item.SubItems.Add(p.CurrentValue.ToString("C0"));
                     itemsListView.Items.Add(item);
                 }
@@ -72,7 +74,6 @@ namespace Galaxy_Trade
         {
             // SHOULD PROBABLY THINK OF SOMETHING BETTER HERE -----
             inventoryListView.Items.Clear();
-            //////////////////////////////////////////////////////
 
             foreach (string key in game.player.Inventory.Keys)
             {
@@ -276,21 +277,29 @@ namespace Galaxy_Trade
 
             if (game.playerEvents.Message.Count > 0)
             {
-                foreach (string s in game.playerEvents.Message)
-                {
-                    eventTextBox.AppendText(s);
-                }
+                appendMessagesToTextBox(game.playerEvents.Message);
             }
 
             if (game.itemEvents.Message.Count > 0)
             {
-                foreach (string s in game.itemEvents.Message)
-                {
-                    eventTextBox.AppendText(s);
-                }
+                appendMessagesToTextBox(game.itemEvents.Message);
             }
             
             setState();
+        }
+
+        /**
+         * Appends each string to the eventTextBox one by one. This is mainly used to
+         * append playerEvent and itemEvent messages but could be used to append any
+         * List of strings to the eventTextBox.
+         * @param messages - List of strings you want to append to the eventTextBox.
+         */ 
+        private void appendMessagesToTextBox(List<string> messages)
+        {
+            foreach (string s in messages)
+            {
+                eventTextBox.AppendText(s);
+            }
         }
 
         /**
@@ -657,12 +666,35 @@ namespace Galaxy_Trade
         }
 
         // TODO: MOVE THE LOCATION.CLEARCURRENTPRODUCTS SOMEWHERE THAT MAKES SENSE.
+        // TODO: Change the way we handle event messages?
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XmlUtil xml = new XmlUtil(ref game);
             game.CurrentLocation.clearCurrentProducts();
             xml.loadGameFromXmlFile(SAVEFILE);
+
+            if (game.itemEvents.Message.Count > 0)
+                appendMessagesToTextBox(game.itemEvents.Message);
+
             setState();
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            game = new Game();
+
+            setState();
+        }
+
+
+        // *********************************************************** //
+        // ************************** DEBUG ************************** //
+        // *********************************************************** //
+        private float calculatePercent(int min, int max, int current)
+        {
+            float range = max - min;
+
+            return ((current - min) / range) * 100;
         }
     }
 }

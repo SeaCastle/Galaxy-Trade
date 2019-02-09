@@ -153,6 +153,11 @@ namespace Galaxy_Trade
             }            
         }
 
+        public void updateAfterFileLoad()
+        {
+
+        }
+
         /**
          * Checks whether the game is over or not.
          * @return - False if we haven't hit the game length yet, True otherwise.

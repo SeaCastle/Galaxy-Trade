@@ -26,8 +26,6 @@ namespace Galaxy_Trade
         private int additionalInventory;
         private int inventorySlots;
 
-        [XmlIgnore] // THIS SHOULD NOT BE IGNORED. I DON'T WANT THE HEADACHE OF SERIALIZING
-                    // A DICTIONARY RIGHT NOW
         public Dictionary<string, int> Inventory
         {
             get => inventory;
@@ -45,7 +43,6 @@ namespace Galaxy_Trade
             set => debt = value;
         }
 
-        [XmlIgnore]
         public int MaxHealth
         {
             get => MAXHEALTH;            
@@ -71,7 +68,6 @@ namespace Galaxy_Trade
             set => additionalInventory = value;
         }
 
-        [XmlIgnore] // THIS SHOULD PROBABLY NOT GET IGNORED BUT WE NEED TO TEST
         public int InventorySlots
         {
             get => inventorySlots;

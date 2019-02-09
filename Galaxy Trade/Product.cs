@@ -13,7 +13,6 @@ namespace Galaxy_Trade
 {
     public class Product
     {
-        private Random rnd = new Random();
         private string name;
         private int minValue;
         private int maxValue;
@@ -64,7 +63,7 @@ namespace Galaxy_Trade
          */ 
         public void updateCurrentValue()
         {
-            currentValue = rnd.Next(minValue, (maxValue + 1));
+            currentValue = Globals.rnd.Next(minValue, (maxValue + 1));
         }
 
         /**

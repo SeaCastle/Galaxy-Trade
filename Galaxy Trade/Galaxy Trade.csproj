@@ -63,6 +63,7 @@
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Events\ItemEvents.cs" />
     <Compile Include="Events\PlayerEvents.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="LocationWindow.cs">
       <SubType>Form</SubType>

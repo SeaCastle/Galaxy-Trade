@@ -14,7 +14,6 @@ namespace Galaxy_Trade.Events
 {
     public class PlayerEvents : IEvent
     {
-        private Random rnd;
         private Player player;
         private Product[] products;
         private int eventChance;
@@ -30,7 +29,6 @@ namespace Galaxy_Trade.Events
          */ 
         public PlayerEvents(int chance, ref Player p, ref Product[] prod)
         {
-            rnd = new Random();
             message = new List<string>();
             player = p;
             products = prod;
@@ -54,7 +52,7 @@ namespace Galaxy_Trade.Events
          */ 
         public bool isActive()
         {
-            int i = rnd.Next(100) + 1;
+            int i = Globals.rnd.Next(100) + 1;
             return (i <= eventChance);
         }
 
@@ -64,7 +62,7 @@ namespace Galaxy_Trade.Events
          */ 
         private void buyStorage()
         {            
-            int cost = rnd.Next(200,351);
+            int cost = Globals.rnd.Next(200,351);
 
             string m = String.Format("**An Alien ship hails you on your way. For a small fee of ${0} " +
                 "their expert engineers have agreed to increase your storage capacity by 10!\n", cost);
@@ -97,8 +95,8 @@ namespace Galaxy_Trade.Events
         private void findItems()
         {
             int freeInvSlots = player.InventorySlots;
-            int itemQuantity = rnd.Next(1, 14);
-            int idx = rnd.Next(products.Length);
+            int itemQuantity = Globals.rnd.Next(1, 14);
+            int idx = Globals.rnd.Next(products.Length);
             Product prod = products[idx];
 
             string m = String.Format("**Among your travels, you come across a tragic scene - A ship " +
@@ -134,8 +132,8 @@ namespace Galaxy_Trade.Events
         private void gotMugged()
         {
             // Anywhere between 3% - 10% of the Players total money, rounded up/down.
-            int moneyTaken = rnd.Next((int)(player.Money * 0.03), (int)(player.Money * 0.1));
-            int healthLost = rnd.Next(5,18);
+            int moneyTaken = Globals.rnd.Next((int)(player.Money * 0.03), (int)(player.Money * 0.1));
+            int healthLost = Globals.rnd.Next(5,18);
             string m = String.Format("**While traveling through space, you encounter a huge ship of space pirates! " +
                 "Not wanting to start any trouble, you comply with their demands. They take ${0} and hurt you for {1} " +
                 "for good measure - they are pirates after all.\n", moneyTaken, healthLost);
@@ -144,12 +142,12 @@ namespace Galaxy_Trade.Events
             // Calculate what item and how much of that item was lost.
             if (itemsInInv > 0)
             {
-                int idx = rnd.Next(itemsInInv); // This may need to be - 1
+                int idx = Globals.rnd.Next(itemsInInv); // This may need to be - 1
 
                 string itemName = player.Inventory.ElementAt(idx).Key;
                 int itemQuantity = player.Inventory.ElementAt(idx).Value;
 
-                double i = rnd.Next((int)(itemQuantity * 0.1), (int)(itemQuantity * 0.4));
+                double i = Globals.rnd.Next((int)(itemQuantity * 0.1), (int)(itemQuantity * 0.4));
                 int totalLost = (int)Math.Ceiling(i);
 
                 player.removeItemsFromInventory(itemName, totalLost);
@@ -169,7 +167,7 @@ namespace Galaxy_Trade.Events
          */ 
         public void chooseEvent()
         {
-            int i = rnd.Next(100) + 1;
+            int i = Globals.rnd.Next(100) + 1;
 
             if (i <= 30)
             {

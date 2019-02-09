@@ -28,10 +28,24 @@ namespace Galaxy_Trade
             {
                 writer.WriteProcessingInstruction("xml", "version='1.0'");
                 writer.WriteComment("Game Save data for Galaxy Trade");
+
+                // Write the save data for the Game.
                 writer.WriteStartElement("Game");
 
                 writer.WriteStartElement("Day");
                 writer.WriteString(gameInstance.Day.ToString());
+                writer.WriteFullEndElement();
+
+                writer.WriteStartElement("Events");
+                if (gameInstance.itemEvents.Message != null)
+                {
+                    foreach(string message in gameInstance.itemEvents.Message)
+                    {
+                        writer.WriteStartElement("Message");
+                        writer.WriteString(message);
+                        writer.WriteFullEndElement();
+                    }
+                }
                 writer.WriteFullEndElement();
 
                 // Write the save data for the Player.
@@ -52,6 +66,10 @@ namespace Galaxy_Trade
 
                 writer.WriteStartElement("Savings");
                 writer.WriteString(gameInstance.player.Savings.ToString());
+                writer.WriteFullEndElement();
+
+                writer.WriteStartElement("AdditionalInventory");
+                writer.WriteString(gameInstance.player.AdditionalInventory.ToString());
                 writer.WriteFullEndElement();
 
                 writer.WriteStartElement("Inventory");
@@ -139,7 +157,12 @@ namespace Galaxy_Trade
                                 reader.Read();
                                 gameInstance.Day = reader.ReadContentAsInt();
                             }
-                            if (tag == "Money")
+                            else if (tag == "Message")
+                            {
+                                reader.Read();
+                                gameInstance.itemEvents.Message.Add(reader.ReadContentAsString());
+                            }
+                            else if (tag == "Money")
                             {
                                 reader.Read();
                                 gameInstance.player.Money = reader.ReadContentAsInt();
@@ -159,6 +182,11 @@ namespace Galaxy_Trade
                                 reader.Read();
                                 gameInstance.player.Savings = reader.ReadContentAsInt();
                             }
+                            else if (tag == "AdditionalInventory")
+                            {
+                                reader.Read();
+                                gameInstance.player.AdditionalInventory = reader.ReadContentAsInt();
+                            }
                             else if (tag == "LocationName")
                             {
                                 reader.Read();
@@ -166,6 +194,8 @@ namespace Galaxy_Trade
                             }
                             else if (tag == "Inventory" || tag == "Products")
                             {
+                                // Inventory and Products tags share the same structure just with different names.
+                                // ---------------------------------------------------------------------------
                                 // Inventory has multiple <Item> descendants depending on how many items the Player
                                 // had in their Inventory when they saved. Each <item> has a <Key><Val> children pair.
                                 string itemName;
